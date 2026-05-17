@@ -791,7 +791,7 @@ app.get('/api/admin/users', async (req, res) => {
 
 
 // UPDATE USER ROLE
-app.put('/api/admin/users/role', async (req, res) => {
+app.put('/api/admin/users', async (req, res) => {
 
   try {
 
