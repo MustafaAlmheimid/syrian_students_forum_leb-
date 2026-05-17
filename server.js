@@ -16,162 +16,860 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+
 // ==================== Helper: Check Admin ====================
+
 async function checkAdmin(req) {
+
+  // لاحقاً يمكنك تفعيل التحقق الحقيقي
+
   // const userId = req.headers['x-user-id'];
   // if (!userId) return false;
 
-  // const result = await sql`SELECT role FROM users WHERE id = ${userId}`;
+  // const result = await sql`
+  //   SELECT role
+  //   FROM users
+  //   WHERE id = ${userId}
+  // `;
+
   // return result[0]?.role === 'admin';
-   return true;
+
+  return true;
 }
 
-// ==================== PUBLIC ROUTES ====================
 
-// Auth
+// ==================== AUTH ====================
+
 app.post('/api/auth', async (req, res) => {
-  try {
-    const { action, email, password, full_name } = req.body;
 
+  try {
+
+    const {
+      action,
+      email,
+      password,
+      full_name
+    } = req.body;
+
+    // LOGIN
     if (action === 'login') {
-      const users = await sql`SELECT * FROM users WHERE email = ${email}`;
+
+      const users = await sql`
+        SELECT *
+        FROM users
+        WHERE email = ${email}
+      `;
+
       const user = users[0];
+
       if (!user || user.password !== password) {
-        return res.status(401).json({ error: 'البريد أو كلمة المرور غير صحيحة' });
+
+        return res.status(401).json({
+          error: 'البريد أو كلمة المرور غير صحيحة'
+        });
       }
-      return res.json({ user: { id: user.id, email: user.email, full_name: user.full_name, role: user.role } });
+
+      return res.json({
+        user: {
+          id: user.id,
+          email: user.email,
+          full_name: user.full_name,
+          role: user.role
+        }
+      });
     }
 
+    // SIGNUP
     if (action === 'signup') {
-      const existing = await sql`SELECT id FROM users WHERE email = ${email}`;
-      if (existing.length > 0) return res.status(400).json({ error: 'هذا البريد مسجل مسبقاً' });
+
+      const existing = await sql`
+        SELECT id
+        FROM users
+        WHERE email = ${email}
+      `;
+
+      if (existing.length > 0) {
+
+        return res.status(400).json({
+          error: 'هذا البريد مسجل مسبقاً'
+        });
+      }
 
       const id = 'user-' + Date.now();
+
       const [newUser] = await sql`
-        INSERT INTO users (id, email, password, full_name, role)
-        VALUES (${id}, ${email}, ${password}, ${full_name || ''}, 'user')
+        INSERT INTO users (
+          id,
+          email,
+          password,
+          full_name,
+          role
+        )
+        VALUES (
+          ${id},
+          ${email},
+          ${password},
+          ${full_name || ''},
+          'user'
+        )
         RETURNING *
       `;
-      return res.status(201).json({ user: { id: newUser.id, email: newUser.email, full_name: newUser.full_name, role: newUser.role } });
+
+      return res.status(201).json({
+        user: {
+          id: newUser.id,
+          email: newUser.email,
+          full_name: newUser.full_name,
+          role: newUser.role
+        }
+      });
     }
+
+    return res.status(400).json({
+      error: 'Invalid action'
+    });
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
   }
 });
 
-// Posts
+
+// ==================== POSTS ====================
+
+// PUBLIC POSTS + Editing if Admin 
+// ==================== POSTS ====================
+
+// PUBLIC POSTS
+// app.get('/api/posts', async (req, res) => {
+
+//   try {
+
+//     const posts = await sql`
+//       SELECT *
+//       FROM posts
+//       ORDER BY created_at DESC
+//     `;
+
+//     res.json(posts);
+
+//   } catch (err) {
+
+//     res.status(500).json({
+//       error: err.message
+//     });
+//   }
+// });
+
+
 app.get('/api/posts', async (req, res) => {
-  const posts = await sql`SELECT * FROM posts WHERE published = true ORDER BY created_at DESC`;
-  res.json(posts);
+
+  try {
+
+    const posts = await sql`
+      SELECT *
+      FROM posts
+      ORDER BY created_at DESC
+    `;
+
+    res.json(posts);
+
+  } catch (err) {
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
 });
 
-// Questions
-app.get('/api/questions', async (req, res) => {
-  const questions = await sql`SELECT * FROM questions ORDER BY created_at DESC`;
-  res.json(questions);
+
+// CREATE POST
+app.post('/api/posts', async (req, res) => {
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const {
+      title,
+      content,
+      category
+    } = req.body;
+
+    const [post] = await sql`
+      INSERT INTO posts (
+        title,
+        content,
+        category,
+        published
+      )
+      VALUES (
+        ${title},
+        ${content},
+        ${category},
+        true
+      )
+      RETURNING *
+    `;
+
+    res.status(201).json(post);
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
 });
 
-app.post('/api/questions', async (req, res) => {
-  const { user_id, user_name, title, content } = req.body;
-  const [q] = await sql`
-    INSERT INTO questions (user_id, user_name, title, content, answered)
-    VALUES (${user_id}, ${user_name}, ${title}, ${content}, false)
-    RETURNING *
-  `;
-  res.status(201).json(q);
+
+// UPDATE POST
+app.put('/api/posts', async (req, res) => {
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const {
+      id,
+      title,
+      content,
+      category
+    } = req.body;
+
+    const [post] = await sql`
+      UPDATE posts
+      SET
+        title = ${title},
+        content = ${content},
+        category = ${category}
+      WHERE id = ${id}
+      RETURNING *
+    `;
+
+    res.json(post);
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
 });
 
-// Question Replies
-app.get('/api/question-replies', async (req, res) => {
-  const { question_id } = req.query;
-  const replies = await sql`
-    SELECT * FROM question_replies 
-    WHERE question_id = ${question_id} ORDER BY created_at ASC
-  `;
-  res.json(replies);
+
+// DELETE POST
+app.delete('/api/posts', async (req, res) => {
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const { id } = req.body;
+
+    await sql`
+      DELETE FROM posts
+      WHERE id = ${id}
+    `;
+
+    res.json({
+      ok: true
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
 });
-
-app.post('/api/question-replies', async (req, res) => {
-  const { question_id, user_id, user_name, content } = req.body;
-  const [reply] = await sql`
-    INSERT INTO question_replies (question_id, user_id, user_name, content)
-    VALUES (${question_id}, ${user_id}, ${user_name}, ${content})
-    RETURNING *
-  `;
-  res.status(201).json(reply);
-});
-
-// ==================== ADMIN ROUTES ====================
-
-// Users
-app.get('/api/admin/users', async (req, res) => {
-  if (!(await checkAdmin(req))) return res.status(403).json({ error: 'Admin only' });
-  const users = await sql`SELECT id, email, full_name, role, created_at FROM users ORDER BY created_at DESC`;
-  res.json(users);
-});
-
-app.put('/api/admin/users/role', async (req, res) => {
-  if (!(await checkAdmin(req))) return res.status(403).json({ error: 'Admin only' });
-  const { id, role } = req.body;
-  await sql`UPDATE users SET role = ${role} WHERE id = ${id}`;
-  res.json({ ok: true });
-});
-
-app.delete('/api/admin/users', async (req, res) => {
-  if (!(await checkAdmin(req))) return res.status(403).json({ error: 'Admin only' });
-  const { id } = req.body;
-  await sql`DELETE FROM users WHERE id = ${id}`;
-  res.json({ ok: true });
-});
-
-// Posts (Admin)
+// ADMIN POSTS
 app.get('/api/admin/posts', async (req, res) => {
-  if (!(await checkAdmin(req))) return res.status(403).json({ error: 'Admin only' });
-  const posts = await sql`SELECT * FROM posts ORDER BY created_at DESC`;
-  res.json(posts);
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const posts = await sql`
+      SELECT *
+      FROM posts
+      ORDER BY created_at DESC
+    `;
+
+    res.json(posts);
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
 });
 
-// Comments (Admin)
-app.get('/api/admin/comments', async (req, res) => {
-  if (!(await checkAdmin(req))) return res.status(403).json({ error: 'Admin only' });
-  const comments = await sql`SELECT * FROM comments ORDER BY created_at DESC`;
-  res.json(comments);
+
+// CREATE POST
+app.post('/api/admin/posts', async (req, res) => {
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const {
+      title,
+      content,
+      category
+    } = req.body;
+
+    const [post] = await sql`
+      INSERT INTO posts (
+        title,
+        content,
+        category,
+        published
+      )
+      VALUES (
+        ${title},
+        ${content},
+        ${category},
+        true
+      )
+      RETURNING *
+    `;
+
+    res.status(201).json(post);
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
 });
+
+
+// UPDATE POST
+app.put('/api/admin/posts', async (req, res) => {
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const {
+      id,
+      title,
+      content,
+      category
+    } = req.body;
+
+    const [post] = await sql`
+      UPDATE posts
+      SET
+        title = ${title},
+        content = ${content},
+        category = ${category}
+      WHERE id = ${id}
+      RETURNING *
+    `;
+
+    res.json(post);
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
+
+// DELETE POST
+app.delete('/api/admin/posts', async (req, res) => {
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const { id } = req.body;
+
+    await sql`
+      DELETE FROM posts
+      WHERE id = ${id}
+    `;
+
+    res.json({
+      ok: true
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
+
+// ==================== COMMENTS ====================
+
+app.get('/api/admin/comments', async (req, res) => {
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const comments = await sql`
+      SELECT *
+      FROM comments
+      ORDER BY created_at DESC
+    `;
+
+    res.json(comments);
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
 
 app.delete('/api/admin/comments', async (req, res) => {
-  if (!(await checkAdmin(req))) return res.status(403).json({ error: 'Admin only' });
-  const { id } = req.body;
-  await sql`DELETE FROM comments WHERE id = ${id}`;
-  res.json({ ok: true });
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const { id } = req.body;
+
+    await sql`
+      DELETE FROM comments
+      WHERE id = ${id}
+    `;
+
+    res.json({
+      ok: true
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
 });
 
-// Questions (Admin)
-app.get('/api/admin/questions', async (req, res) => {
-  if (!(await checkAdmin(req))) return res.status(403).json({ error: 'Admin only' });
-  const questions = await sql`SELECT * FROM questions ORDER BY created_at DESC`;
-  res.json(questions);
+
+// ==================== QUESTIONS ====================
+
+// PUBLIC QUESTIONS
+app.get('/api/questions', async (req, res) => {
+
+  try {
+
+    const questions = await sql`
+      SELECT *
+      FROM questions
+      ORDER BY created_at DESC
+    `;
+
+    res.json(questions);
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
 });
+
+
+// CREATE QUESTION
+app.post('/api/questions', async (req, res) => {
+
+  try {
+
+    const {
+      user_id,
+      user_name,
+      title,
+      content
+    } = req.body;
+
+    const [q] = await sql`
+      INSERT INTO questions (
+        user_id,
+        user_name,
+        title,
+        content,
+        answered
+      )
+      VALUES (
+        ${user_id},
+        ${user_name},
+        ${title},
+        ${content},
+        false
+      )
+      RETURNING *
+    `;
+
+    res.status(201).json(q);
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
+
+// ADMIN QUESTIONS
+app.get('/api/admin/questions', async (req, res) => {
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const questions = await sql`
+      SELECT *
+      FROM questions
+      ORDER BY created_at DESC
+    `;
+
+    res.json(questions);
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
 
 app.put('/api/admin/questions', async (req, res) => {
-  if (!(await checkAdmin(req))) return res.status(403).json({ error: 'Admin only' });
-  const { id, answered } = req.body;
-  await sql`UPDATE questions SET answered = ${answered} WHERE id = ${id}`;
-  res.json({ ok: true });
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const {
+      id,
+      answered
+    } = req.body;
+
+    await sql`
+      UPDATE questions
+      SET answered = ${answered}
+      WHERE id = ${id}
+    `;
+
+    res.json({
+      ok: true
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
 });
+
 
 app.delete('/api/admin/questions', async (req, res) => {
-  if (!(await checkAdmin(req))) return res.status(403).json({ error: 'Admin only' });
-  const { id } = req.body;
-  await sql`DELETE FROM questions WHERE id = ${id}`;
-  res.json({ ok: true });
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const { id } = req.body;
+
+    await sql`
+      DELETE FROM questions
+      WHERE id = ${id}
+    `;
+
+    res.json({
+      ok: true
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
 });
 
-// ==================== SERVE FRONTEND ====================
+
+// ==================== QUESTION REPLIES ====================
+
+app.get('/api/question-replies', async (req, res) => {
+
+  try {
+
+    const { question_id } = req.query;
+
+    const replies = await sql`
+      SELECT *
+      FROM question_replies
+      WHERE question_id = ${question_id}
+      ORDER BY created_at ASC
+    `;
+
+    res.json(replies);
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
+
+app.post('/api/question-replies', async (req, res) => {
+
+  try {
+
+    const {
+      question_id,
+      user_id,
+      user_name,
+      content
+    } = req.body;
+
+    const [reply] = await sql`
+      INSERT INTO question_replies (
+        question_id,
+        user_id,
+        user_name,
+        content
+      )
+      VALUES (
+        ${question_id},
+        ${user_id},
+        ${user_name},
+        ${content}
+      )
+      RETURNING *
+    `;
+
+    res.status(201).json(reply);
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
+
+// ==================== USERS ====================
+
+app.get('/api/admin/users', async (req, res) => {
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const users = await sql`
+      SELECT
+        id,
+        email,
+        full_name,
+        role,
+        created_at
+      FROM users
+      ORDER BY created_at DESC
+    `;
+
+    res.json(users);
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
+
+// UPDATE USER ROLE
+app.put('/api/admin/users/role', async (req, res) => {
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const {
+      id,
+      role
+    } = req.body;
+
+    await sql`
+      UPDATE users
+      SET role = ${role}
+      WHERE id = ${id}
+    `;
+
+    res.json({
+      ok: true
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
+
+// DELETE USER
+app.delete('/api/admin/users', async (req, res) => {
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const { id } = req.body;
+
+    await sql`
+      DELETE FROM users
+      WHERE id = ${id}
+    `;
+
+    res.json({
+      ok: true
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
+
+// ==================== FRONTEND ====================
+
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
+
+
+// ==================== START SERVER ====================
 
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);

@@ -898,14 +898,15 @@ function AdminPage({ user, isAdmin, userRole }: { user: User | null; isAdmin: bo
   const [showPostModal, setShowPostModal] = useState(false);
   const [newPost, setNewPost] = useState({ title: '', content: '', category: CATEGORIES[0] });
 
-  const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  //const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
-  const getAuthHeaders = () => {
-    return {
-      'Content-Type': 'application/json',
-      'x-user-id': currentUser.id || ''
-    };
+const getAuthHeaders = () => {
+  const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  return {
+    'Content-Type': 'application/json',
+    'x-user-id': user.id || ''
   };
+};
 
   const fetchAllData = async () => {
     setLoadingData(true);
@@ -934,20 +935,14 @@ function AdminPage({ user, isAdmin, userRole }: { user: User | null; isAdmin: bo
   }, [isAdmin]);
 
   // Protected API Calls
-  const adminApiCall = async (endpoint: string, method: string, body?: any) => {
-    const headers = await getAuthHeaders();
-    const res = await fetch(endpoint, { 
-      method, 
-      headers, 
-      body: body ? JSON.stringify(body) : undefined 
-    });
-    if (!res.ok) {
-      const err = await res.json();
-      alert('خطأ: ' + (err.error || 'فشلت العملية'));
-      return false;
-    }
-    return true;
-  };
+const adminApiCall = async (endpoint: string, method: string, body?: any) => {
+  const res = await fetch(endpoint, {
+    method,
+    headers: getAuthHeaders(),           // ← هون التعديل
+    body: body ? JSON.stringify(body) : undefined
+  });
+  return res.ok;
+};
 
   // Posts Management
   const handleSavePost = async () => {
@@ -1217,6 +1212,7 @@ function AdminPage({ user, isAdmin, userRole }: { user: User | null; isAdmin: bo
     </div>
   );
 }
+
 
 // Authentication Page (Email/Password)
 function AuthPage() {
