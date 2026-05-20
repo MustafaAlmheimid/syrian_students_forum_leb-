@@ -53,40 +53,161 @@ const CATEGORIES = [
 ];
 
 // Guides Data (Structured)
+// const GUIDES = [
+//     {
+//     id: 1,
+//     title: "دليل معادلة الشهادة في سوريا",
+//     steps: [
+//       "تقديم طلب خطي أو كتاب رسمي يوضح الغرض من التعادل (وظيفي أو أكاديمي)",
+//       "تجهيز الشهادة الجامعية الأصلية مع 3 نسخ مصورة عنها",
+//       "إرفاق كشف علامات مفصل لكامل سنوات الدراسة مع 3 نسخ مصورة",
+//       "إرفاق وثيقة شهادة المرحلة الثانوية العامة",
+//       "تقديم إثباتات الإقامة القانونية في بلد الدراسة (جواز السفر وسجل الدخول والخروج)",
+//       "تصديق جميع الوثائق من وزارة خارجية بلد الإصدار ثم من السفارة السورية",
+//       "تصديق الوثائق داخل سوريا من وزارة الخارجية والمغتربين السورية",
+//       "تقديم الملف إلى وزارة التعليم العالي السورية وانتظار المعالجة"
+//     ],
+//     requirements: [
+//       "طلب خطي رسمي",
+//       "الشهادة الجامعية الأصلية",
+//       "3 نسخ مصورة عن الشهادة",
+//       "كشف علامات مفصل",
+//       "3 نسخ عن كشف العلامات",
+//       "وثيقة الثانوية العامة",
+//       "جواز السفر",
+//       "سجل الدخول والخروج",
+//       "تصديقات خارجية وداخلية"
+//     ],
+//     additionalConditions: [
+//       "الشهادات الطبية (بشري، أسنان، صيدلة) تتطلب اجتياز الامتحان الوطني الموحد بعد التقييم والتسجيل الإلكتروني",
+//       "شهادات الماجستير والدكتوراه تتطلب وثيقة توضح طريقة مناقشة الرسالة أو الأطروحة والتقييم النهائي"
+//     ]
+//   },
+//   {
+//     id: 2,
+//     title: "شروط النقل والتحويل بين الجامعات",
+//     steps: [
+//       "الحصول على موافقة الجامعة الحالية",
+//       "تقديم طلب تحويل إلى الجامعة المستهدفة",
+//       "تقديم كشف درجات وشهادات معتمدة",
+//       "اجتياز اختبار القبول إن وجد"
+//     ],
+//     requirements: "معدل تراكمي لا يقل عن 2.5، سنة دراسية كاملة"
+//   },
+//   {
+//     id: 3,
+//     title: "إرشادات للطلاب العائدين إلى سوريا",
+//     steps: [
+//       "التأكد من صحة الوثائق المعادلة",
+//       "التسجيل في الجامعات السورية عبر المنصة الإلكترونية",
+//       "التواصل مع مكتب الطلاب السوريين في دمشق",
+//       "متابعة التحديثات عبر الملتقى"
+//     ],
+//     requirements: "شهادة معادلة، سجل أكاديمي، تأشيرة خروج"
+//   }
+// ];
+// Guides Data (Structured)
 const GUIDES = [
   {
     id: 1,
     title: "دليل معادلة الشهادة في سوريا",
     steps: [
-      "تقديم طلب رسمي إلى وزارة التعليم العالي السورية",
-      "إرفاق الشهادة الأصلية والترجمة المعتمدة",
-      "دفع الرسوم المطلوبة وانتظار الموافقة",
-      "الحصول على الشهادة المعادلة خلال 30 يوم عمل"
+      "تقديم طلب خطي أو كتاب رسمي يوضح الغرض من التعادل سواء كان وظيفياً أو أكاديمياً",
+      "تجهيز الشهادة الجامعية الأصلية مع 3 نسخ مصورة عنها",
+      "إرفاق كشف علامات مفصل لكامل سنوات الدراسة الجامعية مع 3 نسخ مصورة",
+      "إرفاق وثيقة شهادة المرحلة الثانوية العامة",
+      "تقديم إثباتات الإقامة القانونية في بلد الدراسة مثل جواز السفر وسجل الدخول والخروج",
+      "تصديق جميع الوثائق من وزارة خارجية بلد الإصدار",
+      "تصديق الوثائق من السفارة السورية في بلد الدراسة",
+      "تصديق الوثائق داخل سوريا من وزارة الخارجية والمغتربين السورية",
+      "تقديم الملف الكامل إلى وزارة التعليم العالي السورية وانتظار المعالجة"
     ],
-    requirements: "جواز سفر سوري، شهادة الثانوية، صور شخصية"
+    requirements: [
+      "طلب خطي رسمي",
+      "الشهادة الجامعية الأصلية",
+      "3 نسخ مصورة عن الشهادة",
+      "كشف علامات مفصل",
+      "3 نسخ عن كشف العلامات",
+      "وثيقة الثانوية العامة",
+      "جواز السفر",
+      "سجل الدخول والخروج",
+      "تصديقات خارجية وداخلية"
+    ],
+    additionalConditions: [
+      "الشهادات الطبية (بشري، أسنان، صيدلة) تتطلب اجتياز الامتحان الوطني الموحد بعد التقييم والتسجيل الإلكتروني",
+      "شهادات الماجستير والدكتوراه تتطلب وثيقة توضح طريقة مناقشة الرسالة أو الأطروحة والتقييم النهائي"
+    ]
   },
   {
-    id: 2,
-    title: "شروط النقل والتحويل بين الجامعات",
-    steps: [
-      "الحصول على موافقة الجامعة الحالية",
-      "تقديم طلب تحويل إلى الجامعة المستهدفة",
-      "تقديم كشف درجات وشهادات معتمدة",
-      "اجتياز اختبار القبول إن وجد"
-    ],
-    requirements: "معدل تراكمي لا يقل عن 2.5، سنة دراسية كاملة"
-  },
+  id: 2,
+  title: "التحويل المماثل من الجامعات خارج سوريا",
+  steps: [
+    "التأكد من أن الجامعة خارج سوريا معتمدة لدى وزارة التعليم العالي السورية",
+    "تحقيق شرط الإقامة القانونية لمدة لا تقل عن 8 أشهر في بلد الدراسة",
+    "إنجاز سنة دراسية جامعية واحدة على الأقل بنجاح",
+    "تحقيق المعدلات المطلوبة للكليات المطلوبة مثل الطب والهندسة",
+    "التأكد من عدم وجود فصل تأديبي أو مشاكل أكاديمية في الجامعة السابقة",
+    "امتلاك شهادة ثانوية سورية أو ما يعادلها بالفرع المطلوب",
+    "تجهيز كشف العلامات المصدق أصولاً من الجامعة ووزارة الخارجية والسفارة السورية",
+    "إرفاق توصيف كامل للمقررات الدراسية والخطة الدرسية",
+    "إرفاق بيان حالة دراسية يوضح الوضع الأكاديمي الحالي",
+    "تقديم صورة عن الشهادة الثانوية المعادلة",
+    "إرفاق صور شخصية ونسخة عن جواز السفر لإثبات مدة الإقامة",
+    "التقديم إلكترونياً ضمن مفاضلة التحويل المماثل الصادرة عن وزارة التعليم العالي السورية",
+    "متابعة نتائج المفاضلة واستكمال إجراءات المعادلة والتسجيل"
+  ],
+  requirements: [
+    "أن تكون الجامعة معترف بها لدى وزارة التعليم العالي السورية",
+    "مدة إقامة لا تقل عن 8 أشهر في بلد الدراسة",
+    "إنجاز سنة جامعية واحدة على الأقل",
+    "ألا يكون الطالب مفصولاً تأديبياً",
+    "امتلاك شهادة ثانوية مناسبة للتخصص المطلوب",
+    "تحقيق المعدلات المطلوبة لبعض الكليات",
+    "كشف علامات مصدق أصولاً",
+    "توصيف مقررات دراسية",
+    "بيان حالة جامعية",
+    "جواز سفر يثبت الإقامة"
+  ],
+  additionalConditions: [
+    "يشترط معدل لا يقل عن 80% لكليات الطب البشري وطب الأسنان والصيدلة",
+    "يشترط معدل لا يقل عن 75% لكليات الهندسة",
+    "تتم إجراءات التحويل حصراً عبر مفاضلة التحويل المماثل السنوية",
+    "غالباً ما يتم فتح باب التسجيل في شهري أيلول أو تشرين الأول"
+  ]
+},
   {
-    id: 3,
-    title: "إرشادات للطلاب العائدين إلى سوريا",
-    steps: [
-      "التأكد من صحة الوثائق المعادلة",
-      "التسجيل في الجامعات السورية عبر المنصة الإلكترونية",
-      "التواصل مع مكتب الطلاب السوريين في دمشق",
-      "متابعة التحديثات عبر الملتقى"
-    ],
-    requirements: "شهادة معادلة، سجل أكاديمي، تأشيرة خروج"
-  }
+  id: 3,
+  title: "الجامعات اللبنانية المعترف بها في سوريا",
+  steps: [
+    "التأكد من أن الجامعة معترف بها لدى وزارة التعليم العالي السورية قبل التسجيل",
+    "الاحتفاظ بجميع الوثائق الأكاديمية الأصلية والمصدقة أثناء الدراسة",
+    "متابعة أي تحديثات أو تغييرات على قوائم الاعتراف الجامعي بشكل دوري",
+    "التأكد من اعتماد الاختصاص المطلوب وليس فقط اعتماد الجامعة",
+    "الاستفسار من وزارة التعليم العالي السورية قبل اختيار أي اختصاص حساس مثل الطب أو الصيدلة"
+  ],
+  requirements: [
+    "الجامعة اللبنانية",
+    "الجامعة الأمريكية في بيروت (AUB)",
+    "الجامعة اللبنانية الأمريكية (LAU)",
+    "جامعة القديس يوسف (USJ)",
+    "جامعة البلمند",
+    "جامعة بيروت العربية",
+    "الجامعة اللبنانية الدولية (LIU)",
+    "جامعة الروح القدس الكسليك (USEK)",
+    "جامعة سيدة اللويزة (NDU)",
+    "جامعة الحكمة",
+    "جامعة الجنان",
+    "جامعة الآداب والعلوم والتكنولوجيا في لبنان (AUL)",
+    "الجامعة الإسلامية في لبنان",
+    "جامعة هايكازيان",
+    "الجامعة الحديثة للإدارة والعلوم (MUBS)"
+  ],
+  additionalConditions: [
+    "اختصاص الصيدلة في جامعة الجنان غير معتمد في سوريا",
+    "قد تختلف شروط المعادلة بحسب الاختصاص والجامعة",
+    "يُنصح دائماً بالتحقق من أحدث قرارات وزارة التعليم العالي السورية قبل التسجيل"
+  ]
+}
 ];
 
 // FAQ Data
@@ -151,6 +272,107 @@ function App() {
 }
 
 // Navbar Component
+// function Navbar({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
+//   const [isOpen, setIsOpen] = useState(false);
+//   const navigate = useNavigate();
+
+//   const handleLogout = async () => {
+//     localStorage.removeItem('currentUser');
+//     window.location.href = '/';
+//   };
+
+//   const navLinks = [
+//     { to: '/', label: 'الرئيسية', icon: Home },
+//     { to: '/about', label: 'عن الملتقى', icon: Info },
+//     { to: '/news', label: 'الأخبار والتحديثات', icon: Newspaper },
+//     { to: '/guides', label: 'الأدلة الإرشادية', icon: BookOpen },
+//     { to: '/community', label: 'المجتمع', icon: MessageCircle },
+//     { to: '/faq', label: 'الأسئلة الشائعة', icon: HelpCircle },
+//   ];
+
+//   return (
+//     <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
+//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+//         <div className="flex justify-between h-20 items-center">
+//           <div className="flex items-center gap-3">
+//             <div className="w-11 h-11 bg-emerald-700 rounded-full flex items-center justify-center">
+//               <Users className="w-6 h-6 text-white" />
+//             </div>
+//             <div>
+//               <div className="font-bold text-2xl text-emerald-900">ملتقى الطلاب السوريين</div>
+//               <div className="text-xs text-gray-500 -mt-1">في لبنان</div>
+//             </div>
+//           </div>
+
+//           {/* Desktop Navigation */}
+//           <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+//             {navLinks.map(link => (
+//               <Link key={link.to} to={link.to} className="text-gray-700 hover:text-emerald-700 transition-colors flex items-center gap-1.5">
+//                 <link.icon className="w-4 h-4" /> {link.label}
+//               </Link>
+//             ))}
+//             {isAdmin && (
+//               <Link to="/admin" className="text-emerald-700 hover:text-emerald-800 flex items-center gap-1.5 font-semibold">
+//                 <Award className="w-4 h-4" /> لوحة الإدارة
+//               </Link>
+//             )}
+//           </div>
+
+//           {/* Auth Buttons */}
+//           <div className="flex items-center gap-4">
+//             {user ? (
+//               <div className="flex items-center gap-3">
+//                 <div className="hidden md:flex items-center gap-2 text-sm bg-gray-100 px-3 py-1.5 rounded-full">
+//                   <User className="w-4 h-4" />
+//                   <span>{user.user_metadata?.name || user.email}</span>
+//                 </div>
+//                 <button 
+//                   onClick={handleLogout}
+//                   className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+//                 >
+//                   <LogOut className="w-4 h-4" /> تسجيل الخروج
+//                 </button>
+//               </div>
+//             ) : (
+//               <Link 
+//                 to="/login" 
+//                 className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-2.5 rounded-full text-sm font-medium transition"
+//               >
+//                 <LogIn className="w-4 h-4" /> تسجيل الدخول
+//               </Link>
+//             )}
+            
+//             {/* Mobile Menu Button */}
+//             <button 
+//               onClick={() => setIsOpen(!isOpen)} 
+//               className="md:hidden p-2"
+//             >
+//               <div className="space-y-1">
+//                 <div className={`h-0.5 w-6 bg-gray-800 transition ${isOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
+//                 <div className={`h-0.5 w-6 bg-gray-800 transition ${isOpen ? 'opacity-0' : ''}`} />
+//                 <div className={`h-0.5 w-6 bg-gray-800 transition ${isOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
+//               </div>
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Mobile Menu */}
+//       {isOpen && (
+//         <div className="md:hidden border-t bg-white px-4 py-4 space-y-1 text-sm">
+//           {navLinks.map(link => (
+//             <Link key={link.to} to={link.to} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 rounded-xl" onClick={() => setIsOpen(false)}>
+//               <link.icon className="w-4 h-4" /> {link.label}
+//             </Link>
+//           ))}
+//           {isAdmin && <Link to="/admin" className="flex items-center gap-3 px-4 py-3 text-emerald-700" onClick={() => setIsOpen(false)}>لوحة الإدارة</Link>}
+//         </div>
+//       )}
+//     </nav>
+//   );
+// }
+
+// Navbar Component
 function Navbar({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -173,26 +395,48 @@ function Navbar({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
     <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
+
+          {/* Logo + Title */}
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-emerald-700 rounded-full flex items-center justify-center">
-              <Users className="w-6 h-6 text-white" />
-            </div>
+
+            {/* Logo Image */}
+            <img
+              src="/images/logo1.png"
+              alt="ملتقى الطلاب السوريين"
+              className="w-14 h-14 object-cover rounded-full border border-emerald-100 shadow-sm"
+            />
+
+            {/* Title */}
             <div>
-              <div className="font-bold text-2xl text-emerald-900">ملتقى الطلاب السوريين</div>
-              <div className="text-xs text-gray-500 -mt-1">في لبنان</div>
+              <div className="font-bold text-2xl text-emerald-900">
+                ملتقى الطلاب السوريين
+              </div>
+              <div className="text-xs text-gray-500 -mt-1">
+                في لبنان
+              </div>
             </div>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8 text-sm font-medium">
             {navLinks.map(link => (
-              <Link key={link.to} to={link.to} className="text-gray-700 hover:text-emerald-700 transition-colors flex items-center gap-1.5">
-                <link.icon className="w-4 h-4" /> {link.label}
+              <Link
+                key={link.to}
+                to={link.to}
+                className="text-gray-700 hover:text-emerald-700 transition-colors flex items-center gap-1.5"
+              >
+                <link.icon className="w-4 h-4" />
+                {link.label}
               </Link>
             ))}
+
             {isAdmin && (
-              <Link to="/admin" className="text-emerald-700 hover:text-emerald-800 flex items-center gap-1.5 font-semibold">
-                <Award className="w-4 h-4" /> لوحة الإدارة
+              <Link
+                to="/admin"
+                className="text-emerald-700 hover:text-emerald-800 flex items-center gap-1.5 font-semibold"
+              >
+                <Award className="w-4 h-4" />
+                لوحة الإدارة
               </Link>
             )}
           </div>
@@ -205,25 +449,28 @@ function Navbar({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
                   <User className="w-4 h-4" />
                   <span>{user.user_metadata?.name || user.email}</span>
                 </div>
-                <button 
+
+                <button
                   onClick={handleLogout}
                   className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
                 >
-                  <LogOut className="w-4 h-4" /> تسجيل الخروج
+                  <LogOut className="w-4 h-4" />
+                  تسجيل الخروج
                 </button>
               </div>
             ) : (
-              <Link 
-                to="/login" 
+              <Link
+                to="/login"
                 className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-2.5 rounded-full text-sm font-medium transition"
               >
-                <LogIn className="w-4 h-4" /> تسجيل الدخول
+                <LogIn className="w-4 h-4" />
+                تسجيل الدخول
               </Link>
             )}
-            
+
             {/* Mobile Menu Button */}
-            <button 
-              onClick={() => setIsOpen(!isOpen)} 
+            <button
+              onClick={() => setIsOpen(!isOpen)}
               className="md:hidden p-2"
             >
               <div className="space-y-1">
@@ -240,11 +487,26 @@ function Navbar({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
       {isOpen && (
         <div className="md:hidden border-t bg-white px-4 py-4 space-y-1 text-sm">
           {navLinks.map(link => (
-            <Link key={link.to} to={link.to} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 rounded-xl" onClick={() => setIsOpen(false)}>
-              <link.icon className="w-4 h-4" /> {link.label}
+            <Link
+              key={link.to}
+              to={link.to}
+              className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 rounded-xl"
+              onClick={() => setIsOpen(false)}
+            >
+              <link.icon className="w-4 h-4" />
+              {link.label}
             </Link>
           ))}
-          {isAdmin && <Link to="/admin" className="flex items-center gap-3 px-4 py-3 text-emerald-700" onClick={() => setIsOpen(false)}>لوحة الإدارة</Link>}
+
+          {isAdmin && (
+            <Link
+              to="/admin"
+              className="flex items-center gap-3 px-4 py-3 text-emerald-700"
+              onClick={() => setIsOpen(false)}
+            >
+              لوحة الإدارة
+            </Link>
+          )}
         </div>
       )}
     </nav>
@@ -602,32 +864,129 @@ function NewsPage({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
 }
 
 // Guides Page
+// function GuidesPage() {
+//   return (
+//     <div className="max-w-5xl mx-auto px-6 py-16">
+//       <div className="text-center mb-16">
+//         <div className="text-emerald-600 text-sm tracking-[3px]">معلومات موثوقة</div>
+//         <h1 className="font-bold text-6xl tracking-tighter mt-3">الأدلة الإرشادية</h1>
+//       </div>
+
+//       <div className="space-y-16">
+//         {GUIDES.map((guide, idx) => (
+//           <div key={idx} className="bg-white border rounded-3xl px-10 py-12">
+//             <div className="flex items-center gap-4 mb-6">
+//               <div className="text-4xl font-bold text-emerald-100">0{idx + 1}</div>
+//               <h2 className="font-semibold text-4xl tracking-tighter">{guide.title}</h2>
+//             </div>
+            
+//             <div className="grid md:grid-cols-5 gap-y-12 gap-x-8 mt-8">
+//               <div className="md:col-span-3">
+//                 <div className="font-medium mb-4 text-sm tracking-wider text-emerald-700">الخطوات بالتفصيل</div>
+//                 <ol className="space-y-5 text-[15px]">
+//                   {guide.steps.map((step, i) => <li key={i} className="pl-8 relative before:absolute before:right-0 before:top-1 before:w-5 before:h-5 before:bg-emerald-50 before:rounded-full before:content-['✓'] before:flex before:items-center before:justify-center before:text-emerald-600 before:text-sm">{step}</li>)}
+//                 </ol>
+//               </div>
+//               <div className="md:col-span-2 bg-gray-50 p-8 rounded-2xl text-sm">
+//                 <div className="font-medium mb-3">الشروط والمتطلبات</div>
+//                 <div className="text-gray-600 leading-relaxed">{guide.requirements}</div>
+//               </div>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+// Guides Page
 function GuidesPage() {
   return (
     <div className="max-w-5xl mx-auto px-6 py-16">
       <div className="text-center mb-16">
-        <div className="text-emerald-600 text-sm tracking-[3px]">معلومات موثوقة</div>
-        <h1 className="font-bold text-6xl tracking-tighter mt-3">الأدلة الإرشادية</h1>
+        <div className="text-emerald-600 text-sm tracking-[3px]">
+          معلومات موثوقة
+        </div>
+
+        <h1 className="font-bold text-6xl tracking-tighter mt-3">
+          الأدلة الإرشادية
+        </h1>
       </div>
 
       <div className="space-y-16">
         {GUIDES.map((guide, idx) => (
-          <div key={idx} className="bg-white border rounded-3xl px-10 py-12">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="text-4xl font-bold text-emerald-100">0{idx + 1}</div>
-              <h2 className="font-semibold text-4xl tracking-tighter">{guide.title}</h2>
+          <div
+            key={guide.id}
+            className="bg-white border rounded-3xl px-10 py-12 shadow-sm"
+          >
+            <div className="flex items-center gap-4 mb-8">
+              <div className="text-5xl font-bold text-emerald-100">
+                0{idx + 1}
+              </div>
+
+              <h2 className="font-semibold text-4xl tracking-tighter">
+                {guide.title}
+              </h2>
             </div>
-            
-            <div className="grid md:grid-cols-5 gap-y-12 gap-x-8 mt-8">
+
+            <div className="grid md:grid-cols-5 gap-10">
+              {/* Steps */}
               <div className="md:col-span-3">
-                <div className="font-medium mb-4 text-sm tracking-wider text-emerald-700">الخطوات بالتفصيل</div>
-                <ol className="space-y-5 text-[15px]">
-                  {guide.steps.map((step, i) => <li key={i} className="pl-8 relative before:absolute before:right-0 before:top-1 before:w-5 before:h-5 before:bg-emerald-50 before:rounded-full before:content-['✓'] before:flex before:items-center before:justify-center before:text-emerald-600 before:text-sm">{step}</li>)}
+                <div className="font-medium mb-5 text-sm tracking-wider text-emerald-700">
+                  الخطوات بالتفصيل
+                </div>
+
+                <ol className="space-y-5 text-[15px] leading-relaxed">
+                  {guide.steps.map((step, i) => (
+                    <li
+                      key={i}
+                      className="pr-10 relative before:absolute before:right-0 before:top-1 before:w-6 before:h-6 before:bg-emerald-50 before:rounded-full before:content-['✓'] before:flex before:items-center before:justify-center before:text-emerald-600 before:text-sm"
+                    >
+                      {step}
+                    </li>
+                  ))}
                 </ol>
               </div>
-              <div className="md:col-span-2 bg-gray-50 p-8 rounded-2xl text-sm">
-                <div className="font-medium mb-3">الشروط والمتطلبات</div>
-                <div className="text-gray-600 leading-relaxed">{guide.requirements}</div>
+
+              {/* Requirements */}
+              <div className="md:col-span-2 space-y-6">
+                <div className="bg-gray-50 p-8 rounded-2xl">
+                  <div className="font-semibold mb-4 text-lg">
+                    الشروط والمتطلبات
+                  </div>
+
+                  <ul className="space-y-3 text-sm text-gray-700 leading-relaxed">
+                    {Array.isArray(guide.requirements) ? (
+                      guide.requirements.map((req, i) => (
+                        <li key={i} className="flex gap-2">
+                          <span className="text-emerald-600">•</span>
+                          <span>{req}</span>
+                        </li>
+                      ))
+                    ) : (
+                      <li>{guide.requirements}</li>
+                    )}
+                  </ul>
+                </div>
+
+                {/* Additional Conditions */}
+                {"additionalConditions" in guide &&
+                  guide.additionalConditions && (
+                    <div className="bg-orange-50 border border-orange-100 p-8 rounded-2xl">
+                      <div className="font-semibold mb-4 text-lg text-orange-700">
+                        شروط إضافية
+                      </div>
+
+                      <ul className="space-y-4 text-sm text-gray-700 leading-relaxed">
+                        {guide.additionalConditions.map((condition, i) => (
+                          <li key={i} className="flex gap-2">
+                            <span className="text-orange-500">•</span>
+                            <span>{condition}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
               </div>
             </div>
           </div>
@@ -1284,12 +1643,71 @@ function AuthPage() {
   );
 }
 
+// function Footer() {
+//   return (
+//     <footer className="border-t mt-16 py-12 bg-white text-sm text-gray-600">
+//       <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row gap-y-3 justify-between">
+//         <div>© ملتقى الطلاب السوريين في لبنان — منصة رسمية بالتعاون مع سفارة الجمهورية العربية السورية في بيروت</div>
+//         <div>جميع الحقوق محفوظة 2026</div>
+//       </div>
+//     </footer>
+//   );
+// }
+
 function Footer() {
   return (
     <footer className="border-t mt-16 py-12 bg-white text-sm text-gray-600">
-      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row gap-y-3 justify-between">
-        <div>© ملتقى الطلاب السوريين في لبنان — منصة رسمية بالتعاون مع سفارة الجمهورية العربية السورية في بيروت</div>
-        <div>جميع الحقوق محفوظة 2026</div>
+      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-10">
+        
+        {/* Left Section */}
+        <div className="space-y-3 max-w-xl">
+          <div className="font-medium text-gray-800 text-base">
+            ملتقى الطلاب السوريين في لبنان
+          </div>
+
+          <p className="leading-relaxed">
+            منصة طلابية تهدف إلى دعم الطلاب السوريين في لبنان من خلال توفير
+            المعلومات الرسمية والأدلة الإرشادية والأخبار الجامعية المهمة.
+          </p>
+
+          <div>
+            © جميع الحقوق محفوظة 2026
+          </div>
+        </div>
+
+        {/* Contact & Social */}
+        <div className="space-y-4">
+          <div className="font-medium text-gray-800 text-base">
+            تواصل معنا
+          </div>
+
+          <div className="space-y-2">
+            <a
+              href="mailto:syrianstudentsforum@gmail.com"
+              className="block hover:text-emerald-700 transition"
+            >
+              syrianstudentsforum@gmail.com
+            </a>
+
+            <a
+              href="https://www.instagram.com/syrian_students_forum"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block hover:text-emerald-700 transition"
+            >
+              Instagram
+            </a>
+
+            <a
+              href="https://www.facebook.com/share/1JMcAqhnNX/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block hover:text-emerald-700 transition"
+            >
+              Facebook
+            </a>
+          </div>
+        </div>
       </div>
     </footer>
   );
