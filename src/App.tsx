@@ -549,52 +549,51 @@ function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-<div className="relative h-[620px] bg-emerald-950 text-white overflow-hidden">
-  <div
-    className="absolute inset-0 bg-cover bg-center"
-    style={{ backgroundImage: "url('/images/hero2.png')" }}
-  />
+        <div className="relative min-h-[720px] md:h-[620px] bg-emerald-950 text-white overflow-hidden">        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/hero2.png')" }}
+        />
 
-  <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/95 via-emerald-950/90 to-emerald-950/70" />
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/95 via-emerald-950/90 to-emerald-950/70" />
 
-  <div className="relative max-w-5xl mx-auto px-6 pt-24 pb-16 text-center">
-    
-    <div className="inline-block mb-5 px-4 py-1 bg-white/10 backdrop-blur rounded-full text-sm tracking-wider">
-      منصة رسمية للطلاب السوريين
-    </div>
+        <div className="relative max-w-5xl mx-auto px-6 pt-24 pb-16 text-center">
+          
+          <div className="inline-block mb-5 px-4 py-1 bg-white/10 backdrop-blur rounded-full text-sm tracking-wider">
+            منصة رسمية للطلاب السوريين
+          </div>
 
-    <h1 className="text-6xl md:text-7xl font-bold tracking-tighter leading-none">
-      ملتقى الطلاب السوريين في لبنان
-    </h1>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter leading-tight">
+            ملتقى الطلاب السوريين في لبنان
+          </h1>
 
-    <div className="mt-4 text-emerald-200 text-xl md:text-2xl tracking-[4px] font-light uppercase">
-      Syrian Students Forum
-    </div>
+          <div className="mt-4 text-emerald-200 text-lg sm:text-xl md:text-2xl tracking-[2px] sm:tracking-[4px] font-light uppercase">
+            Syrian Students Forum
+          </div>
 
-    <p className="max-w-2xl mx-auto text-xl text-emerald-100 mt-8 mb-10 leading-relaxed">
-      منصة معتمدة توفر أحدث المعلومات والفرص التفاعلية لدعم الطلاب السوريين
-      في مسيرتهم التعليمية داخل لبنان
-    </p>
+          <p className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-emerald-100 mt-8 mb-10 leading-relaxed px-2">
+            منصة معتمدة توفر أحدث المعلومات والفرص التفاعلية لدعم الطلاب السوريين
+            في مسيرتهم التعليمية داخل لبنان
+          </p>
 
-    <div className="flex flex-wrap justify-center gap-4">
-      <Link
-        to="/news"
-        className="px-10 py-4 bg-white text-emerald-950 font-semibold rounded-2xl hover:bg-white/90 transition flex items-center gap-2"
-      >
-        <Newspaper className="w-5 h-5" />
-        تصفح الأخبار
-      </Link>
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <Link
+              to="/news"
+              className="px-10 py-4 bg-white text-emerald-950 font-semibold rounded-2xl hover:bg-white/90 transition flex items-center gap-2"
+            >
+              <Newspaper className="w-5 h-5" />
+              تصفح الأخبار
+            </Link>
 
-      <Link
-        to="/community"
-        className="px-10 py-4 border-2 border-white/70 hover:bg-white/10 rounded-2xl font-semibold transition flex items-center gap-2"
-      >
-        <MessageCircle className="w-5 h-5" />
-        انضم إلى المجتمع
-      </Link>
-    </div>
-  </div>
-</div>
+            <Link
+              to="/community"
+              className="px-10 py-4 border-2 border-white/70 hover:bg-white/10 rounded-2xl font-semibold transition flex items-center gap-2"
+            >
+              <MessageCircle className="w-5 h-5" />
+              انضم إلى المجتمع
+            </Link>
+          </div>
+        </div>
+      </div>
 
       {/* Mission Section */}
       <div className="max-w-5xl mx-auto px-6 py-20">
