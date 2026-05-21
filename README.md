@@ -1,18 +1,21 @@
+
+# 1. set this in command 
 set DATABASE_URL=postgresql://neondb_owner:npg_m8WsXAHK3Fzn@ep-plain-bar-aphlvr38.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require
-npm start
-
-الأمر	الاستخدام	التعديلات تظهر؟
-npm run dev	التطوير (موصى به)	نعم، فوراً
-npm start	الإنتاج (بعد البناء)	لا، لازم تعمل Build
-
-
 الطريقة الصحيحة:
-# 1. اعمل Build للواجهة الأمامية
+# 2. اعمل Build للواجهة الأمامية
 npm run build
 
-# 2. شغّل السيرفر
+# 3. شغّل السيرفر
 npm start
 # React + TypeScript + Vite
+
+# Git Command :
+git add .
+git commit -m "Add logo to navbar and update UI"
+git pull origin main --rebase
+git push origin main
+
+
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

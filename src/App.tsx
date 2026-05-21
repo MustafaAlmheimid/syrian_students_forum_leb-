@@ -1,9 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { 
-  Users, BookOpen, MessageCircle, Award, Home, Info, Newspaper, 
-  HelpCircle, LogIn, LogOut, User, Plus, Edit2, Trash2, Heart 
+  Users,
+  BookOpen,
+  MessageCircle,
+  Award,
+  Home,
+  Info,
+  Newspaper,
+  HelpCircle,
+  LogIn,
+  LogOut,
+  User,
+  Plus,
+  Edit2,
+  Trash2,
+  Heart,
+  Mail,
+  Instagram,
+  Facebook
 } from 'lucide-react';
+
 import { motion } from 'framer-motion';
 // Using local SQLite database via API routes
 
@@ -396,26 +413,27 @@ function Navbar({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
 
-          {/* Logo + Title */}
-          <div className="flex items-center gap-3">
+        {/* Logo + Title */}
+        <Link to="/" className="flex items-center gap-3 group">
+          
+          {/* Logo Image */}
+          <img
+            src="/images/logo1.png"
+            alt="ملتقى الطلاب السوريين"
+            className="w-14 h-14 object-cover rounded-full border border-emerald-100 shadow-sm group-hover:scale-105 transition"
+          />
 
-            {/* Logo Image */}
-            <img
-              src="/images/logo1.png"
-              alt="ملتقى الطلاب السوريين"
-              className="w-14 h-14 object-cover rounded-full border border-emerald-100 shadow-sm"
-            />
+          {/* Title */}
+          <div>
+            <div className="font-bold text-2xl text-emerald-900 group-hover:text-emerald-700 transition">
+              ملتقى الطلاب السوريين
+            </div>
 
-            {/* Title */}
-            <div>
-              <div className="font-bold text-2xl text-emerald-900">
-                ملتقى الطلاب السوريين
-              </div>
-              <div className="text-xs text-gray-500 -mt-1">
-                في لبنان
-              </div>
+            <div className="text-xs text-gray-500 -mt-1">
+              في لبنان
             </div>
           </div>
+        </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8 text-sm font-medium">
@@ -531,30 +549,52 @@ function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <div className="relative h-[620px] bg-emerald-950 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/images/hero.jpg')" }} />
-        <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/95 via-emerald-950/90 to-emerald-950/70" />
-        
-        <div className="relative max-w-5xl mx-auto px-6 pt-24 pb-16 text-center">
-          <div className="inline-block mb-4 px-4 py-1 bg-white/10 backdrop-blur rounded-full text-sm tracking-wider">منصة رسمية للطلاب السوريين</div>
-          
-          <h1 className="text-6xl md:text-7xl font-bold tracking-tighter mb-6 leading-none">
-            ملتقى الطلاب<br />السوريين في لبنان
-          </h1>
-          <p className="max-w-xl mx-auto text-xl text-emerald-100 mb-10">
-            منصة موثوقة توفر معلومات محدثة وفرص تفاعلية لدعم الطلاب السوريين في مسيرتهم التعليمية
-          </p>
-          
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/news" className="px-10 py-4 bg-white text-emerald-950 font-semibold rounded-2xl hover:bg-white/90 transition flex items-center gap-2">
-              <Newspaper className="w-5 h-5" /> تصفح الأخبار
-            </Link>
-            <Link to="/community" className="px-10 py-4 border-2 border-white/70 hover:bg-white/10 rounded-2xl font-semibold transition flex items-center gap-2">
-              <MessageCircle className="w-5 h-5" /> انضم إلى المجتمع
-            </Link>
-          </div>
-        </div>
-      </div>
+<div className="relative h-[620px] bg-emerald-950 text-white overflow-hidden">
+  <div
+    className="absolute inset-0 bg-cover bg-center"
+    style={{ backgroundImage: "url('/images/hero2.png')" }}
+  />
+
+  <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/95 via-emerald-950/90 to-emerald-950/70" />
+
+  <div className="relative max-w-5xl mx-auto px-6 pt-24 pb-16 text-center">
+    
+    <div className="inline-block mb-5 px-4 py-1 bg-white/10 backdrop-blur rounded-full text-sm tracking-wider">
+      منصة رسمية للطلاب السوريين
+    </div>
+
+    <h1 className="text-6xl md:text-7xl font-bold tracking-tighter leading-none">
+      ملتقى الطلاب السوريين في لبنان
+    </h1>
+
+    <div className="mt-4 text-emerald-200 text-xl md:text-2xl tracking-[4px] font-light uppercase">
+      Syrian Students Forum
+    </div>
+
+    <p className="max-w-2xl mx-auto text-xl text-emerald-100 mt-8 mb-10 leading-relaxed">
+      منصة معتمدة توفر أحدث المعلومات والفرص التفاعلية لدعم الطلاب السوريين
+      في مسيرتهم التعليمية داخل لبنان
+    </p>
+
+    <div className="flex flex-wrap justify-center gap-4">
+      <Link
+        to="/news"
+        className="px-10 py-4 bg-white text-emerald-950 font-semibold rounded-2xl hover:bg-white/90 transition flex items-center gap-2"
+      >
+        <Newspaper className="w-5 h-5" />
+        تصفح الأخبار
+      </Link>
+
+      <Link
+        to="/community"
+        className="px-10 py-4 border-2 border-white/70 hover:bg-white/10 rounded-2xl font-semibold transition flex items-center gap-2"
+      >
+        <MessageCircle className="w-5 h-5" />
+        انضم إلى المجتمع
+      </Link>
+    </div>
+  </div>
+</div>
 
       {/* Mission Section */}
       <div className="max-w-5xl mx-auto px-6 py-20">
@@ -670,7 +710,7 @@ function AboutPage() {
           {
             name: 'زاهدة العابد',
             role: 'مسؤولة الإعلام والتواصل',
-            image: '/images/team/zahida.jpeg',
+            image: '/images/team/zahida1.jpeg',
             desc: 'علاقات مباشرة مع الطلاب بالاضافة منسق في سوريا'
           },
 
@@ -1656,56 +1696,141 @@ function AuthPage() {
 
 function Footer() {
   return (
-    <footer className="border-t mt-16 py-12 bg-white text-sm text-gray-600">
-      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-10">
-        
-        {/* Left Section */}
-        <div className="space-y-3 max-w-xl">
-          <div className="font-medium text-gray-800 text-base">
-            ملتقى الطلاب السوريين في لبنان
-          </div>
+    <footer className="mt-20 bg-emerald-950 text-white">
+      
+      {/* Top Section */}
+      <div className="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-3 gap-12">
 
-          <p className="leading-relaxed">
-            منصة طلابية تهدف إلى دعم الطلاب السوريين في لبنان من خلال توفير
-            المعلومات الرسمية والأدلة الإرشادية والأخبار الجامعية المهمة.
+        {/* About */}
+        <div>
+          <h3 className="text-2xl font-bold mb-4 tracking-tight">
+            ملتقى الطلاب السوريين
+          </h3>
+
+          <p className="text-emerald-100 leading-relaxed text-sm">
+            منصة طلابية تهدف إلى دعم الطلاب السوريين في لبنان عبر توفير
+            المعلومات الرسمية، الأخبار الجامعية، الأدلة الإرشادية،
+            والفرص التعليمية الحديثة.
           </p>
+        </div>
 
-          <div>
-            © جميع الحقوق محفوظة 2026
+        {/* Quick Links */}
+        <div>
+          <h4 className="font-semibold text-lg mb-5">
+            روابط سريعة
+          </h4>
+
+          <div className="space-y-3 text-sm">
+            <Link
+              to="/news"
+              className="block text-emerald-100 hover:text-white transition"
+            >
+              الأخبار والتحديثات
+            </Link>
+
+            <Link
+              to="/guides"
+              className="block text-emerald-100 hover:text-white transition"
+            >
+              الأدلة الإرشادية
+            </Link>
+
+            <Link
+              to="/community"
+              className="block text-emerald-100 hover:text-white transition"
+            >
+              المجتمع الطلابي
+            </Link>
+
+            <Link
+              to="/faq"
+              className="block text-emerald-100 hover:text-white transition"
+            >
+              الأسئلة الشائعة
+            </Link>
           </div>
         </div>
 
-        {/* Contact & Social */}
-        <div className="space-y-4">
-          <div className="font-medium text-gray-800 text-base">
+        {/* Contact */}
+        <div>
+          <h4 className="font-semibold text-lg mb-5">
             تواصل معنا
-          </div>
+          </h4>
 
-          <div className="space-y-2">
+          <div className="space-y-4">
+
+            {/* Email */}
             <a
               href="mailto:syrianstudentsforum@gmail.com"
-              className="block hover:text-emerald-700 transition"
+              className="flex items-center gap-3 bg-white/5 hover:bg-white/10 transition px-4 py-3 rounded-2xl"
             >
-              syrianstudentsforum@gmail.com
+              <Mail className="w-5 h-5 text-emerald-300" />
+
+              <div>
+                <div className="text-xs text-emerald-200">
+                  البريد الإلكتروني
+                </div>
+
+                <div className="text-sm">
+                  syrianstudentsforum@gmail.com
+                </div>
+              </div>
             </a>
 
+            {/* Instagram */}
             <a
               href="https://www.instagram.com/syrian_students_forum"
               target="_blank"
               rel="noopener noreferrer"
-              className="block hover:text-emerald-700 transition"
+              className="flex items-center gap-3 bg-white/5 hover:bg-pink-500/20 transition px-4 py-3 rounded-2xl"
             >
-              Instagram
+              <Instagram className="w-5 h-5 text-pink-300" />
+
+              <div>
+                <div className="text-xs text-emerald-200">
+                  Instagram
+                </div>
+
+                <div className="text-sm">
+                  @syrian_students_forum
+                </div>
+              </div>
             </a>
 
+            {/* Facebook */}
             <a
               href="https://www.facebook.com/share/1JMcAqhnNX/"
               target="_blank"
               rel="noopener noreferrer"
-              className="block hover:text-emerald-700 transition"
+              className="flex items-center gap-3 bg-white/5 hover:bg-blue-500/20 transition px-4 py-3 rounded-2xl"
             >
-              Facebook
+              <Facebook className="w-5 h-5 text-blue-300" />
+
+              <div>
+                <div className="text-xs text-emerald-200">
+                  Facebook
+                </div>
+
+                <div className="text-sm">
+                  Syrian Students Forum
+                </div>
+              </div>
             </a>
+
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom */}
+      <div className="border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-3 text-sm text-emerald-200">
+
+          <div>
+            © 2026 ملتقى الطلاب السوريين في لبنان
+          </div>
+
+          <div>
+            Developed with dedication for Syrian students in Lebanon
           </div>
         </div>
       </div>
