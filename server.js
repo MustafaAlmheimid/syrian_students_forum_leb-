@@ -7,6 +7,10 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { sql } from './api/_db.js';
 
+import nodemailer from 'nodemailer';
+import crypto from 'crypto';
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -15,7 +19,13 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
 
 // ==================== Helper: Check Admin ====================
 
@@ -961,6 +971,126 @@ app.put('/api/profile', async (req, res) => {
   }
 });
 
+
+
+//==================== Forgot Password ====================
+app.post('/api/forgot-password', async (req, res) => {
+
+  try {
+
+    const { email } = req.body;
+
+    const users = await sql`
+      SELECT *
+      FROM users
+      WHERE email = ${email}
+    `;
+
+    const user = users[0];
+
+    if (!user) {
+      return res.status(404).json({
+        error: 'البريد غير موجود'
+      });
+    }
+
+    const token = crypto.randomBytes(32).toString('hex');
+
+    const expiry = Date.now() + 1000 * 60 * 30;
+
+    await sql`
+      UPDATE users
+      SET
+        reset_token = ${token},
+        reset_token_expiry = ${expiry}
+      WHERE id = ${user.id}
+    `;
+
+    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+
+    const resetLink = `${BASE_URL}/reset-password/${token}`;
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'إعادة تعيين كلمة المرور',
+      html: `
+        <h2>إعادة تعيين كلمة المرور</h2>
+
+        <p>
+          اضغط على الرابط التالي:
+        </p>
+
+        <a href="${resetLink}">
+          إعادة تعيين كلمة المرور
+        </a>
+      `
+    });
+
+    res.json({
+      ok: true
+    });
+
+  } catch (err) {
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
+//
+app.post('/api/reset-password', async (req, res) => {
+
+  try {
+
+    const {
+      token,
+      password
+    } = req.body;
+
+    const users = await sql`
+      SELECT *
+      FROM users
+      WHERE reset_token = ${token}
+    `;
+
+    const user = users[0];
+
+    if (!user) {
+
+      return res.status(400).json({
+        error: 'الرابط غير صالح'
+      });
+    }
+
+    if (Date.now() > user.reset_token_expiry) {
+
+      return res.status(400).json({
+        error: 'انتهت صلاحية الرابط'
+      });
+    }
+
+    await sql`
+      UPDATE users
+      SET
+        password = ${password},
+        reset_token = NULL,
+        reset_token_expiry = NULL
+      WHERE id = ${user.id}
+    `;
+
+    res.json({
+      ok: true
+    });
+
+  } catch (err) {
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
 // ==================== FRONTEND ====================
 
 app.use(express.static(path.join(__dirname, 'dist')));

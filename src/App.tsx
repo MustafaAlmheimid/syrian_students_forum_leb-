@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate ,useParams} from 'react-router-dom';
 import { 
   Users,
   BookOpen,
@@ -286,6 +286,16 @@ function App() {
           <Route path="/admin" element={<AdminPage user={user} isAdmin={isAdmin} userRole={userRole} />} />
           <Route path="/login" element={<AuthPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+
+          <Route
+            path="/forgot-password"
+            element={<ForgotPasswordPage />}
+          />
+
+          <Route
+            path="/reset-password/:token"
+            element={<ResetPasswordPage />}
+          />
         </Routes>
 
         <Footer />
@@ -1817,11 +1827,16 @@ function AuthPage() {
             ? 'ليس لديك حساب؟ أنشئ حساباً جديداً'
             : 'لديك حساب بالفعل؟ سجّل الدخول'}
         </button>
-
-        <div className="text-center text-xs text-gray-400 mt-9">
+        <Link
+          to="/forgot-password"
+          className="text-sm text-emerald-700 hover:underline"
+        >
+          نسيت كلمة المرور؟
+        </Link>
+        {/* <div className="text-center text-xs text-gray-400 mt-9">
           تجربة تجريبية:
           admin@syrian-students.lb / password123
-        </div>
+        </div> */}
 
       </div>
 
@@ -1966,10 +1981,131 @@ function ProfilePage() {
   );
 }
 
+//forgot password page
+function ForgotPasswordPage() {
+
+  const [email, setEmail] = useState('');
+  const [done, setDone] = useState(false);
+
+  const handleSubmit = async () => {
+
+    await fetch('/api/forgot-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email })
+    });
+
+    setDone(true);
+  };
+
+  return (
+    <div className="max-w-md mx-auto py-20 px-6">
+
+      <div className="bg-white border p-8 rounded-3xl">
+
+        <h1 className="text-3xl font-bold mb-6">
+          نسيت كلمة المرور
+        </h1>
+
+        {done ? (
+
+          <div className="text-green-700">
+            تم إرسال رابط إعادة التعيين
+          </div>
+
+        ) : (
+
+          <>
+            <input
+              type="email"
+              placeholder="البريد الإلكتروني"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              className="w-full border p-4 rounded-2xl mb-4"
+            />
+
+            <button
+              onClick={handleSubmit}
+              className="w-full bg-emerald-700 text-white py-4 rounded-2xl"
+            >
+              إرسال الرابط
+            </button>
+          </>
+        )}
+
+      </div>
+    </div>
+  );
+}
 
 
+//Reset Password Page
+function ResetPasswordPage() {
 
+  const { token } = useParams();
 
+  const [password, setPassword] = useState('');
+  const [done, setDone] = useState(false);
+
+  const handleReset = async () => {
+
+    const res = await fetch('/api/reset-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        token,
+        password
+      })
+    });
+
+    if (res.ok) {
+      setDone(true);
+    }
+  };
+
+  return (
+    <div className="max-w-md mx-auto py-20 px-6">
+
+      <div className="bg-white border p-8 rounded-3xl">
+
+        <h1 className="text-3xl font-bold mb-6">
+          تعيين كلمة مرور جديدة
+        </h1>
+
+        {done ? (
+
+          <div className="text-green-700">
+            تم تغيير كلمة المرور
+          </div>
+
+        ) : (
+
+          <>
+            <input
+              type="password"
+              placeholder="كلمة المرور الجديدة"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              className="w-full border p-4 rounded-2xl mb-4"
+            />
+
+            <button
+              onClick={handleReset}
+              className="w-full bg-emerald-700 text-white py-4 rounded-2xl"
+            >
+              حفظ كلمة المرور
+            </button>
+          </>
+        )}
+
+      </div>
+    </div>
+  );
+}
 
 // function Footer() {
 //   return (

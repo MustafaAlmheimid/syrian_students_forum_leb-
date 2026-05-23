@@ -17,6 +17,8 @@ git push origin main
 
 
 
+
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
@@ -87,4 +89,72 @@ export default defineConfig([
     },
   },
 ])
+```
+
+
+
+# forgot password steps
+```js
+1) Frontend
+إنشاء صفحة ForgotPasswordPage
+إنشاء صفحة ResetPasswordPage
+إضافة Routes:
+<Route path="/forgot-password" element={<ForgotPasswordPage />} />
+<Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+إضافة:
+import { useParams } from 'react-router-dom';
+إضافة زر:
+<Link to="/forgot-password">
+  نسيت كلمة المرور؟
+</Link>
+2) Database
+
+إضافة أعمدة داخل جدول users:
+
+ALTER TABLE users
+ADD COLUMN reset_token TEXT,
+ADD COLUMN reset_token_expiry TIMESTAMP;
+3) Backend Packages
+
+تثبيت:
+
+npm install nodemailer crypto
+4) Environment Variables (.env)
+EMAIL_USER=yourgmail@gmail.com
+EMAIL_PASS=your_app_password
+5) Gmail App Password
+تفعيل 2FA على Gmail
+إنشاء App Password
+وضعه داخل EMAIL_PASS
+6) Backend Routes
+Forgot Password
+POST /api/forgot-password
+
+المهام:
+
+البحث عن المستخدم
+إنشاء token
+حفظ token + expiry
+إرسال رابط للإيميل
+Reset Password
+POST /api/reset-password
+
+المهام:
+
+التحقق من token
+تحديث password
+حذف token بعد الاستخدام
+7) Email Link
+
+الرابط المرسل:
+
+https://your-domain.com/reset-password/TOKEN
+8) Important
+
+بدون إعداد nodemailer + Gmail App Password
+to get app password : 
+https://myaccount.google.com/apppasswords?utm_source=chatgpt.com&pli=1&rapt=AEjHL4M3Ir5LTjWH5atDCOaMCmnhlIvX1FRP04ys9PFT94cRXocAvUT73Q-32ghKzP2PNiz7huuIf2_Lp1LbYyTChZs1bxxm289JmpkPT0HYmq9VVn42OX0
+لن يتم إرسال أي إيميل حتى لو ظهرت رسالة:
+
+تم إرسال رابط إعادة التعيين
 ```
