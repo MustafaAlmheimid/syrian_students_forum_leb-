@@ -158,3 +158,6 @@ https://myaccount.google.com/apppasswords?utm_source=chatgpt.com&pli=1&rapt=AEjH
 
 تم إرسال رابط إعادة التعيين
 ```
+
+in .env : BASE_URL=http://localhost:3000 
+eza sar 3ende domain name , b7ot l domain name mahal hal link 'localhost' b 'render envirenoment variable'

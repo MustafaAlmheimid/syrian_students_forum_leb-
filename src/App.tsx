@@ -1982,22 +1982,99 @@ function ProfilePage() {
 }
 
 //forgot password page
+// function ForgotPasswordPage() {
+
+//   const [email, setEmail] = useState('');
+//   const [done, setDone] = useState(false);
+
+//   const handleSubmit = async () => {
+
+//     await fetch('/api/forgot-password', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({ email })
+//     });
+
+//     setDone(true);
+//   };
+
+//   return (
+//     <div className="max-w-md mx-auto py-20 px-6">
+
+//       <div className="bg-white border p-8 rounded-3xl">
+
+//         <h1 className="text-3xl font-bold mb-6">
+//           نسيت كلمة المرور
+//         </h1>
+
+//         {done ? (
+
+//           <div className="text-green-700">
+//             تم إرسال رابط إعادة التعيين
+//           </div>
+
+//         ) : (
+
+//           <>
+//             <input
+//               type="email"
+//               placeholder="البريد الإلكتروني"
+//               value={email}
+//               onChange={e => setEmail(e.target.value)}
+//               className="w-full border p-4 rounded-2xl mb-4"
+//             />
+
+//             <button
+//               onClick={handleSubmit}
+//               className="w-full bg-emerald-700 text-white py-4 rounded-2xl"
+//             >
+//               إرسال الرابط
+//             </button>
+//           </>
+//         )}
+
+//       </div>
+//     </div>
+//   );
+// }
+// Forgot Password Page
 function ForgotPasswordPage() {
 
   const [email, setEmail] = useState('');
   const [done, setDone] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async () => {
 
-    await fetch('/api/forgot-password', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email })
-    });
+    setError('');
 
-    setDone(true);
+    try {
+
+      const response = await fetch('/api/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+      });
+
+      const data = await response.json();
+
+      // إذا في خطأ
+      if (!response.ok) {
+        throw new Error(data.error || 'حدث خطأ');
+      }
+
+      // نجاح
+      setDone(true);
+
+    } catch (err: any) {
+
+      setError(err.message || 'حدث خطأ');
+
+    }
   };
 
   return (
@@ -2018,6 +2095,7 @@ function ForgotPasswordPage() {
         ) : (
 
           <>
+
             <input
               type="email"
               placeholder="البريد الإلكتروني"
@@ -2026,12 +2104,19 @@ function ForgotPasswordPage() {
               className="w-full border p-4 rounded-2xl mb-4"
             />
 
+            {error && (
+              <div className="text-red-600 text-sm mb-4 text-center">
+                {error}
+              </div>
+            )}
+
             <button
               onClick={handleSubmit}
               className="w-full bg-emerald-700 text-white py-4 rounded-2xl"
             >
               إرسال الرابط
             </button>
+
           </>
         )}
 
@@ -2039,7 +2124,6 @@ function ForgotPasswordPage() {
     </div>
   );
 }
-
 
 //Reset Password Page
 function ResetPasswordPage() {
