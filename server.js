@@ -40,15 +40,21 @@ async function checkAdmin(req) {
 
 // ==================== AUTH ====================
 
+// ==================== AUTH ====================
+
 app.post('/api/auth', async (req, res) => {
 
   try {
 
     const {
       action,
+      first_name,
+      last_name,
+      birthday,
+      university,
+      major,
       email,
-      password,
-      full_name
+      password
     } = req.body;
 
     // LOGIN
@@ -73,7 +79,11 @@ app.post('/api/auth', async (req, res) => {
         user: {
           id: user.id,
           email: user.email,
-          full_name: user.full_name,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          birthday: user.birthday,
+          university: user.university,
+          major: user.major,
           role: user.role
         }
       });
@@ -100,16 +110,24 @@ app.post('/api/auth', async (req, res) => {
       const [newUser] = await sql`
         INSERT INTO users (
           id,
+          first_name,
+          last_name,
+          birthday,
+          university,
+          major,
           email,
           password,
-          full_name,
           role
         )
         VALUES (
           ${id},
+          ${first_name},
+          ${last_name},
+          ${birthday},
+          ${university},
+          ${major},
           ${email},
           ${password},
-          ${full_name || ''},
           'user'
         )
         RETURNING *
@@ -118,8 +136,12 @@ app.post('/api/auth', async (req, res) => {
       return res.status(201).json({
         user: {
           id: newUser.id,
+          first_name: newUser.first_name,
+          last_name: newUser.last_name,
+          birthday: newUser.birthday,
+          university: newUser.university,
+          major: newUser.major,
           email: newUser.email,
-          full_name: newUser.full_name,
           role: newUser.role
         }
       });
@@ -767,13 +789,17 @@ app.get('/api/admin/users', async (req, res) => {
     }
 
     const users = await sql`
-      SELECT
-        id,
-        email,
-        full_name,
-        role,
-        created_at
-      FROM users
+    SELECT
+      id,
+      email,
+      first_name,
+      last_name,
+      birthday,
+      university,
+      major,
+      role,
+      created_at
+    FROM users
       ORDER BY created_at DESC
     `;
 
@@ -859,6 +885,81 @@ app.delete('/api/admin/users', async (req, res) => {
   }
 });
 
+
+
+//======================Profile =======================
+//get user information for profile page
+app.get('/api/profile/:id', async (req, res) => {
+
+  try {
+
+    const { id } = req.params;
+
+    const users = await sql`
+      SELECT
+        id,
+        email,
+        first_name,
+        last_name,
+        birthday,
+        university,
+        major,
+        role
+      FROM users
+      WHERE id = ${id}
+    `;
+
+    if (users.length === 0) {
+      return res.status(404).json({
+        error: 'User not found'
+      });
+    }
+
+    res.json(users[0]);
+
+  } catch (err) {
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
+//Profile update 
+app.put('/api/profile', async (req, res) => {
+
+  try {
+
+    const {
+      id,
+      first_name,
+      last_name,
+      birthday,
+      university,
+      major
+    } = req.body;
+
+    const [updatedUser] = await sql`
+      UPDATE users
+      SET
+        first_name = ${first_name},
+        last_name = ${last_name},
+        birthday = ${birthday},
+        university = ${university},
+        major = ${major}
+      WHERE id = ${id}
+      RETURNING *
+    `;
+
+    res.json(updatedUser);
+
+  } catch (err) {
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
 
 // ==================== FRONTEND ====================
 

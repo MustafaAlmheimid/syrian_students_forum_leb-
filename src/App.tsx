@@ -53,13 +53,18 @@ interface Question {
   answered: boolean;
 }
 
-interface User {
+type User = {
   id: string;
   email: string;
-  user_metadata?: { name?: string };
-  role?: string;
-  full_name?: string;
-}
+  role: string;
+
+  first_name?: string;
+  last_name?: string;
+
+  birthday?: string;
+  university?: string;
+  major?: string;
+};
 
 // Categories
 const CATEGORIES = [
@@ -280,6 +285,7 @@ function App() {
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/admin" element={<AdminPage user={user} isAdmin={isAdmin} userRole={userRole} />} />
           <Route path="/login" element={<AuthPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
 
         <Footer />
@@ -399,14 +405,18 @@ function Navbar({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
     window.location.href = '/';
   };
 
-  const navLinks = [
-    { to: '/', label: 'الرئيسية', icon: Home },
-    { to: '/about', label: 'عن الملتقى', icon: Info },
-    { to: '/news', label: 'الأخبار والتحديثات', icon: Newspaper },
-    { to: '/guides', label: 'الأدلة الإرشادية', icon: BookOpen },
-    { to: '/community', label: 'المجتمع', icon: MessageCircle },
-    { to: '/faq', label: 'الأسئلة الشائعة', icon: HelpCircle },
-  ];
+    const navLinks = [
+      { to: '/', label: 'الرئيسية', icon: Home },
+      { to: '/about', label: 'عن الملتقى', icon: Info },
+      { to: '/news', label: 'الأخبار والتحديثات', icon: Newspaper },
+      { to: '/guides', label: 'الأدلة الإرشادية', icon: BookOpen },
+      { to: '/community', label: 'المجتمع', icon: MessageCircle },
+      { to: '/faq', label: 'الأسئلة الشائعة', icon: HelpCircle },
+
+      ...(user ? [
+        { to: '/profile', label: 'الملف الشخصي', icon: User }
+      ] : [])
+    ];
 
   return (
     <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
@@ -458,25 +468,34 @@ function Navbar({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
               </Link>
             )}
           </div>
+              {/* Auth Buttons */}
+              <div className="flex items-center gap-4">
+                {user ? (
+                  <div className="flex items-center gap-3">
 
-          {/* Auth Buttons */}
-          <div className="flex items-center gap-4">
-            {user ? (
-              <div className="flex items-center gap-3">
-                <div className="hidden md:flex items-center gap-2 text-sm bg-gray-100 px-3 py-1.5 rounded-full">
-                  <User className="w-4 h-4" />
-                  <span>{user.user_metadata?.name || user.email}</span>
-                </div>
+                    <Link
+                      to="/profile"
+                      className="hidden md:flex items-center gap-2 text-sm bg-gray-100 px-3 py-1.5 rounded-full hover:bg-emerald-50 transition"
+                    >
+                      <User className="w-4 h-4" />
 
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
-                >
-                  <LogOut className="w-4 h-4" />
-                  تسجيل الخروج
-                </button>
-              </div>
-            ) : (
+                      <span>
+                        {user.first_name && user.last_name
+                          ? `${user.first_name} ${user.last_name}`
+                          : user.email}
+                      </span>
+                    </Link>
+
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      تسجيل الخروج
+                    </button>
+
+                  </div>
+                ) : (
               <Link
                 to="/login"
                 className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-2.5 rounded-full text-sm font-medium transition"
@@ -551,7 +570,7 @@ function HomePage() {
       {/* Hero Section */}
         <div className="relative min-h-[720px] md:h-[620px] bg-emerald-950 text-white overflow-hidden">        <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/images/hero2.png')" }}
+          style={{ backgroundImage: "url('/images/hero3.png')" }}
         />
 
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/95 via-emerald-950/90 to-emerald-950/70" />
@@ -1083,7 +1102,7 @@ function CommunityPage({ user }: { user: User | null }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         user_id: user.id,
-        user_name: user.user_metadata?.name || user.email,
+        user_name: `${user.first_name} ${user.last_name}` || user.email,
         ...newQuestion
       })
     });
@@ -1100,7 +1119,7 @@ function CommunityPage({ user }: { user: User | null }) {
       body: JSON.stringify({
         question_id: questionId,
         user_id: user.id,
-        user_name: user.full_name || user.email,
+        user_name: `${user.first_name} ${user.last_name}` || user.email,
         content: replyContent[questionId]
       })
     });
@@ -1118,7 +1137,7 @@ function CommunityPage({ user }: { user: User | null }) {
       body: JSON.stringify({
         post_id: selectedPost.id,
         user_id: user.id,
-        user_name: user.user_metadata?.name || user.email,
+        user_name: `${user.first_name} ${user.last_name}` || user.email,
         content: newComment
       })
     });
@@ -1561,7 +1580,15 @@ const adminApiCall = async (endpoint: string, method: string, body?: any) => {
                 {users.map(u => (
                   <tr key={u.id}>
                     <td className="p-6">
-                      <div className="font-medium">{u.full_name || '—'}</div>
+                      
+                      <div className="font-medium">
+                        {u.first_name} {u.last_name}
+                      </div>
+
+                      <div className="text-gray-500 text-xs mt-1">
+                        {u.university || '—'} • {u.major || '—'}
+                      </div>
+
                       <div className="text-gray-500 text-xs">{u.email}</div>
                     </td>
                     <td className="p-6">
@@ -1614,73 +1641,335 @@ const adminApiCall = async (endpoint: string, method: string, body?: any) => {
 
 // Authentication Page (Email/Password)
 function AuthPage() {
+
   const [isLogin, setIsLogin] = useState(true);
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [university, setUniversity] = useState('');
+  const [major, setMajor] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+
   const [error, setError] = useState('');
+
   const navigate = useNavigate();
 
   const handleAuth = async (e: React.FormEvent) => {
+
     e.preventDefault();
     setError('');
 
     try {
+
       const response = await fetch('/api/auth', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json'
+        },
+
         body: JSON.stringify({
           action: isLogin ? 'login' : 'signup',
+
+          first_name: firstName,
+          last_name: lastName,
+          birthday,
+          university,
+          major,
+
           email,
-          password,
-          full_name: name
+          password
         })
       });
 
       const data = await response.json();
 
       if (!response.ok) {
+
         throw new Error(data.error || 'حدث خطأ');
       }
 
-      // Save user to localStorage
-      localStorage.setItem('currentUser', JSON.stringify(data.user));
+      localStorage.setItem(
+        'currentUser',
+        JSON.stringify(data.user)
+      );
+
       window.location.href = '/';
+
     } catch (err: any) {
-      setError(err.message || 'حدث خطأ. يرجى المحاولة مرة أخرى.');
+
+      setError(
+        err.message || 'حدث خطأ. يرجى المحاولة مرة أخرى.'
+      );
     }
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center bg-gray-50 px-4">
-      <div className="bg-white w-full max-w-md p-10 rounded-3xl border">
-        <div className="flex justify-center mb-8">
-          <div className="px-4 py-1 bg-emerald-50 text-emerald-700 text-xs tracking-[2px] rounded">ملتقى الطلاب السوريين</div>
-        </div>
-        
-        <h2 className="text-center font-bold text-3xl tracking-tight mb-8">{isLogin ? 'تسجيل الدخول' : 'إنشاء حساب جديد'}</h2>
 
-        <form onSubmit={handleAuth} className="space-y-4">
+    <div className="min-h-[80vh] flex items-center justify-center bg-gray-50 px-4">
+
+      <div className="bg-white w-full max-w-md p-10 rounded-3xl border">
+
+        <div className="flex justify-center mb-8">
+          <div className="px-4 py-1 bg-emerald-50 text-emerald-700 text-xs tracking-[2px] rounded">
+            ملتقى الطلاب السوريين
+          </div>
+        </div>
+
+        <h2 className="text-center font-bold text-3xl tracking-tight mb-8">
+          {isLogin ? 'تسجيل الدخول' : 'إنشاء حساب جديد'}
+        </h2>
+
+        <form
+          onSubmit={handleAuth}
+          className="space-y-4"
+        >
+
           {!isLogin && (
-            <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="الاسم الكامل" className="w-full px-5 py-4 border rounded-2xl" required />
+            <>
+
+              <input
+                type="text"
+                value={firstName}
+                onChange={e => setFirstName(e.target.value)}
+                placeholder="الاسم الأول"
+                className="w-full px-5 py-4 border rounded-2xl"
+                required
+              />
+
+              <input
+                type="text"
+                value={lastName}
+                onChange={e => setLastName(e.target.value)}
+                placeholder="اسم العائلة"
+                className="w-full px-5 py-4 border rounded-2xl"
+                required
+              />
+
+              <input
+                type="date"
+                value={birthday}
+                onChange={e => setBirthday(e.target.value)}
+                className="w-full px-5 py-4 border rounded-2xl"
+                required
+              />
+
+              <input
+                type="text"
+                value={university}
+                onChange={e => setUniversity(e.target.value)}
+                placeholder="اسم الجامعة"
+                className="w-full px-5 py-4 border rounded-2xl"
+                required
+              />
+
+              <input
+                type="text"
+                value={major}
+                onChange={e => setMajor(e.target.value)}
+                placeholder="الاختصاص"
+                className="w-full px-5 py-4 border rounded-2xl"
+                required
+              />
+
+            </>
           )}
-          <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="البريد الإلكتروني" className="w-full px-5 py-4 border rounded-2xl" required />
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="كلمة المرور" className="w-full px-5 py-4 border rounded-2xl" required />
-          
-          {error && <p className="text-red-600 text-sm text-center">{error}</p>}
-          
-          <button type="submit" className="mt-2 w-full py-4 bg-emerald-700 text-white font-semibold rounded-2xl">{isLogin ? 'تسجيل الدخول' : 'إنشاء الحساب'}</button>
+
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="البريد الإلكتروني"
+            className="w-full px-5 py-4 border rounded-2xl"
+            required
+          />
+
+          <input
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="كلمة المرور"
+            className="w-full px-5 py-4 border rounded-2xl"
+            required
+          />
+
+          {error && (
+            <p className="text-red-600 text-sm text-center">
+              {error}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="mt-2 w-full py-4 bg-emerald-700 text-white font-semibold rounded-2xl"
+          >
+            {isLogin ? 'تسجيل الدخول' : 'إنشاء الحساب'}
+          </button>
+
         </form>
 
-        <button onClick={() => setIsLogin(!isLogin)} className="text-sm w-full mt-7 text-center text-gray-600 hover:text-emerald-700">
-          {isLogin ? 'ليس لديك حساب؟ أنشئ حساباً جديداً' : 'لديك حساب بالفعل؟ سجّل الدخول'}
+        <button
+          onClick={() => setIsLogin(!isLogin)}
+          className="text-sm w-full mt-7 text-center text-gray-600 hover:text-emerald-700"
+        >
+          {isLogin
+            ? 'ليس لديك حساب؟ أنشئ حساباً جديداً'
+            : 'لديك حساب بالفعل؟ سجّل الدخول'}
         </button>
 
-        <div className="text-center text-xs text-gray-400 mt-9">تجربة تجريبية: استخدم admin@syrian-students.lb / password123</div>
+        <div className="text-center text-xs text-gray-400 mt-9">
+          تجربة تجريبية:
+          admin@syrian-students.lb / password123
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
+
+
+// User Profile Page
+function ProfilePage() {
+
+  const currentUser = JSON.parse(
+    localStorage.getItem('currentUser') || '{}'
+  );
+
+  const [form, setForm] = useState({
+    first_name: '',
+    last_name: '',
+    birthday: '',
+    university: '',
+    major: ''
+  });
+
+  useEffect(() => {
+
+    fetch(`/api/profile/${currentUser.id}`)
+      .then(res => res.json())
+      .then(data => {
+
+        setForm({
+          first_name: data.first_name || '',
+          last_name: data.last_name || '',
+          birthday: data.birthday || '',
+          university: data.university || '',
+          major: data.major || ''
+        });
+      });
+
+  }, []);
+
+  const handleSave = async () => {
+
+    const res = await fetch('/api/profile', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: currentUser.id,
+        ...form
+      })
+    });
+
+    const updatedUser = await res.json();
+
+    localStorage.setItem(
+      'currentUser',
+      JSON.stringify(updatedUser)
+    );
+
+    alert('تم حفظ التعديلات');
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto px-6 py-14">
+
+      <h1 className="text-4xl font-bold mb-10">
+        الملف الشخصي
+      </h1>
+
+      <div className="space-y-4 bg-white border p-8 rounded-3xl">
+
+        <input
+          value={form.first_name}
+          onChange={e =>
+            setForm({
+              ...form,
+              first_name: e.target.value
+            })
+          }
+          placeholder="الاسم الأول"
+          className="w-full border p-4 rounded-2xl"
+        />
+
+        <input
+          value={form.last_name}
+          onChange={e =>
+            setForm({
+              ...form,
+              last_name: e.target.value
+            })
+          }
+          placeholder="اسم العائلة"
+          className="w-full border p-4 rounded-2xl"
+        />
+
+        <input
+          type="date"
+          value={form.birthday}
+          onChange={e =>
+            setForm({
+              ...form,
+              birthday: e.target.value
+            })
+          }
+          className="w-full border p-4 rounded-2xl"
+        />
+
+        <input
+          value={form.university}
+          onChange={e =>
+            setForm({
+              ...form,
+              university: e.target.value
+            })
+          }
+          placeholder="الجامعة"
+          className="w-full border p-4 rounded-2xl"
+        />
+
+        <input
+          value={form.major}
+          onChange={e =>
+            setForm({
+              ...form,
+              major: e.target.value
+            })
+          }
+          placeholder="التخصص"
+          className="w-full border p-4 rounded-2xl"
+        />
+
+        <button
+          onClick={handleSave}
+          className="w-full bg-emerald-700 text-white py-4 rounded-2xl"
+        >
+          حفظ التعديلات
+        </button>
+
       </div>
     </div>
   );
 }
+
+
+
+
+
 
 // function Footer() {
 //   return (
