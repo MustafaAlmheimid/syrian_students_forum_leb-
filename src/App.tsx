@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate ,useParams} from 'react-router-dom';
 import { 
   Users,
@@ -1449,53 +1447,102 @@ const adminApiCall = async (endpoint: string, method: string, body?: any) => {
             u.major?.toLowerCase().includes(userSearch.toLowerCase())
           );
         });
+// Export users to Excel
+    //     const exportUsersExcel = () => {
 
-        const exportUsersExcel = () => {
+    //   const data = users.map((u) => ({
+    //     'الاسم الأول': u.first_name,
+    //     'الاسم الأخير': u.last_name,
+    //     'تاريخ الميلاد': u.birthday,
+    //     'الجامعة': u.university,
+    //     'التخصص': u.major,
+    //     'البريد الإلكتروني': u.email,
+    //     'الدور': u.role,
+    //     'تاريخ التسجيل': new Date(u.created_at).toLocaleDateString('ar')
+    //   }));
 
-      const data = users.map((u) => ({
-        'الاسم الأول': u.first_name,
-        'الاسم الأخير': u.last_name,
-        'تاريخ الميلاد': u.birthday,
-        'الجامعة': u.university,
-        'التخصص': u.major,
-        'البريد الإلكتروني': u.email,
-        'الدور': u.role,
-        'تاريخ التسجيل': new Date(u.created_at).toLocaleDateString('ar')
-      }));
+    //   const worksheet = XLSX.utils.json_to_sheet(data);
 
-      const worksheet = XLSX.utils.json_to_sheet(data);
+    //   const workbook = XLSX.utils.book_new();
 
-      const workbook = XLSX.utils.book_new();
+    //   XLSX.utils.book_append_sheet(
+    //     workbook,
+    //     worksheet,
+    //     'Users'
+    //   );
 
-      XLSX.utils.book_append_sheet(
-        workbook,
-        worksheet,
-        'Users'
-      );
+    //   const excelBuffer = XLSX.write(workbook, {
+    //     bookType: 'xlsx',
+    //     type: 'array'
+    //   });
 
-      const excelBuffer = XLSX.write(workbook, {
-        bookType: 'xlsx',
-        type: 'array'
-      });
+    //   const fileData = new Blob(
+    //     [excelBuffer],
+    //     {
+    //       type:
+    //         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    //     }
+    //   );
 
-      const fileData = new Blob(
-        [excelBuffer],
-        {
-          type:
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        }
-      );
-
-      saveAs(
-        fileData,
-        `users-${Date.now()}.xlsx`
-      );
-    };
+    //   saveAs(
+    //     fileData,
+    //     `users-${Date.now()}.xlsx`
+    //   );
+    // };
 
 
 
   //Annoncement 
-      const handleSendAnnouncement = async () => {
+  
+        const exportUsersCSV = () => {
+
+        const headers = [
+          'First Name',
+          'Last Name',
+          'Email',
+          'University',
+          'Major',
+          'Birthday',
+          'Role',
+          'Created At'
+        ];
+
+        const rows = filteredUsers.map((u) => [
+          u.first_name || '',
+          u.last_name || '',
+          u.email || '',
+          u.university || '',
+          u.major || '',
+          u.birthday || '',
+          u.role || '',
+          u.created_at || ''
+        ]);
+
+        const csvContent = [
+          headers.join(','),
+          ...rows.map(row =>
+            row.map(field => `"${field}"`).join(',')
+          )
+        ].join('\n');
+
+        const blob = new Blob(
+          [csvContent],
+          { type: 'text/csv;charset=utf-8;' }
+        );
+
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+
+        link.href = url;
+        link.download = 'users.csv';
+
+        link.click();
+
+        URL.revokeObjectURL(url);
+      };
+  
+  const handleSendAnnouncement = async () => {
 
       if (!announcementTitle || !announcementMessage) {
         alert('يرجى تعبئة جميع الحقول');
@@ -1869,10 +1916,10 @@ const adminApiCall = async (endpoint: string, method: string, body?: any) => {
         />
 
         <button
-          onClick={exportUsersExcel}
+          onClick={exportUsersCSV}
           className="bg-emerald-700 hover:bg-emerald-800 transition text-white px-6 py-3 rounded-2xl whitespace-nowrap"
         >
-          Export Excel
+          Export CSV
         </button>
 
       </div>
