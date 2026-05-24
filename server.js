@@ -143,6 +143,69 @@ app.post('/api/auth', async (req, res) => {
         RETURNING *
       `;
 
+      // Send Welcome Email
+      await transporter.sendMail({
+
+        from: process.env.EMAIL_USER,
+
+        to: email,
+
+        subject: 'مرحباً بك في ملتقى الطلاب السوريين',
+
+        html: `
+          <div style="
+            font-family: Arial;
+            direction: rtl;
+            text-align: right;
+            padding: 20px;
+          ">
+
+            <h2 style="color:#047857;">
+              أهلاً بك ${first_name} 👋
+            </h2>
+
+            <p>
+              تم إنشاء حسابك بنجاح في منصة
+              <strong>ملتقى الطلاب السوريين في لبنان</strong>.
+            </p>
+
+            <p>
+              يمكنك الآن:
+            </p>
+
+            <ul>
+              <li>متابعة الأخبار والتحديثات</li>
+              <li>طرح الأسئلة داخل المجتمع</li>
+              <li>التفاعل مع الطلاب</li>
+              <li>الوصول إلى الأدلة الإرشادية</li>
+            </ul>
+
+            <br>
+
+            <a
+              href="${process.env.BASE_URL}"
+              style="
+                background:#047857;
+                color:white;
+                padding:12px 20px;
+                border-radius:10px;
+                text-decoration:none;
+                display:inline-block;
+              "
+            >
+              الدخول إلى المنصة
+            </a>
+
+            <br><br>
+
+            <p style="font-size:13px;color:gray;">
+              ملتقى الطلاب السوريين في لبنان
+            </p>
+
+          </div>
+        `
+      });
+
       return res.status(201).json({
         user: {
           id: newUser.id,
@@ -1014,17 +1077,108 @@ app.post('/api/forgot-password', async (req, res) => {
       from: process.env.EMAIL_USER,
       to: email,
       subject: 'إعادة تعيين كلمة المرور',
-      html: `
-        <h2>إعادة تعيين كلمة المرور</h2>
+     html: `
+      <div style="
+        font-family: Arial, sans-serif;
+        direction: rtl;
+        text-align: right;
+        background: #f9fafb;
+        padding: 40px 20px;
+      ">
 
-        <p>
-          اضغط على الرابط التالي:
-        </p>
+        <div style="
+          max-width: 600px;
+          margin: auto;
+          background: white;
+          border-radius: 20px;
+          padding: 40px;
+          border: 1px solid #e5e7eb;
+        ">
 
-        <a href="${resetLink}">
-          إعادة تعيين كلمة المرور
-        </a>
-      `
+          <div style="
+            text-align: center;
+            margin-bottom: 30px;
+          ">
+
+            <h1 style="
+              color: #047857;
+              margin: 0;
+              font-size: 28px;
+            ">
+              إعادة تعيين كلمة المرور
+            </h1>
+
+            <p style="
+              color: #6b7280;
+              margin-top: 10px;
+              font-size: 15px;
+            ">
+              ملتقى الطلاب السوريين في لبنان
+            </p>
+
+          </div>
+
+          <p style="
+            color: #374151;
+            font-size: 16px;
+            line-height: 1.8;
+          ">
+            تلقينا طلباً لإعادة تعيين كلمة المرور الخاصة بحسابك.
+          </p>
+
+          <p style="
+            color: #374151;
+            font-size: 16px;
+            line-height: 1.8;
+          ">
+            اضغط على الزر التالي لإكمال العملية:
+          </p>
+
+          <div style="text-align:center; margin:40px 0;">
+
+            <a
+              href="${resetLink}"
+              style="
+                background:#047857;
+                color:white;
+                text-decoration:none;
+                padding:14px 28px;
+                border-radius:12px;
+                font-size:16px;
+                font-weight:bold;
+                display:inline-block;
+              "
+            >
+              إعادة تعيين كلمة المرور
+            </a>
+
+          </div>
+
+          <p style="
+            color:#6b7280;
+            font-size:14px;
+            line-height:1.8;
+          ">
+            إذا لم تقم بطلب إعادة تعيين كلمة المرور، يمكنك تجاهل هذه الرسالة بأمان.
+          </p>
+
+          <hr style="
+            border:none;
+            border-top:1px solid #e5e7eb;
+            margin:30px 0;
+          ">
+
+          <p style="
+            text-align:center;
+            color:#9ca3af;
+            font-size:13px;
+          ">
+            © ملتقى الطلاب السوريين في لبنان
+          </p>
+
+        </div>
+      </div>
+    `
     });
 
     res.json({
@@ -1091,6 +1245,132 @@ app.post('/api/reset-password', async (req, res) => {
     });
   }
 });
+
+
+
+//===================== Announcement Stats ====================
+app.post('/api/admin/send-announcement', async (req, res) => {
+
+  try {
+
+    if (!(await checkAdmin(req))) {
+      return res.status(403).json({
+        error: 'Admin only'
+      });
+    }
+
+    const {
+      title,
+      message
+    } = req.body;
+
+    const users = await sql`
+      SELECT email, first_name
+      FROM users
+      WHERE email IS NOT NULL
+    `;
+
+    for (const user of users) {
+
+      await transporter.sendMail({
+
+        from: process.env.EMAIL_USER,
+
+        to: user.email,
+
+        subject: title,
+
+        html: `
+          <div style="
+            font-family: Arial, sans-serif;
+            background: #f5f7f9;
+            padding: 40px 20px;
+          ">
+
+            <div style="
+              max-width: 650px;
+              margin: auto;
+              background: white;
+              border-radius: 20px;
+              overflow: hidden;
+              border: 1px solid #e5e7eb;
+            ">
+
+              <div style="
+                background: linear-gradient(135deg, #047857, #065f46);
+                padding: 35px;
+                text-align: center;
+                color: white;
+              ">
+                <h1 style="
+                  margin: 0;
+                  font-size: 30px;
+                ">
+                  ملتقى الطلاب السوريين
+                </h1>
+
+                <p style="
+                  margin-top: 10px;
+                  opacity: 0.9;
+                ">
+                  Syrian Students Forum in Lebanon
+                </p>
+              </div>
+
+              <div style="padding: 40px;">
+
+                <h2 style="
+                  color: #111827;
+                  margin-bottom: 25px;
+                ">
+                  ${title}
+                </h2>
+
+                <p style="
+                  color: #374151;
+                  line-height: 2;
+                  font-size: 16px;
+                  white-space: pre-line;
+                ">
+                  مرحباً ${user.first_name || ''}،
+
+                  ${message}
+                </p>
+
+                <div style="
+                  margin-top: 40px;
+                  padding-top: 20px;
+                  border-top: 1px solid #e5e7eb;
+                  color: #6b7280;
+                  font-size: 14px;
+                ">
+                  تم إرسال هذه الرسالة من منصة ملتقى الطلاب السوريين في لبنان.
+                </div>
+
+              </div>
+            </div>
+          </div>
+        `
+      });
+    }
+
+    res.json({
+      success: true
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
+
+
+
 // ==================== FRONTEND ====================
 
 app.use(express.static(path.join(__dirname, 'dist')));

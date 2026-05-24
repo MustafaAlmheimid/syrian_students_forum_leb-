@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate ,useParams} from 'react-router-dom';
 import { 
   Users,
@@ -1315,7 +1317,8 @@ function FAQPage() {
 // Admin Dashboard - Full Role-Based Management
 function AdminPage({ user, isAdmin, userRole }: { user: User | null; isAdmin: boolean; userRole: string }) {
   
-  const [activeTab, setActiveTab] = useState<'posts' | 'comments' | 'questions' | 'users'>('posts');
+  //const [activeTab, setActiveTab] = useState<'posts' | 'comments' | 'questions' | 'users'>('posts');
+  const [activeTab, setActiveTab] = useState<'posts' | 'comments' | 'questions' | 'users' | 'announcements'>('posts');
   const [posts, setPosts] = useState<Post[]>([]);
   const [comments, setComments] = useState<Comment[]>([]);
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -1325,15 +1328,21 @@ function AdminPage({ user, isAdmin, userRole }: { user: User | null; isAdmin: bo
   const [showPostModal, setShowPostModal] = useState(false);
   const [newPost, setNewPost] = useState({ title: '', content: '', category: CATEGORIES[0] });
 
-  //const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const [announcementTitle, setAnnouncementTitle] = useState('');
+    const [announcementMessage, setAnnouncementMessage] = useState('');
+    const [sendingAnnouncement, setSendingAnnouncement] = useState(false);
 
-const getAuthHeaders = () => {
-  const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-  return {
-    'Content-Type': 'application/json',
-    'x-user-id': user.id || ''
-  };
-};
+    const [userSearch, setUserSearch] = useState('');
+
+    //const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+
+    const getAuthHeaders = () => {
+      const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      return {
+        'Content-Type': 'application/json',
+        'x-user-id': user.id || ''
+      };
+    };
 
   const fetchAllData = async () => {
     setLoadingData(true);
@@ -1427,6 +1436,105 @@ const adminApiCall = async (endpoint: string, method: string, body?: any) => {
     if (success) fetchAllData();
   };
 
+      // Filter users based on search
+          const filteredUsers = users.filter((u) => {
+
+          const fullName =
+            `${u.first_name || ''} ${u.last_name || ''}`.toLowerCase();
+
+          return (
+            fullName.includes(userSearch.toLowerCase()) ||
+            u.email?.toLowerCase().includes(userSearch.toLowerCase()) ||
+            u.university?.toLowerCase().includes(userSearch.toLowerCase()) ||
+            u.major?.toLowerCase().includes(userSearch.toLowerCase())
+          );
+        });
+
+        const exportUsersExcel = () => {
+
+      const data = users.map((u) => ({
+        'الاسم الأول': u.first_name,
+        'الاسم الأخير': u.last_name,
+        'تاريخ الميلاد': u.birthday,
+        'الجامعة': u.university,
+        'التخصص': u.major,
+        'البريد الإلكتروني': u.email,
+        'الدور': u.role,
+        'تاريخ التسجيل': new Date(u.created_at).toLocaleDateString('ar')
+      }));
+
+      const worksheet = XLSX.utils.json_to_sheet(data);
+
+      const workbook = XLSX.utils.book_new();
+
+      XLSX.utils.book_append_sheet(
+        workbook,
+        worksheet,
+        'Users'
+      );
+
+      const excelBuffer = XLSX.write(workbook, {
+        bookType: 'xlsx',
+        type: 'array'
+      });
+
+      const fileData = new Blob(
+        [excelBuffer],
+        {
+          type:
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        }
+      );
+
+      saveAs(
+        fileData,
+        `users-${Date.now()}.xlsx`
+      );
+    };
+
+
+
+  //Annoncement 
+      const handleSendAnnouncement = async () => {
+
+      if (!announcementTitle || !announcementMessage) {
+        alert('يرجى تعبئة جميع الحقول');
+        return;
+      }
+
+      setSendingAnnouncement(true);
+
+      try {
+
+        const res = await fetch('/api/admin/send-announcement', {
+          method: 'POST',
+          headers: getAuthHeaders(),
+          body: JSON.stringify({
+            title: announcementTitle,
+            message: announcementMessage
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || 'فشل الإرسال');
+        }
+
+        alert('تم إرسال الإشعار لجميع المستخدمين');
+
+        setAnnouncementTitle('');
+        setAnnouncementMessage('');
+
+      } catch (err: any) {
+
+        alert(err.message);
+
+      }
+
+      setSendingAnnouncement(false);
+    };
+
   if (!isAdmin) {
     return (
       <div className="max-w-md mx-auto text-center py-20">
@@ -1450,11 +1558,12 @@ const adminApiCall = async (endpoint: string, method: string, body?: any) => {
       {/* Tabs */}
       <div className="flex border-b mb-9 text-sm">
         {[
-          { id: 'posts', label: 'إدارة الأخبار', count: posts.length },
-          { id: 'comments', label: 'التعليقات', count: comments.length },
-          { id: 'questions', label: 'الأسئلة', count: questions.length },
-          { id: 'users', label: 'المستخدمين', count: users.length }
-        ].map(tab => (
+            { id: 'posts', label: 'إدارة الأخبار', count: posts.length },
+            { id: 'comments', label: 'التعليقات', count: comments.length },
+            { id: 'questions', label: 'الأسئلة', count: questions.length },
+            { id: 'users', label: 'المستخدمين', count: users.length },
+            { id: 'announcements', label: 'الإشعارات البريدية', count: users.length }
+          ].map(tab => (
           <button 
             key={tab.id}
             onClick={() => setActiveTab(tab.id as any)} 
@@ -1578,55 +1687,453 @@ const adminApiCall = async (endpoint: string, method: string, body?: any) => {
       )}
 
       {/* USERS TAB */}
-      {activeTab === 'users' && (
+      {/* USERS TAB */}
+      {/* {activeTab === 'users' && (
+
         <div>
-          <div className="text-xl font-semibold mb-6">إدارة المستخدمين ({users.length})</div>
-          <div className="bg-white border rounded-3xl overflow-hidden">
-            <table className="w-full">
+
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+
+            <div>
+              <div className="text-2xl font-bold">
+                إدارة المستخدمين
+              </div>
+
+              <div className="text-gray-500 text-sm mt-1">
+                عدد المستخدمين: {users.length}
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+
+              <input
+                type="text"
+                placeholder="بحث عن مستخدم..."
+                value={userSearch}
+                onChange={(e) => setUserSearch(e.target.value)}
+                className="border px-4 py-3 rounded-2xl w-full md:w-72"
+              />
+
+              <button
+                onClick={exportUsersExcel}
+                className="bg-emerald-700 hover:bg-emerald-800 transition text-white px-6 py-3 rounded-2xl whitespace-nowrap"
+              >
+                Export Excel
+              </button>
+
+            </div>
+          </div>
+
+          <div className="bg-white border rounded-3xl overflow-x-auto">
+
+            <table className="w-full min-w-[1200px]">
+
               <thead className="bg-gray-50 border-b text-sm">
-                <tr><th className="p-6 text-right">الاسم / البريد</th><th className="p-6">الدور</th><th className="p-6">تاريخ التسجيل</th><th className="p-6 w-48"></th></tr>
+
+                <tr>
+                  <th className="p-5 text-right">الاسم الكامل</th>
+                  <th className="p-5 text-right">البريد الإلكتروني</th>
+                  <th className="p-5 text-right">الجامعة</th>
+                  <th className="p-5 text-right">التخصص</th>
+                  <th className="p-5 text-right">تاريخ الميلاد</th>
+                  <th className="p-5 text-center">الدور</th>
+                  <th className="p-5 text-center">تاريخ التسجيل</th>
+                  <th className="p-5 text-center">الإجراءات</th>
+                </tr>
+
               </thead>
+
               <tbody className="divide-y text-sm">
-                {users.map(u => (
-                  <tr key={u.id}>
-                    <td className="p-6">
-                      
-                      <div className="font-medium">
-                        {u.first_name} {u.last_name}
+
+                {filteredUsers.map((u) => (
+
+                  <tr
+                    key={u.id}
+                    className="hover:bg-gray-50 transition"
+                  >
+
+                    <td className="p-5">
+
+                      <div className="font-semibold text-gray-900">
+                        {u.first_name || '—'} {u.last_name || ''}
                       </div>
 
-                      <div className="text-gray-500 text-xs mt-1">
-                        {u.university || '—'} • {u.major || '—'}
-                      </div>
-
-                      <div className="text-gray-500 text-xs">{u.email}</div>
                     </td>
-                    <td className="p-6">
+
+                    <td className="p-5 text-gray-600">
+                      {u.email}
+                    </td>
+
+                    <td className="p-5">
+                      {u.university || '—'}
+                    </td>
+
+                    <td className="p-5">
+                      {u.major || '—'}
+                    </td>
+
+                          <td className="p-5">
+                            {u.birthday
+                              ? u.birthday.split('T')[0]
+                              : '—'}
+                          </td>
+
+                    <td className="p-5 text-center">
+
                       {userRole === 'admin' ? (
-                        <select value={u.role} onChange={e => handleChangeRole(u.id, e.target.value)} className="border px-3 py-1 rounded-xl text-sm">
+
+                        <select
+                          value={u.role}
+                          onChange={e =>
+                            handleChangeRole(
+                              u.id,
+                              e.target.value
+                            )
+                          }
+                          className="border px-3 py-2 rounded-xl text-sm"
+                        >
                           <option value="user">مستخدم</option>
                           <option value="moderator">مشرف</option>
                           <option value="admin">مدير</option>
                         </select>
+
                       ) : (
-                        <span className="px-3 py-1 bg-gray-100 rounded-xl text-sm">{u.role}</span>
+
+                        <span className="px-3 py-1 bg-gray-100 rounded-xl text-sm">
+                          {u.role}
+                        </span>
+
                       )}
+
                     </td>
-                    <td className="p-6 text-center text-gray-400 text-xs">{new Date(u.created_at).toLocaleDateString('ar')}</td>
-                    <td className="p-6 text-center">
-                      {userRole === 'admin' && u.email !== 'admin@syrian-students.lb' && (
-                        <button onClick={() => handleDeleteUser(u.id)} className="px-4 py-1 text-red-600 text-sm">حذف</button>
+
+                    <td className="p-5 text-center text-gray-500 text-xs">
+                      {new Date(u.created_at).toLocaleDateString('ar')}
+                    </td>
+
+                    <td className="p-5 text-center">
+
+                      {userRole === 'admin' &&
+                        u.email !== 'admin@syrian-students.lb' && (
+
+                        <button
+                          onClick={() => handleDeleteUser(u.id)}
+                          className="px-4 py-2 text-red-600 hover:text-red-700 text-sm"
+                        >
+                          حذف
+                        </button>
+
                       )}
+
                     </td>
+
                   </tr>
                 ))}
+
               </tbody>
             </table>
           </div>
-          <div className="mt-4 text-xs text-gray-500">ملاحظة: يمكنك ترقية أي مستخدم إلى مشرف.</div>
+
+          <div className="mt-4 text-xs text-gray-500">
+            ملاحظة: يمكنك ترقية أي مستخدم إلى مشرف أو مدير.
+          </div>
+
+        </div>
+      )} */}
+      {/* USERS TAB */}
+{activeTab === 'users' && (
+
+  <div>
+
+    {/* Header */}
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+
+      <div>
+        <div className="text-3xl font-bold">
+          إدارة المستخدمين
+        </div>
+
+        <div className="text-gray-500 text-sm mt-1">
+          عدد المستخدمين: {users.length}
+        </div>
+      </div>
+
+      <div className="flex flex-col md:flex-row gap-3">
+
+        <input
+          type="text"
+          placeholder="بحث عن مستخدم..."
+          value={userSearch}
+          onChange={(e) => setUserSearch(e.target.value)}
+          className="border px-4 py-3 rounded-2xl w-full md:w-72 outline-none focus:ring-2 focus:ring-emerald-500"
+        />
+
+        <button
+          onClick={exportUsersExcel}
+          className="bg-emerald-700 hover:bg-emerald-800 transition text-white px-6 py-3 rounded-2xl whitespace-nowrap"
+        >
+          Export Excel
+        </button>
+
+      </div>
+
+    </div>
+
+    {/* Table */}
+    <div className="bg-white border rounded-3xl overflow-x-auto shadow-sm">
+
+      <table className="w-full min-w-[1400px]">
+
+        <thead className="bg-gray-50 border-b text-sm">
+
+          <tr>
+
+            <th className="p-5 text-right">
+              المستخدم
+            </th>
+
+            <th className="p-5 text-right">
+              البريد الإلكتروني
+            </th>
+
+            <th className="p-5 text-right">
+              الجامعة
+            </th>
+
+            <th className="p-5 text-right">
+              التخصص
+            </th>
+
+            <th className="p-5 text-right">
+              تاريخ الميلاد
+            </th>
+
+            <th className="p-5 text-center">
+              الدور
+            </th>
+
+            <th className="p-5 text-center">
+              تاريخ التسجيل
+            </th>
+
+            <th className="p-5 text-center">
+              الإجراءات
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody className="divide-y text-sm">
+
+          {filteredUsers.map((u) => (
+
+            <tr
+              key={u.id}
+              className="hover:bg-gray-50 transition"
+            >
+
+              {/* User */}
+              <td className="p-5">
+
+                <div className="flex items-center gap-3">
+
+                  <div className="w-11 h-11 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">
+                    {u.first_name?.charAt(0) || 'U'}
+                  </div>
+
+                  <div>
+
+                    <div className="font-semibold text-gray-900">
+                      {u.first_name || '—'} {u.last_name || ''}
+                    </div>
+
+                    <div className="text-xs text-gray-400 mt-1">
+                      ID: {u.id}
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </td>
+
+              {/* Email */}
+              <td className="p-5 text-gray-600">
+                {u.email}
+              </td>
+
+              {/* University */}
+              <td className="p-5">
+                {u.university || '—'}
+              </td>
+
+              {/* Major */}
+              <td className="p-5">
+                {u.major || '—'}
+              </td>
+
+              {/* Birthday */}
+              <td className="p-5">
+
+                {u.birthday ? (
+
+                  <>
+                    <div>
+                      {u.birthday.split('T')[0]}
+                    </div>
+
+                    <div className="text-xs text-gray-400 mt-1">
+                      {new Date().getFullYear() - new Date(u.birthday).getFullYear()} سنة
+                    </div>
+                  </>
+
+                ) : '—'}
+
+              </td>
+
+              {/* Role */}
+              <td className="p-5 text-center">
+
+                {userRole === 'admin' ? (
+
+                  <select
+                    value={u.role}
+                    onChange={e =>
+                      handleChangeRole(
+                        u.id,
+                        e.target.value
+                      )
+                    }
+                    className={`px-3 py-2 rounded-xl text-sm border outline-none
+
+                      ${u.role === 'admin'
+                        ? 'bg-red-50 text-red-700 border-red-200'
+                        : u.role === 'moderator'
+                        ? 'bg-orange-50 text-orange-700 border-orange-200'
+                        : 'bg-gray-50 text-gray-700 border-gray-200'
+                      }
+                    `}
+                  >
+
+                    <option value="user">
+                      مستخدم
+                    </option>
+
+                    <option value="moderator">
+                      مشرف
+                    </option>
+
+                    <option value="admin">
+                      مدير
+                    </option>
+
+                  </select>
+
+                ) : (
+
+                  <span className="px-3 py-1 bg-gray-100 rounded-xl text-sm">
+                    {u.role}
+                  </span>
+
+                )}
+
+              </td>
+
+              {/* Created At */}
+              <td className="p-5 text-center text-gray-500 text-xs">
+
+                {new Date(u.created_at).toLocaleDateString('ar-EG', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+
+              </td>
+
+              {/* Actions */}
+              <td className="p-5 text-center">
+
+                {userRole === 'admin' &&
+                  u.email !== 'admin@syrian-students.lb' && (
+
+                  <button
+                    onClick={() => handleDeleteUser(u.id)}
+                    className="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl text-sm transition"
+                  >
+                    حذف
+                  </button>
+
+                )}
+
+              </td>
+
+            </tr>
+
+          ))}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    {/* Footer Note */}
+    <div className="mt-4 text-xs text-gray-500">
+      ملاحظة: يمكنك ترقية أي مستخدم إلى مشرف أو مدير.
+    </div>
+
+  </div>
+)}
+
+      
+      {/* ANNOUNCEMENTS TAB */}
+      {activeTab === 'announcements' && (
+
+        <div>
+
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold mb-2">
+              إرسال إشعار بريدي جماعي
+            </h2>
+
+            <p className="text-gray-600">
+              سيتم إرسال هذا الإشعار إلى جميع المستخدمين المسجلين في المنصة.
+            </p>
+          </div>
+
+          <div className="bg-white border rounded-3xl p-8 max-w-3xl">
+
+            <input
+              type="text"
+              placeholder="عنوان الإشعار"
+              value={announcementTitle}
+              onChange={(e) => setAnnouncementTitle(e.target.value)}
+              className="w-full border p-4 rounded-2xl mb-5"
+            />
+
+            <textarea
+              rows={8}
+              placeholder="اكتب محتوى الرسالة هنا..."
+              value={announcementMessage}
+              onChange={(e) => setAnnouncementMessage(e.target.value)}
+              className="w-full border p-4 rounded-3xl mb-6"
+            />
+
+            <button
+              onClick={handleSendAnnouncement}
+              disabled={sendingAnnouncement}
+              className="bg-emerald-700 hover:bg-emerald-800 transition text-white px-8 py-4 rounded-2xl font-semibold"
+            >
+              {sendingAnnouncement
+                ? 'جاري الإرسال...'
+                : 'إرسال الإشعار لجميع المستخدمين'}
+            </button>
+
+          </div>
+
         </div>
       )}
-
       {/* Post Modal */}
       {showPostModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
