@@ -18,7 +18,9 @@ import {
   Heart,
   Mail,
   Instagram,
-  Facebook
+  Facebook,
+  GraduationCap, MessagesSquare,HeartHandshake
+
 } from 'lucide-react';
 
 import { motion } from 'framer-motion';
@@ -201,17 +203,10 @@ const GUIDES = [
   id: 3,
   title: "الجامعات اللبنانية المعترف بها في سوريا",
   steps: [
-    "التأكد من أن الجامعة معترف بها لدى وزارة التعليم العالي السورية قبل التسجيل",
-    "الاحتفاظ بجميع الوثائق الأكاديمية الأصلية والمصدقة أثناء الدراسة",
-    "متابعة أي تحديثات أو تغييرات على قوائم الاعتراف الجامعي بشكل دوري",
-    "التأكد من اعتماد الاختصاص المطلوب وليس فقط اعتماد الجامعة",
-    "الاستفسار من وزارة التعليم العالي السورية قبل اختيار أي اختصاص حساس مثل الطب أو الصيدلة"
-  ],
-  requirements: [
-    "الجامعة اللبنانية",
+    "الجامعة اللبنانية (الجامعة الحكومية الرسمية)",
     "الجامعة الأمريكية في بيروت (AUB)",
     "الجامعة اللبنانية الأمريكية (LAU)",
-    "جامعة القديس يوسف (USJ)",
+    "جامعة القديس يوسف (USJ - اليسوعية)",
     "جامعة البلمند",
     "جامعة بيروت العربية",
     "الجامعة اللبنانية الدولية (LIU)",
@@ -224,12 +219,172 @@ const GUIDES = [
     "جامعة هايكازيان",
     "الجامعة الحديثة للإدارة والعلوم (MUBS)"
   ],
+  requirements: [
+    "التأكد من أن الجامعة معترف بها لدى وزارة التعليم العالي السورية قبل التسجيل",
+    "الاحتفاظ بجميع الوثائق الأكاديمية الأصلية والمصدقة أثناء فترة الدراسة",
+    "متابعة أي تحديثات أو تغييرات تطرأ على قوائم الاعتراف الجامعي بشكل دوري",
+    "التأكد من اعتماد الاختصاص والبرنامج المطلوب وليس فقط اعتماد اسم الجامعة العام",
+    "الاستفسار المباشر من وزارة التعليم العالي السورية قبل اختيار أي اختصاص حساس وحرج مثل الطب أو الصيدلة"
+  ],
   additionalConditions: [
     "اختصاص الصيدلة في جامعة الجنان غير معتمد في سوريا",
-    "قد تختلف شروط المعادلة بحسب الاختصاص والجامعة",
-    "يُنصح دائماً بالتحقق من أحدث قرارات وزارة التعليم العالي السورية قبل التسجيل"
+    "قد تختلف شروط ومعايير المعادلة بحسب الاختصاص والجامعة والشهادة الثانوية للطالب",
+    "يُنصح دائماً بالتحقق من أحدث قرارات وزارة التعليم العالي السورية قبل المباشرة بالتسجيل الفعلي"
   ]
-}
+},
+{
+    id: 6,
+    title: "نظام التعليم العام والموازي في سوريا",
+    steps: [
+      "الحصول على الشهادة الثانوية العامة (البكالوريا) للعام الدراسي الحالي حصراً",
+      "التقديم الإلكتروني عبر تطبيق المفاضلة الموحد الصادر عن وزارة التعليم العالي",
+      "ترتيب الرغبات في بطاقة المفاضلة بين خياري (التعليم العام المجاني) أو (التعليم الموازي المأجور)",
+      "انتظار صدور نتائج الحدود الدنيا للقبول ومعرفة الكلية أو المعهد المخصص للمجموع",
+      "توجه الطالب فيزيائياً إلى شؤون الطلاب في الكلية المقبول بها لاستكمال أوراق التسجيل والبطاقة الجامعية",
+      "الالتزام بالدوام النظامي اليومي طيلة أيام الأسبوع (من الأحد إلى الخميس) مع طلاب الدفعة"
+    ],
+    requirements: [
+      "وثيقة الشهادة الثانوية الأصلية وحديثة الصنع",
+      "صورة عن الهوية الشخصية أو القيد المدني",
+      "صور شخصية ملونة وحديثة (عدد 4 أو 6 حسب الكلية)",
+      "دفع رسوم التسجيل السنوية (رمزية للعام، ومحددة وثابتة للموازي)",
+      "البطاقة الاكتتابية للمفاضلة الإلكترونية"
+    ],
+    additionalConditions: [
+      "يقبل التعليم الموازي بمعدلات أقل بنسب معينة (2% إلى 5%) مقارنة بالتعليم العام",
+      "الشهادة الصادرة في نظام الموازي هي شهادة حكومية موحدة لا يُذكر فيها كلمة (موازي)",
+      "يسمح نظام التعليم العام للخريجين الأوائل بالترشح للمعيدية والإيفاد والدراسات العليا مجاناً"
+    ]
+  },
+  {
+    id: 7,
+    title: "نظام التعليم المفتوح في سوريا (تحديث المفاضلة المركزية)",
+    steps: [
+      "حيازة شهادة ثانوية عامة (قديمة أو حديثة) تتوافق مع شروط الفرع المطلوب",
+      "التقديم عبر المنصة الإلكترونية المركزية الموحدة للتعليم المفتوح (تتم لمرة واحدة سنوياً)",
+      "اختيار أحد البرامج المتاحة (حقوق، إعلام، ترجمة، محاسبة، إدارة مشاريع، رياض أطفال)",
+      "تسديد الرسوم المقررة عن كل مادة يتم التسجيل عليها بعد صدور نتائج القبول الإداري",
+      "حضور المحاضرات واللقاءات الصفية الفيزيائية المقررة حصراً يومي (الجمعة والسبت) من كل أسبوع",
+      "التقدم للامتحانات الفصلية المحددة في المراكز الامتحانية التابعة للجامعة الحكومية"
+    ],
+    requirements: [
+      "صورة مصدقة عن الشهادة الثانوية (لا يشترط سنة تخرج حديثة)",
+      "صورة عن البطاقة الشخصية (الهوية)",
+      "استمارة المفاضلة الإلكترونية المطبوعة",
+      "إيصال دفع الرسوم الجامعية لكل مقرر مشحون في الفصل الدراسي"
+    ],
+    additionalConditions: [
+      "لا يشترط الدوام اليومي، مما يجعله مناسباً للموظفين وأصحاب الأعمال",
+      "الشهادة تتيح التسجيل في دبلوم التأهيل التربوي أو ماجستيرات التأهيل والتخصص ولا تتيح الماجستير الأكاديمي مباشرة",
+      "يُسمح قانوناً بالجمع بين التعليم المفتوح وأي نظام تعليمي نظامي آخر (عام أو خاص)"
+    ]
+  },
+  {
+    id: 8,
+    title: "نظام التعليم الافتراضي (الجامعة الافتراضية السورية SVU)",
+    steps: [
+      "التأكد من مواعيد مفاضلة الجامعة الافتراضية (تصدر غالباً في فصلي الربيع والخريف)",
+      "التقديم عبر الموقع الرسمي للجامعة (SVU) واختيار البرنامج (معلوماتية، اتصالات، حقوق، إعلام، إدارة أعمال)",
+      "تسديد رسوم المفاضلة والتحقق من القبول عبر الحساب الإلكتروني للطالب",
+      "متابعة المحاضرات والدروس التفاعلية بالكامل عن بُعد (Online) عبر الإنترنت من أي مكان",
+      "حضور الامتحانات الفصلية والنهائية (فيزيائياً) داخل مراكز النفاذ المعتمدة (داخل سوريا أو مراكزها الدولية خارجها)"
+    ],
+    requirements: [
+      "الشهادة الثانوية العامة أو الشهادة الجامعية (للمتقدمين لبرامج الماجستير)",
+      "صورة عن الهوية الشخصية أو جواز السفر",
+      "حساب بنكي أو وسيلة دفع إلكترونية معتمدة لسداد رسوم المقررات",
+      "الحضور الفيزيائي الإلزامي في مراكز النفاذ أثناء تقديم الامتحانات فقط"
+    ],
+    additionalConditions: [
+      "تعتبر نمطاً تعليمياً حكومياً قائماً بحد ذاته يعتمد على التعليم الإلكتروني الذاتي والمدمج",
+      "تتيح الجامعة برامج ماجستير أكاديمية (بحثية) بالإضافة إلى ماجستيرات التأهيل والتخصص",
+      "تقبل الشهادات الثانوية القديمة والحديثة وتستقطب الطلاب المقيمين خارج سوريا لوجود مراكز امتحانية دولية (كلبنان والإمارات وغيرها)"
+    ]
+  },
+  {
+    id: 9,
+    title: "نظام التعليم الخاص في سوريا",
+    steps: [
+      "الاطلاع على شرائح المعدلات والحدود الدنيا المقررة من وزارة التعليم العالي للكليات الخاصة سنوياً",
+      "التقدم عبر مفاضلة الجامعات الخاصة المركزية واختيار الرغبات والجامعة المطلوبة",
+      "تثبيت التسجيل في مقر الجامعة الخاصة بعد صدور القبول وتسديد القسط الدراسي الأول",
+      "الالتزام بخطة الساعات المعتمدة (Credit Hours) المقررة للتخصص الدراسي ونظام الإرشاد الأكاديمي"
+    ],
+    requirements: [
+      "وثيقة الشهادة الثانوية الأصلية (سورية أو ما يعادلها)",
+      "وثائق إثبات الشخصية والصور الشخصية الحديثة",
+      "تسديد الأقساط والرسوم الدراسية المحتسبة على أساس سعر الساعة المعتمدة في الكلية"
+    ],
+    additionalConditions: [
+      "تخضع الجامعات الخاصة لإشراف أكاديمي مباشر من وزارة التعليم العالي السورية",
+      "تتطلب الكليات الطبية والهندسية معدلات مرتفعة نسبياً تحددها الوزارة لمنع التكسب التجاري على حساب الكفاءة",
+      "تعتمد أغلب الجامعات الخاصة نظام الفصول الدراسية الثلاثة (خريفي، ربيعي، وصيفي اختياري)"
+    ]
+  },
+  {
+    id: 10,
+    title: "سلسلة تصديق الشهادات والأوراق الرسمية بين لبنان وسوريا",
+    steps: [
+      "تصدير الوثيقة الأصلية (شهادة، كشف علامات، إخراج قيد) وتصديقها من إدارة المدرسة أو عمادة الجامعة",
+      "تصديق الوثيقة من وزارة التربية والتعليم العالي اللبنانية (الأونيسكو - بيروت)",
+      "الانتقال بالوثيقة إلى وزارة الخارجية والمغتربين اللبنانية لتصديقها رسميّاً",
+      "زيارة السفارة السورية في لبنان (منطقة اليرزة - بعبدا) للمصادقة على الأختام اللبنانية",
+      "بعد العودة إلى سوريا، يجب تصديق الوثيقة من وزارة الخارجية والمغتربين السورية بدمشق أو أحد مكاتبها بالمحافظات",
+      "ترجمة الوثيقة إلى اللغة العربية وتصديقها من وزارة العدل السورية (إذا كانت صادرة بلغة أجنبية كالإنكليزية أو الفرنسية)"
+    ],
+    requirements: [
+      "الوثائق الدراسية الأصلية",
+      "ختم وزارة التربية اللبنانية",
+      "ختم الخارجية اللبنانية",
+      "ختم السفارة السورية في بعبدا",
+      "ختم الخارجية السورية بدمشق"
+    ],
+    additionalConditions: [
+      "يُشترط حجز موعد مسبق في بعض الأحيان لمعاملات السفارة السورية في لبنان عبر منصاتهم الرسمية",
+      "الشهادات الصادرة عن المدارس الخاصة في لبنان تتطلب تصديقاً إضافياً من مصلحة التعليم الخاص بالوزارة قبل الخارجية"
+    ]
+  },
+  {
+    id: 11,
+    title: "شروط وضوابط الجمع بين دراسة تخصصين جامعيين في آن واحد",
+    steps: [
+      "التأكد من عدم الجمع بين نظامين متماثلين يمنع القانون دمجهم (مثل الجمع بين كليتين في التعليم العام معاً)",
+      "اختيار التخصص الأول في أحد الأنظمة النظامية المقيدة (تعليم عام، أو موازي، أو جامعات خاصة)",
+      "التسجيل في التخصص الثاني عبر الأنظمة المرنة المسموحة (التعليم المفتوح أو الجامعة الافتراضية السورية SVU)",
+      "تنسيق المواعيد الامتحانية بشكل شخصي، حيث لا تلتزم الجامعات بتعديل جداولها في حال تضارب امتحانات التخصصين"
+    ],
+    requirements: [
+      "شهادة ثانوية عامة متوافقة مع شروط كلا الفرعين (أو استخدام شهادتين ثانوية من عامين مختلفين)",
+      "الحصول على موافقة خطية من شؤون الطلاب في حال تطلب الأمر سحب وثيقة أصلية مؤقتاً لإتمام التسجيل الآخر"
+    ],
+    additionalConditions: [
+      "يُمنع منعاً باتاً الجمع بين كليتين طبيتين في أي من الأنظمة الدراسية",
+      "يحق للطالب المسجل في جامعة حكومية (عام أو موازي) التسجيل في الجامعة الافتراضية والتعليم المفتوح معاً ليصبح دارساً لثلاثة تخصصات قانونياً"
+    ]
+  },
+  {
+    id: 12,
+    title: "دليل الامتحان الوطني الموحد للخريجين من خارج سوريا (مركز القياس والتقويم)",
+    steps: [
+      "إتمام التعادل الإداري الأولي للشهادة غير السورية لدى وزارة التعليم العالي بدمشق",
+      "انتظار إحالة الملف من مديرية تعادل الشهادات إلى مركز القياس والتقويم السوري",
+      "التسجيل الإلكتروني على دورة الامتحان الوطني فور إعلان المركز عنها عبر موقعه الرسمي",
+      "سداد الرسوم المالية المقررة للامتحان في المصارف المعتمدة",
+      "خوض الامتحان الوطني الموحد (الذي يقام في مراكز الجامعات الحكومية) والنجاح بمعدل لا يقل عن 50% أو 60% حسب التخصص للترخيص"
+    ],
+    requirements: [
+      "وثيقة الإحالة الصادرة عن لجنة تعادل الشهادات بوزارة التعليم العالي",
+      "صورة عن الهوية الشخصية",
+      "إيصال سداد رسوم الامتحان الوطني الموحد",
+      "بطاقة الاكتتاب الخاصة بالمركز"
+    ],
+    additionalConditions: [
+      "يعد النجاح في هذا الامتحان شرطاً أساسياً وحتمياً للحصول على ترخيص ممارسة المهنة من وزارة الصحة والانتساب للنقابات",
+      "يخضع للامتحان خريجو كليات: الطب البشري، طب الأسنان، الصيدلة، الهندسة المعمارية، الهندسة المعلوماتية، والتمريض",
+      "علامة الامتحان الموحد تُعتمد أيضاً كمعيار تفاضلي رئيسي للقبول في مفاضلات الدراسات العليا (الماجستير)"
+    ]
+  }
+
 ];
 
 // FAQ Data
@@ -689,6 +844,108 @@ function HomePage() {
 }
 
 // About Page
+// function AboutPage() {
+//   return (
+//     <div className="max-w-4xl mx-auto px-6 py-16">
+//       <div className="text-center mb-14">
+//         <div className="text-emerald-700 tracking-[2px] text-sm">من نحن</div>
+//         <h1 className="text-6xl font-bold tracking-tighter mt-3">عن ملتقى الطلاب السوريين</h1>
+//       </div>
+
+//       <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+//         <img src="/images/team.jpeg" alt="طلاب سوريون" className="w-full rounded-3xl mb-12 shadow" />
+        
+//         <p className="text-2xl font-light mb-12">تأسس ملتقى الطلاب السوريين في لبنان كمبادرة تطوعية تهدف إلى دعم الطلاب السوريين الذين يواجهون تحديات تعليمية وإدارية في لبنان.</p>
+        
+//         <h3 className="text-3xl font-semibold mt-14 mb-6">أهداف الملتقى</h3>
+//         <ul className="grid md:grid-cols-2 gap-x-12 gap-y-4 text-lg">
+//           <li className="flex gap-3">• توفير معلومات موثوقة ومحدثة حول القرارات الرسمية</li>
+//           <li className="flex gap-3">• تسهيل عملية معادلة الشهادات والوثائق</li>
+//           <li className="flex gap-3">• دعم الطلاب في التحويل بين الجامعات</li>
+//           <li className="flex gap-3">• بناء مجتمع داعم ومتفاعل بين الطلاب</li>
+//         </ul>
+
+//         <h3 className="text-3xl font-semibold mt-14 mb-6">من المستفيدون؟</h3>
+//         <p>جميع الطلاب السوريين في لبنان من مرحلة الثانوية حتى الدراسات العليا، بالإضافة إلى العائلات السورية الباحثة عن فرص تعليمية لأبنائها.</p>
+//       </div>
+//       <h3 className="text-3xl font-semibold mt-20 mb-10 text-center">أعضاء ملتقى الطلاب السوريين</h3>
+
+//       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+//         {[
+//           {
+//             name: 'مصطفى المحيميد',
+//             role: 'مطور ومشرف تقني',
+//             image: '/images/team/mustafa.jpeg',
+//             desc: 'يهتم بتطوير المنصة وإدارة الأنظمة التقنية ودعم الطلاب رقمياً.'
+//           },
+//           {
+//             name: 'وليد ريحاوي',
+//             role: 'منسق شؤون جامعية',
+//             image: '/images/team/walid.jpeg',
+//             desc: 'مساعدة الطلاب في الجامعة وخصوصا الكليات الطبية'
+//           },  
+//           {
+//             name: 'عبدالبديع دشق',
+//             role: 'مشرف دعم طلابي',
+//             image: '/images/team/abedbadih.jpeg',
+//             desc: 'يعمل على متابعة استفسارات الطلاب وتقديم الدعم المباشر بالاضافة لاختصاص الصيدلة.'
+//           },
+//           {
+//             name: 'زاهدة العابد',
+//             role: 'مسؤولة الإعلام والتواصل',
+//             image: '/images/team/zahida1.jpeg',
+//             desc: 'علاقات مباشرة مع الطلاب بالاضافة منسق في سوريا'
+//           },
+
+//           {
+//             name: 'وئام الشاكوش',
+//             role: 'رئيسة الملتقى',
+//             image: '/images/team/weam.jpeg',
+//             desc: 'تنظم المبادرات واللقاءات والأنشطة التعليمية للطلاب.'
+//           },
+//           {
+//             name: 'عمر سمعو',
+//             role: 'مستشار أكاديمي ومطور تقني',
+//             image: '/images/team/omar.jpeg',
+//             desc: 'يقدم إرشادات أكاديمية حول الاختصاصات والجامعات خصوصا كلية الادارة والاقتصاد.'
+//           },
+//           {
+//             name: 'عبد القادر',
+//             role: 'مستشار أكاديمي',
+//             image: '/images/team/abedelkader.jpeg',
+//             desc: 'نائب الرئيس مسؤول عن الجامعات الخاصة'
+//           }
+//         ].map((member, index) => (
+//           <div
+//             key={index}
+//             className="bg-white border rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300"
+//           >
+//             <img
+//               src={member.image}
+//               alt={member.name}
+//               className="w-full h-72 object-cover"
+//             />
+
+//             <div className="p-6">
+//               <h4 className="text-2xl font-bold">{member.name}</h4>
+
+//               <div className="text-emerald-700 text-sm mt-1 mb-4">
+//                 {member.role}
+//               </div>
+
+//               <p className="text-gray-600 leading-relaxed text-sm">
+//                 {member.desc}
+//               </p>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
 function AboutPage() {
   return (
     <div className="max-w-4xl mx-auto px-6 py-16">
@@ -703,16 +960,68 @@ function AboutPage() {
         <p className="text-2xl font-light mb-12">تأسس ملتقى الطلاب السوريين في لبنان كمبادرة تطوعية تهدف إلى دعم الطلاب السوريين الذين يواجهون تحديات تعليمية وإدارية في لبنان.</p>
         
         <h3 className="text-3xl font-semibold mt-14 mb-6">أهداف الملتقى</h3>
-        <ul className="grid md:grid-cols-2 gap-x-12 gap-y-4 text-lg">
-          <li className="flex gap-3">• توفير معلومات موثوقة ومحدثة حول القرارات الرسمية</li>
-          <li className="flex gap-3">• تسهيل عملية معادلة الشهادات والوثائق</li>
-          <li className="flex gap-3">• دعم الطلاب في التحويل بين الجامعات</li>
-          <li className="flex gap-3">• بناء مجتمع داعم ومتفاعل بين الطلاب</li>
+        <ul className="grid md:grid-cols-2 gap-x-12 gap-y-4 text-lg list-none p-0">
+          <li className="flex gap-3">
+            <span className="text-emerald-700 font-bold">•</span>
+            توفير معلومات موثوقة ومحدثة حول القرارات الرسمية
+          </li>
+          <li className="flex gap-3">
+            <span className="text-emerald-700 font-bold">•</span>
+            تسهيل عملية معادلة الشهادات والوثائق
+          </li>
+          <li className="flex gap-3">
+            <span className="text-emerald-700 font-bold">•</span>
+            دعم الطلاب في التحويل بين الجامعات
+          </li>
+          <li className="flex gap-3">
+            <span className="text-emerald-700 font-bold">•</span>
+            بناء مجتمع داعم ومتفاعل بين الطلاب
+          </li>
         </ul>
 
+        {/* قسم أعمالنا وإنجازاتنا المضاف حديثاً */}
+        <h3 className="text-3xl font-semibold mt-16 mb-8 border-r-4 border-emerald-700 pr-4">أبرز أعمالنا وإنجازاتنا</h3>
+        <div className="grid md:grid-cols-3 gap-6 not-prose mb-16">
+          
+          {/* الإنجاز الأول */}
+          <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition duration-300 hover:border-emerald-300 shadow-sm">
+            <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
+              <Users className="w-6 h-6" />
+            </div>
+            <h4 className="text-xl font-bold mb-2 text-emerald-950">متابعة ديبلوماسية</h4>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              عقد اجتماعات مستمرة مع سفارة الجمهورية العربية السورية في بيروت لمتابعة وحل مشاكل الطلاب، لا سيما أزمات الإقامة والتسجيل الجامعي.
+            </p>
+          </div>
+
+          {/* الإنجاز الثاني */}
+          <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition duration-300 hover:border-emerald-300 shadow-sm">
+            <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
+              <GraduationCap className="w-6 h-6" />
+            </div>
+            <h4 className="text-xl font-bold mb-2 text-emerald-950">حفل التخرج الأول 2025</h4>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              تنظيم وإقامة أول حفل تخرج رسمي مخصص للطلاب السوريين في لبنان عام 2025، تقديراً لجهودهم وتفوقهم رغم كل التحديات.
+            </p>
+          </div>
+
+          {/* الإنجاز الثالث */}
+          <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition duration-300 hover:border-emerald-300 shadow-sm">
+            <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
+              <MessagesSquare className="w-6 h-6" />
+            </div>
+            <h4 className="text-xl font-bold mb-2 text-emerald-950">الدعم الاستشاري الرقمي</h4>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              المتابعة اليومية الفورية لكافة استفسارات وأسئلة الطلاب عبر منصات التواصل الاجتماعي ومجموعات الدعم لتوجيههم دراسياً وقانونياً.
+            </p>
+          </div>
+
+        </div>
+
         <h3 className="text-3xl font-semibold mt-14 mb-6">من المستفيدون؟</h3>
-        <p>جميع الطلاب السوريين في لبنان من مرحلة الثانوية حتى الدراسات العليا، بالإضافة إلى العائلات السورية الباحثة عن فرص تعليمية لأبنائها.</p>
+        <p className="mb-16">جميع الطلاب السوريين في لبنان من مرحلة الثانوية حتى الدراسات العليا، بالإضافة إلى العائلات السورية الباحثة عن فرص تعليمية لأبنائها.</p>
       </div>
+      
       <h3 className="text-3xl font-semibold mt-20 mb-10 text-center">أعضاء ملتقى الطلاب السوريين</h3>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -741,7 +1050,6 @@ function AboutPage() {
             image: '/images/team/zahida1.jpeg',
             desc: 'علاقات مباشرة مع الطلاب بالاضافة منسق في سوريا'
           },
-
           {
             name: 'وئام الشاكوش',
             role: 'رئيسة الملتقى',
@@ -785,11 +1093,23 @@ function AboutPage() {
           </div>
         ))}
       </div>
+
+      {/* الملاحظة التوضيحية المضافة في نهاية الصفحة */}
+      <div className="bg-amber-50/60 border border-amber-200/70 rounded-3xl p-6 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-right mt-16 shadow-sm">
+        <div className="bg-amber-600 text-white p-3 rounded-2xl shadow-sm shrink-0">
+          <HeartHandshake className="w-6 h-6" />
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-amber-950 mb-1">تنويه وعهد شفافية</h4>
+          <p className="text-amber-900 text-sm leading-relaxed m-0">
+            نحن في ملتقى الطلاب السوريين نسعى جاهدين وبشكل تطوعي كامل لخدمتكم ولتسهيل الإجراءات الأكاديمية والإدارية لكافة الطلاب، ونؤكد أننا <strong>لا نتلقى أي دعم مادي من أي جهة أو أحد</strong>، وغايتنا الأولى والأخيرة هي مصلحة الطالب ومساندته.
+          </p>
+        </div>
+      </div>
+
     </div>
   );
 }
-
-
 // News & Updates Page with CRUD for Admin
 function NewsPage({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -1525,10 +1845,10 @@ const adminApiCall = async (endpoint: string, method: string, body?: any) => {
           )
         ].join('\n');
 
-        const blob = new Blob(
-          [csvContent],
-          { type: 'text/csv;charset=utf-8;' }
-        );
+          const blob = new Blob(
+            ['\uFEFF' + csvContent],
+            { type: 'text/csv;charset=utf-8;' }
+          );
 
         const url = URL.createObjectURL(blob);
 
@@ -2756,6 +3076,150 @@ function ResetPasswordPage() {
 //   );
 // }
 
+// function Footer() {
+//   return (
+//     <footer className="mt-20 bg-emerald-950 text-white">
+      
+//       {/* Top Section */}
+//       <div className="max-w-7xl mx-auto px-6 py-14 grid md:grid-cols-3 gap-12">
+
+//         {/* About */}
+//         <div>
+//           <h3 className="text-2xl font-bold mb-4 tracking-tight">
+//             ملتقى الطلاب السوريين
+//           </h3>
+
+//           <p className="text-emerald-100 leading-relaxed text-sm">
+//             منصة طلابية تهدف إلى دعم الطلاب السوريين في لبنان عبر توفير
+//             المعلومات الرسمية، الأخبار الجامعية، الأدلة الإرشادية،
+//             والفرص التعليمية الحديثة.
+//           </p>
+//         </div>
+
+//         {/* Quick Links */}
+//         <div>
+//           <h4 className="font-semibold text-lg mb-5">
+//             روابط سريعة
+//           </h4>
+
+//           <div className="space-y-3 text-sm">
+//             <Link
+//               to="/news"
+//               className="block text-emerald-100 hover:text-white transition"
+//             >
+//               الأخبار والتحديثات
+//             </Link>
+
+//             <Link
+//               to="/guides"
+//               className="block text-emerald-100 hover:text-white transition"
+//             >
+//               الأدلة الإرشادية
+//             </Link>
+
+//             <Link
+//               to="/community"
+//               className="block text-emerald-100 hover:text-white transition"
+//             >
+//               المجتمع الطلابي
+//             </Link>
+
+//             <Link
+//               to="/faq"
+//               className="block text-emerald-100 hover:text-white transition"
+//             >
+//               الأسئلة الشائعة
+//             </Link>
+//           </div>
+//         </div>
+
+//         {/* Contact */}
+//         <div>
+//           <h4 className="font-semibold text-lg mb-5">
+//             تواصل معنا
+//           </h4>
+
+//           <div className="space-y-4">
+
+//             {/* Email */}
+//             <a
+//               href="mailto:syrianstudentsforum@gmail.com"
+//               className="flex items-center gap-3 bg-white/5 hover:bg-white/10 transition px-4 py-3 rounded-2xl"
+//             >
+//               <Mail className="w-5 h-5 text-emerald-300" />
+
+//               <div>
+//                 <div className="text-xs text-emerald-200">
+//                   البريد الإلكتروني
+//                 </div>
+
+//                 <div className="text-sm">
+//                   syrianstudentsforum@gmail.com
+//                 </div>
+//               </div>
+//             </a>
+
+//             {/* Instagram */}
+//             <a
+//               href="https://www.instagram.com/syrian_students_forum"
+//               target="_blank"
+//               rel="noopener noreferrer"
+//               className="flex items-center gap-3 bg-white/5 hover:bg-pink-500/20 transition px-4 py-3 rounded-2xl"
+//             >
+//               <Instagram className="w-5 h-5 text-pink-300" />
+
+//               <div>
+//                 <div className="text-xs text-emerald-200">
+//                   Instagram
+//                 </div>
+
+//                 <div className="text-sm">
+//                   @syrian_students_forum
+//                 </div>
+//               </div>
+//             </a>
+
+//             {/* Facebook */}
+//             <a
+//               href="https://www.facebook.com/share/1JMcAqhnNX/"
+//               target="_blank"
+//               rel="noopener noreferrer"
+//               className="flex items-center gap-3 bg-white/5 hover:bg-blue-500/20 transition px-4 py-3 rounded-2xl"
+//             >
+//               <Facebook className="w-5 h-5 text-blue-300" />
+
+//               <div>
+//                 <div className="text-xs text-emerald-200">
+//                   Facebook
+//                 </div>
+
+//                 <div className="text-sm">
+//                   Syrian Students Forum
+//                 </div>
+//               </div>
+//             </a>
+
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Bottom */}
+//       <div className="border-t border-white/10">
+//         <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-3 text-sm text-emerald-200">
+
+//           <div>
+//             © 2026 ملتقى الطلاب السوريين في لبنان
+//           </div>
+
+//           <div>
+//             Developed with dedication for Syrian students in Lebanon
+//           </div>
+//         </div>
+//       </div>
+//     </footer>
+//   );
+// }
+
 function Footer() {
   return (
     <footer className="mt-20 bg-emerald-950 text-white">
@@ -2820,6 +3284,26 @@ function Footer() {
           </h4>
 
           <div className="space-y-4">
+
+            {/* WhatsApp Community */}
+            <a
+              href="https://chat.whatsapp.com/C3iDIO4F9RYDQjqRgFIn42" // ضع رابط مجتمع أو مجموعة الواتساب هنا
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 bg-white/5 hover:bg-green-500/20 transition px-4 py-3 rounded-2xl border border-green-500/10"
+            >
+              <MessageCircle className="w-5 h-5 text-green-400" />
+
+              <div>
+                <div className="text-xs text-green-300 font-medium">
+                  مجتمع WhatsApp
+                </div>
+
+                <div className="text-sm">
+                  انضم إلى المجموعة الطلابية
+                </div>
+              </div>
+            </a>
 
             {/* Email */}
             <a
@@ -2899,5 +3383,7 @@ function Footer() {
     </footer>
   );
 }
+
+
 
 export default App;
