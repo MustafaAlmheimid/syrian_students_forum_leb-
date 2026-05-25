@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate ,useParams} from 'react-router-dom';
 import { 
@@ -66,6 +67,7 @@ type User = {
   birthday?: string;
   university?: string;
   major?: string;
+  phone?: string;
 };
 
 // Categories
@@ -440,6 +442,7 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [userRole, setUserRole] = useState<string>('user');
   const [loading, setLoading] = useState(true);
+  
 
   // Local auth state (SQLite)
   useEffect(() => {
@@ -3107,7 +3110,8 @@ const adminApiCall = async (endpoint: string, method: string, body?: any) => {
           'Major',
           'Birthday',
           'Role',
-          'Created At'
+          'Created At',
+          'phone'
         ];
 
         const rows = filteredUsers.map((u) => [
@@ -3118,7 +3122,8 @@ const adminApiCall = async (endpoint: string, method: string, body?: any) => {
           u.major || '',
           u.birthday || '',
           u.role || '',
-          u.created_at || ''
+          u.created_at || '',
+          u.phone || ''
         ]);
 
         const csvContent = [
@@ -3545,6 +3550,9 @@ const adminApiCall = async (endpoint: string, method: string, body?: any) => {
             <th className="p-5 text-right">
               البريد الإلكتروني
             </th>
+            <th className="p-5 text-right">
+             رقم الهاتف
+            </th>
 
             <th className="p-5 text-right">
               الجامعة
@@ -3611,6 +3619,10 @@ const adminApiCall = async (endpoint: string, method: string, body?: any) => {
               {/* Email */}
               <td className="p-5 text-gray-600">
                 {u.email}
+              </td>
+              {/* Phone */}
+              <td className="p-5 text-gray-600">
+                {u.phone}
               </td>
 
               {/* University */}
@@ -3818,6 +3830,7 @@ function AuthPage() {
   const [major, setMajor] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
 
   const [error, setError] = useState('');
 
@@ -3844,9 +3857,9 @@ function AuthPage() {
           birthday,
           university,
           major,
-
           email,
-          password
+          password,
+          phone
         })
       });
 
@@ -3939,7 +3952,14 @@ function AuthPage() {
                 className="w-full px-5 py-4 border rounded-2xl"
                 required
               />
-
+            <input
+              type="tel"
+              value={phone}
+              onChange={e => setPhone(e.target.value)}
+              placeholder="رقم الهاتف"
+              className="w-full px-5 py-4 border rounded-2xl"
+              required
+            />
             </>
           )}
 
@@ -4014,7 +4034,8 @@ function ProfilePage() {
     last_name: '',
     birthday: '',
     university: '',
-    major: ''
+    major: '',
+    phone: ''
   });
 
   useEffect(() => {
@@ -4028,7 +4049,8 @@ function ProfilePage() {
           last_name: data.last_name || '',
           birthday: data.birthday || '',
           university: data.university || '',
-          major: data.major || ''
+          major: data.major || '',
+          phone: data.phone || ''
         });
       });
 
@@ -4125,6 +4147,17 @@ function ProfilePage() {
           placeholder="التخصص"
           className="w-full border p-4 rounded-2xl"
         />
+        <input
+        value={form.phone || ''}
+        onChange={e =>
+          setForm({
+            ...form,
+            phone: e.target.value
+          })
+        }
+        placeholder="رقم الهاتف"
+        className="w-full border p-4 rounded-2xl"
+      />
 
         <button
           onClick={handleSave}

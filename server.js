@@ -63,6 +63,7 @@ app.post('/api/auth', async (req, res) => {
       birthday,
       university,
       major,
+      phone,
       email,
       password
     } = req.body;
@@ -85,18 +86,19 @@ app.post('/api/auth', async (req, res) => {
         });
       }
 
-      return res.json({
-        user: {
-          id: user.id,
-          email: user.email,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          birthday: user.birthday,
-          university: user.university,
-          major: user.major,
-          role: user.role
-        }
-      });
+        return res.json({
+          user: {
+            id: user.id,
+            email: user.email,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            birthday: user.birthday,
+            university: user.university,
+            major: user.major,
+            phone: user.phone,
+            role: user.role
+          }
+        });
     }
 
     // SIGNUP
@@ -119,27 +121,29 @@ app.post('/api/auth', async (req, res) => {
 
       const [newUser] = await sql`
         INSERT INTO users (
-          id,
-          first_name,
-          last_name,
-          birthday,
-          university,
-          major,
-          email,
-          password,
-          role
-        )
-        VALUES (
-          ${id},
-          ${first_name},
-          ${last_name},
-          ${birthday},
-          ${university},
-          ${major},
-          ${email},
-          ${password},
-          'user'
-        )
+            id,
+            first_name,
+            last_name,
+            birthday,
+            university,
+            major,
+            phone,
+            email,
+            password,
+            role
+          )
+          VALUES (
+            ${id},
+            ${first_name},
+            ${last_name},
+            ${birthday},
+            ${university},
+            ${major},
+            ${phone},
+            ${email},
+            ${password},
+            'user'
+          )
         RETURNING *
       `;
 
@@ -870,6 +874,7 @@ app.get('/api/admin/users', async (req, res) => {
       birthday,
       university,
       major,
+      phone,
       role,
       created_at
     FROM users
@@ -977,6 +982,7 @@ app.get('/api/profile/:id', async (req, res) => {
         birthday,
         university,
         major,
+        phone,
         role
       FROM users
       WHERE id = ${id}
@@ -1009,19 +1015,21 @@ app.put('/api/profile', async (req, res) => {
       last_name,
       birthday,
       university,
-      major
+      major,
+      phone
     } = req.body;
 
     const [updatedUser] = await sql`
       UPDATE users
-      SET
-        first_name = ${first_name},
-        last_name = ${last_name},
-        birthday = ${birthday},
-        university = ${university},
-        major = ${major}
-      WHERE id = ${id}
-      RETURNING *
+        SET
+          first_name = ${first_name},
+          last_name = ${last_name},
+          birthday = ${birthday},
+          university = ${university},
+          major = ${major},
+          phone = ${phone}
+        WHERE id = ${id}
+        RETURNING *
     `;
 
     res.json(updatedUser);
@@ -1193,7 +1201,7 @@ app.post('/api/forgot-password', async (req, res) => {
   }
 });
 
-//
+//reset password
 app.post('/api/reset-password', async (req, res) => {
 
   try {
