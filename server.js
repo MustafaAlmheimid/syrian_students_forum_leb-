@@ -92,7 +92,9 @@ app.post('/api/auth', async (req, res) => {
             email: user.email,
             first_name: user.first_name,
             last_name: user.last_name,
-            birthday: user.birthday,
+            birthday: user.birthday
+            ? user.birthday.toISOString().split('T')[0]
+            : null,
             university: user.university,
             major: user.major,
             phone: user.phone,
@@ -215,7 +217,9 @@ app.post('/api/auth', async (req, res) => {
           id: newUser.id,
           first_name: newUser.first_name,
           last_name: newUser.last_name,
-          birthday: newUser.birthday,
+          birthday: newUser.birthday  ? 
+          user.birthday.toISOString().split('T')[0]
+          : null,
           university: newUser.university,
           major: newUser.major,
           email: newUser.email,
@@ -994,7 +998,14 @@ app.get('/api/profile/:id', async (req, res) => {
       });
     }
 
-    res.json(users[0]);
+    const user = users[0];
+
+    res.json({
+      ...user,
+      birthday: user.birthday
+        ? user.birthday.toISOString().split('T')[0]
+        : null
+    });
 
   } catch (err) {
 

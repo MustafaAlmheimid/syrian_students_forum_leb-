@@ -3646,7 +3646,7 @@ const adminApiCall = async (endpoint: string, method: string, body?: any) => {
                     </div>
 
                     <div className="text-xs text-gray-400 mt-1">
-                      {new Date().getFullYear() - new Date(u.birthday).getFullYear()} سنة
+                      {new Date().getFullYear() - parseInt(u.birthday.split('-')[0])} سنة
                     </div>
                   </>
 
@@ -4047,7 +4047,9 @@ function ProfilePage() {
         setForm({
           first_name: data.first_name || '',
           last_name: data.last_name || '',
-          birthday: data.birthday || '',
+          birthday: data.birthday
+          ? data.birthday.split('T')[0]
+          : '',
           university: data.university || '',
           major: data.major || '',
           phone: data.phone || ''
