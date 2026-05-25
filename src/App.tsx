@@ -19,7 +19,7 @@ import {
   Mail,
   Instagram,
   Facebook,
-  GraduationCap, MessagesSquare,HeartHandshake
+  GraduationCap, MessagesSquare,HeartHandshake,Sparkles 
 
 } from 'lucide-react';
 
@@ -404,6 +404,33 @@ const FAQS = [
   {
     q: "هل يوجد رسوم للاستفادة من خدمات الملتقى؟",
     a: "الملتقى مجاني تماماً لجميع الطلاب السوريين في لبنان."
+  },
+
+  // إضافات قوية
+
+  {
+    q: "هل يمكنني نشر إعلان أو فرصة تعليمية؟",
+    a: "نعم، يمكن للطلاب مشاركة الفرص التعليمية والمنح والدورات بعد مراجعتها من الإدارة لضمان الموثوقية."
+  },
+  {
+    q: "كيف يمكنني التواصل مع إدارة الملتقى؟",
+    a: "يمكنك التواصل معنا عبر صفحة التواصل أو من خلال حساباتنا الرسمية على وسائل التواصل الاجتماعي."
+  },
+  {
+    q: "هل يدعم الموقع الهواتف المحمولة؟",
+    a: "نعم، تم تصميم المنصة لتعمل بشكل كامل على الهواتف والأجهزة اللوحية وأجهزة الكمبيوتر."
+  },
+  {
+    q: "ما نوع الأخبار التي يتم نشرها؟",
+    a: "يتم نشر الأخبار المتعلقة بالجامعات، القرارات الرسمية، المنح الدراسية، التسجيل، والإجراءات التعليمية الخاصة بالطلاب السوريين."
+  },
+  {
+    q: "هل يمكن للطلاب من خارج لبنان الاستفادة من المنصة؟",
+    a: "حالياً تركز المنصة على الطلاب السوريين في لبنان، لكن بعض المحتوى والخدمات قد تكون مفيدة للطلاب السوريين في دول أخرى."
+  },
+  {
+    q: "هل يتم حفظ بياناتي بشكل آمن؟",
+    a: "نعم، نحرص على حماية بيانات المستخدمين وعدم مشاركتها مع أي جهة خارجية."
   }
 ];
 
@@ -716,6 +743,134 @@ function Navbar({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
 }
 
 // Homepage
+// function HomePage() {
+//   const [latestPosts, setLatestPosts] = useState<Post[]>([]);
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     fetch('/api/posts')
+//       .then(res => res.json())
+//       .then(data => {
+//         setLatestPosts(data.slice(0, 3));
+//         setLoading(false);
+//       })
+//       .catch(() => setLoading(false));
+//   }, []);
+
+//   return (
+//     <div>
+//       {/* Hero Section */}
+//         <div className="relative min-h-[720px] md:h-[620px] bg-emerald-950 text-white overflow-hidden">        <div
+//           className="absolute inset-0 bg-cover bg-center"
+//           style={{ backgroundImage: "url('/images/hero3.png')" }}
+//         />
+
+//         <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/95 via-emerald-950/90 to-emerald-950/70" />
+
+//         <div className="relative max-w-5xl mx-auto px-6 pt-24 pb-16 text-center">
+          
+//           <div className="inline-block mb-5 px-4 py-1 bg-white/10 backdrop-blur rounded-full text-sm tracking-wider">
+//             منصة رسمية للطلاب السوريين
+//           </div>
+
+//           <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter leading-tight">
+//             ملتقى الطلاب السوريين في لبنان
+//           </h1>
+
+//           <div className="mt-4 text-emerald-200 text-lg sm:text-xl md:text-2xl tracking-[2px] sm:tracking-[4px] font-light uppercase">
+//             Syrian Students Forum
+//           </div>
+
+//           <p className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-emerald-100 mt-8 mb-10 leading-relaxed px-2">
+//             منصة معتمدة توفر أحدث المعلومات والفرص التفاعلية لدعم الطلاب السوريين
+//             في مسيرتهم التعليمية داخل لبنان
+//           </p>
+
+//           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+//             <Link
+//               to="/news"
+//               className="px-10 py-4 bg-white text-emerald-950 font-semibold rounded-2xl hover:bg-white/90 transition flex items-center gap-2"
+//             >
+//               <Newspaper className="w-5 h-5" />
+//               تصفح الأخبار
+//             </Link>
+
+//             <Link
+//               to="/community"
+//               className="px-10 py-4 border-2 border-white/70 hover:bg-white/10 rounded-2xl font-semibold transition flex items-center gap-2"
+//             >
+//               <MessageCircle className="w-5 h-5" />
+//               انضم إلى المجتمع
+//             </Link>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Mission Section */}
+//       <div className="max-w-5xl mx-auto px-6 py-20">
+//         <div className="grid md:grid-cols-2 gap-16 items-center">
+//           <div>
+//             <div className="uppercase text-emerald-700 tracking-[3px] text-sm mb-3">رسالتنا</div>
+//             <h2 className="text-5xl font-semibold tracking-tighter leading-none mb-6">نحن هنا لدعمكم</h2>
+//             <p className="text-xl text-gray-600 leading-relaxed">
+//               يهدف ملتقى الطلاب السوريين في لبنان إلى تمكين الطلاب السوريين من الوصول إلى المعلومات الدقيقة والخدمات التعليمية، وتوفير منصة آمنة للتفاعل والتبادل.
+//             </p>
+//           </div>
+//           <div className="space-y-5 text-lg">
+//             <div className="flex gap-4"><div className="font-semibold text-emerald-700 min-w-[120px]">الرؤية:</div> <div>تمكين جيل متعلم وقادر على المساهمة في بناء مستقبل سوريا.</div></div>
+//             <div className="flex gap-4"><div className="font-semibold text-emerald-700 min-w-[120px]">الهدف:</div> <div>تقديم دعم شامل وموثوق لأكثر من ١٢ ألف طالب سوري في لبنان.</div></div>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Latest News */}
+//       <div className="bg-white py-16 border-t">
+//         <div className="max-w-6xl mx-auto px-6">
+//           <div className="flex justify-between items-end mb-8">
+//             <div>
+//               <div className="text-emerald-700 text-sm tracking-widest">آخر التحديثات</div>
+//               <div className="text-4xl font-semibold">أحدث الأخبار</div>
+//             </div>
+//             <Link to="/news" className="text-emerald-700 hover:underline flex items-center gap-1">عرض الكل ←</Link>
+//           </div>
+
+//           {loading ? (
+//             <div className="text-center py-10">جاري التحميل...</div>
+//           ) : (
+//             <div className="grid md:grid-cols-3 gap-6">
+//               {latestPosts.map((post, index) => (
+//                 <motion.div whileHover={{ y: -4 }} key={index} className="border bg-white rounded-3xl p-7 group">
+//                   <div className="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-medium rounded mb-4">{post.category}</div>
+//                   <h3 className="font-semibold text-xl mb-3 leading-tight group-hover:text-emerald-700 transition">{post.title}</h3>
+//                   <p className="text-gray-600 line-clamp-3 mb-4 text-[15px]">{post.content}</p>
+//                   <div className="text-xs text-gray-400">{new Date(post.created_at).toLocaleDateString('ar-EG')}</div>
+//                 </motion.div>
+//               ))}
+//             </div>
+//           )}
+//         </div>
+//       </div>
+
+//       {/* Quick Navigation */}
+//       <div className="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-4 gap-4">
+//         {[
+//           { icon: BookOpen, title: "الأدلة الإرشادية", desc: "خطوات واضحة لمعادلة الشهادات", link: "/guides" },
+//           { icon: MessageCircle, title: "المجتمع التفاعلي", desc: "اسأل وشارك مع الطلاب", link: "/community" },
+//           { icon: Newspaper, title: "الأخبار والقرارات", desc: "متابعة التحديثات الرسمية", link: "/news" },
+//           { icon: HelpCircle, title: "الأسئلة الشائعة", desc: "إجابات سريعة لاستفساراتكم", link: "/faq" },
+//         ].map((item, idx) => (
+//           <Link to={item.link} key={idx} className="group bg-white border hover:border-emerald-200 p-8 rounded-3xl transition">
+//             <item.icon className="w-9 h-9 text-emerald-700 mb-6 group-hover:scale-110 transition" />
+//             <div className="font-semibold text-xl mb-1.5">{item.title}</div>
+//             <p className="text-sm text-gray-600">{item.desc}</p>
+//           </Link>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+// Homepage
 function HomePage() {
   const [latestPosts, setLatestPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
@@ -731,38 +886,76 @@ function HomePage() {
   }, []);
 
   return (
-    <div>
+    <div className="overflow-hidden">
+
       {/* Hero Section */}
-        <div className="relative min-h-[720px] md:h-[620px] bg-emerald-950 text-white overflow-hidden">        <div
+      <div className="relative min-h-[720px] md:h-[620px] bg-emerald-950 text-white overflow-hidden">
+
+        {/* Background */}
+        <motion.div
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 8 }}
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: "url('/images/hero3.png')" }}
         />
 
+        {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/95 via-emerald-950/90 to-emerald-950/70" />
 
+        {/* Floating Blur */}
+        <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-400/20 blur-3xl rounded-full" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-teal-300/20 blur-3xl rounded-full" />
+
         <div className="relative max-w-5xl mx-auto px-6 pt-24 pb-16 text-center">
-          
-          <div className="inline-block mb-5 px-4 py-1 bg-white/10 backdrop-blur rounded-full text-sm tracking-wider">
+
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-block mb-5 px-4 py-1 bg-white/10 backdrop-blur rounded-full text-sm tracking-wider border border-white/10"
+          >
             منصة رسمية للطلاب السوريين
-          </div>
+          </motion.div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter leading-tight">
+          <motion.h1
+            initial={{ opacity: 0, y: 35 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter leading-tight"
+          >
             ملتقى الطلاب السوريين في لبنان
-          </h1>
+          </motion.h1>
 
-          <div className="mt-4 text-emerald-200 text-lg sm:text-xl md:text-2xl tracking-[2px] sm:tracking-[4px] font-light uppercase">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="mt-4 text-emerald-200 text-lg sm:text-xl md:text-2xl tracking-[2px] sm:tracking-[4px] font-light uppercase"
+          >
             Syrian Students Forum
-          </div>
+          </motion.div>
 
-          <p className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-emerald-100 mt-8 mb-10 leading-relaxed px-2">
+          <motion.p
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-emerald-100 mt-8 mb-10 leading-relaxed px-2"
+          >
             منصة معتمدة توفر أحدث المعلومات والفرص التفاعلية لدعم الطلاب السوريين
             في مسيرتهم التعليمية داخل لبنان
-          </p>
+          </motion.p>
 
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="flex flex-col sm:flex-row justify-center items-center gap-4"
+          >
+
             <Link
               to="/news"
-              className="px-10 py-4 bg-white text-emerald-950 font-semibold rounded-2xl hover:bg-white/90 transition flex items-center gap-2"
+              className="px-10 py-4 bg-white text-emerald-950 font-semibold rounded-2xl hover:bg-white/90 hover:scale-105 transition-all duration-300 flex items-center gap-2 shadow-lg"
             >
               <Newspaper className="w-5 h-5" />
               تصفح الأخبار
@@ -770,79 +963,231 @@ function HomePage() {
 
             <Link
               to="/community"
-              className="px-10 py-4 border-2 border-white/70 hover:bg-white/10 rounded-2xl font-semibold transition flex items-center gap-2"
+              className="px-10 py-4 border-2 border-white/70 hover:bg-white/10 hover:scale-105 rounded-2xl font-semibold transition-all duration-300 flex items-center gap-2 backdrop-blur-sm"
             >
               <MessageCircle className="w-5 h-5" />
               انضم إلى المجتمع
             </Link>
-          </div>
+
+          </motion.div>
+
         </div>
       </div>
 
       {/* Mission Section */}
-      <div className="max-w-5xl mx-auto px-6 py-20">
+      <motion.div
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7 }}
+        viewport={{ once: true }}
+        className="max-w-5xl mx-auto px-6 py-20"
+      >
+
         <div className="grid md:grid-cols-2 gap-16 items-center">
+
           <div>
-            <div className="uppercase text-emerald-700 tracking-[3px] text-sm mb-3">رسالتنا</div>
-            <h2 className="text-5xl font-semibold tracking-tighter leading-none mb-6">نحن هنا لدعمكم</h2>
+
+            <div className="uppercase text-emerald-700 tracking-[3px] text-sm mb-3">
+              رسالتنا
+            </div>
+
+            <h2 className="text-5xl font-semibold tracking-tighter leading-none mb-6">
+              نحن هنا لدعمكم
+            </h2>
+
             <p className="text-xl text-gray-600 leading-relaxed">
               يهدف ملتقى الطلاب السوريين في لبنان إلى تمكين الطلاب السوريين من الوصول إلى المعلومات الدقيقة والخدمات التعليمية، وتوفير منصة آمنة للتفاعل والتبادل.
             </p>
+
           </div>
+
           <div className="space-y-5 text-lg">
-            <div className="flex gap-4"><div className="font-semibold text-emerald-700 min-w-[120px]">الرؤية:</div> <div>تمكين جيل متعلم وقادر على المساهمة في بناء مستقبل سوريا.</div></div>
-            <div className="flex gap-4"><div className="font-semibold text-emerald-700 min-w-[120px]">الهدف:</div> <div>تقديم دعم شامل وموثوق لأكثر من ١٢ ألف طالب سوري في لبنان.</div></div>
+
+            <motion.div
+              whileHover={{ x: -5 }}
+              className="flex gap-4 bg-white border rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300"
+            >
+              <div className="font-semibold text-emerald-700 min-w-[120px]">
+                الرؤية:
+              </div>
+
+              <div>
+                تمكين جيل متعلم وقادر على المساهمة في بناء مستقبل سوريا.
+              </div>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ x: -5 }}
+              className="flex gap-4 bg-white border rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300"
+            >
+              <div className="font-semibold text-emerald-700 min-w-[120px]">
+                الهدف:
+              </div>
+
+              <div>
+                تقديم دعم شامل وموثوق لأكثر من ١٢ ألف طالب سوري في لبنان.
+              </div>
+            </motion.div>
+
           </div>
+
         </div>
-      </div>
+
+      </motion.div>
 
       {/* Latest News */}
       <div className="bg-white py-16 border-t">
+
         <div className="max-w-6xl mx-auto px-6">
-          <div className="flex justify-between items-end mb-8">
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+            className="flex justify-between items-end mb-8"
+          >
+
             <div>
-              <div className="text-emerald-700 text-sm tracking-widest">آخر التحديثات</div>
-              <div className="text-4xl font-semibold">أحدث الأخبار</div>
+
+              <div className="text-emerald-700 text-sm tracking-widest">
+                آخر التحديثات
+              </div>
+
+              <div className="text-4xl font-semibold">
+                أحدث الأخبار
+              </div>
+
             </div>
-            <Link to="/news" className="text-emerald-700 hover:underline flex items-center gap-1">عرض الكل ←</Link>
-          </div>
+
+            <Link
+              to="/news"
+              className="text-emerald-700 hover:underline flex items-center gap-1"
+            >
+              عرض الكل ←
+            </Link>
+
+          </motion.div>
 
           {loading ? (
-            <div className="text-center py-10">جاري التحميل...</div>
+            <div className="text-center py-10">
+              جاري التحميل...
+            </div>
           ) : (
             <div className="grid md:grid-cols-3 gap-6">
+
               {latestPosts.map((post, index) => (
-                <motion.div whileHover={{ y: -4 }} key={index} className="border bg-white rounded-3xl p-7 group">
-                  <div className="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-medium rounded mb-4">{post.category}</div>
-                  <h3 className="font-semibold text-xl mb-3 leading-tight group-hover:text-emerald-700 transition">{post.title}</h3>
-                  <p className="text-gray-600 line-clamp-3 mb-4 text-[15px]">{post.content}</p>
-                  <div className="text-xs text-gray-400">{new Date(post.created_at).toLocaleDateString('ar-EG')}</div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.15 }}
+                  viewport={{ once: true }}
+                  whileHover={{
+                    y: -8,
+                    scale: 1.02
+                  }}
+                  key={index}
+                  className="border bg-white rounded-3xl p-7 group shadow-sm hover:shadow-2xl transition-all duration-500"
+                >
+
+                  <div className="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-medium rounded mb-4">
+                    {post.category}
+                  </div>
+
+                  <h3 className="font-semibold text-xl mb-3 leading-tight group-hover:text-emerald-700 transition">
+                    {post.title}
+                  </h3>
+
+                  <p className="text-gray-600 line-clamp-3 mb-4 text-[15px]">
+                    {post.content}
+                  </p>
+
+                  <div className="text-xs text-gray-400">
+                    {new Date(post.created_at).toLocaleDateString('ar-EG')}
+                  </div>
+
                 </motion.div>
+
               ))}
+
             </div>
           )}
+
         </div>
+
       </div>
 
       {/* Quick Navigation */}
       <div className="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-4 gap-4">
+
         {[
-          { icon: BookOpen, title: "الأدلة الإرشادية", desc: "خطوات واضحة لمعادلة الشهادات", link: "/guides" },
-          { icon: MessageCircle, title: "المجتمع التفاعلي", desc: "اسأل وشارك مع الطلاب", link: "/community" },
-          { icon: Newspaper, title: "الأخبار والقرارات", desc: "متابعة التحديثات الرسمية", link: "/news" },
-          { icon: HelpCircle, title: "الأسئلة الشائعة", desc: "إجابات سريعة لاستفساراتكم", link: "/faq" },
+          {
+            icon: BookOpen,
+            title: "الأدلة الإرشادية",
+            desc: "خطوات واضحة لمعادلة الشهادات",
+            link: "/guides"
+          },
+          {
+            icon: MessageCircle,
+            title: "المجتمع التفاعلي",
+            desc: "اسأل وشارك مع الطلاب",
+            link: "/community"
+          },
+          {
+            icon: Newspaper,
+            title: "الأخبار والقرارات",
+            desc: "متابعة التحديثات الرسمية",
+            link: "/news"
+          },
+          {
+            icon: HelpCircle,
+            title: "الأسئلة الشائعة",
+            desc: "إجابات سريعة لاستفساراتكم",
+            link: "/faq"
+          },
         ].map((item, idx) => (
-          <Link to={item.link} key={idx} className="group bg-white border hover:border-emerald-200 p-8 rounded-3xl transition">
-            <item.icon className="w-9 h-9 text-emerald-700 mb-6 group-hover:scale-110 transition" />
-            <div className="font-semibold text-xl mb-1.5">{item.title}</div>
-            <p className="text-sm text-gray-600">{item.desc}</p>
-          </Link>
+
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: idx * 0.1 }}
+            viewport={{ once: true }}
+            whileHover={{
+              y: -10,
+              scale: 1.02
+            }}
+          >
+
+            <Link
+              to={item.link}
+              className="group bg-white border hover:border-emerald-200 p-8 rounded-3xl transition-all duration-500 block shadow-sm hover:shadow-2xl"
+            >
+
+              <item.icon className="w-9 h-9 text-emerald-700 mb-6 group-hover:scale-110 transition duration-300" />
+
+              <div className="font-semibold text-xl mb-1.5">
+                {item.title}
+              </div>
+
+              <p className="text-sm text-gray-600">
+                {item.desc}
+              </p>
+
+            </Link>
+
+          </motion.div>
+
         ))}
+
       </div>
+
     </div>
   );
 }
 
+//without animation
 // About Page
 // function AboutPage() {
 //   return (
@@ -946,85 +1291,857 @@ function HomePage() {
 
 
 
-function AboutPage() {
-  return (
-    <div className="max-w-4xl mx-auto px-6 py-16">
-      <div className="text-center mb-14">
-        <div className="text-emerald-700 tracking-[2px] text-sm">من نحن</div>
-        <h1 className="text-6xl font-bold tracking-tighter mt-3">عن ملتقى الطلاب السوريين</h1>
-      </div>
+// function AboutPage() {
+//   return (
+//     <div className="max-w-4xl mx-auto px-6 py-16">
+//       <div className="text-center mb-14">
+//         <div className="text-emerald-700 tracking-[2px] text-sm">من نحن</div>
+//         <h1 className="text-6xl font-bold tracking-tighter mt-3">عن ملتقى الطلاب السوريين</h1>
+//       </div>
 
-      <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-        <img src="/images/team.jpeg" alt="طلاب سوريون" className="w-full rounded-3xl mb-12 shadow" />
+//       <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+//         <img src="/images/team.jpeg" alt="طلاب سوريون" className="w-full rounded-3xl mb-12 shadow" />
         
-        <p className="text-2xl font-light mb-12">تأسس ملتقى الطلاب السوريين في لبنان كمبادرة تطوعية تهدف إلى دعم الطلاب السوريين الذين يواجهون تحديات تعليمية وإدارية في لبنان.</p>
+//         <p className="text-2xl font-light mb-12">تأسس ملتقى الطلاب السوريين في لبنان كمبادرة تطوعية تهدف إلى دعم الطلاب السوريين الذين يواجهون تحديات تعليمية وإدارية في لبنان.</p>
         
-        <h3 className="text-3xl font-semibold mt-14 mb-6">أهداف الملتقى</h3>
-        <ul className="grid md:grid-cols-2 gap-x-12 gap-y-4 text-lg list-none p-0">
-          <li className="flex gap-3">
-            <span className="text-emerald-700 font-bold">•</span>
-            توفير معلومات موثوقة ومحدثة حول القرارات الرسمية
-          </li>
-          <li className="flex gap-3">
-            <span className="text-emerald-700 font-bold">•</span>
-            تسهيل عملية معادلة الشهادات والوثائق
-          </li>
-          <li className="flex gap-3">
-            <span className="text-emerald-700 font-bold">•</span>
-            دعم الطلاب في التحويل بين الجامعات
-          </li>
-          <li className="flex gap-3">
-            <span className="text-emerald-700 font-bold">•</span>
-            بناء مجتمع داعم ومتفاعل بين الطلاب
-          </li>
-        </ul>
+//         <h3 className="text-3xl font-semibold mt-14 mb-6">أهداف الملتقى</h3>
+//         <ul className="grid md:grid-cols-2 gap-x-12 gap-y-4 text-lg list-none p-0">
+//           <li className="flex gap-3">
+//             <span className="text-emerald-700 font-bold">•</span>
+//             توفير معلومات موثوقة ومحدثة حول القرارات الرسمية
+//           </li>
+//           <li className="flex gap-3">
+//             <span className="text-emerald-700 font-bold">•</span>
+//             تسهيل عملية معادلة الشهادات والوثائق
+//           </li>
+//           <li className="flex gap-3">
+//             <span className="text-emerald-700 font-bold">•</span>
+//             دعم الطلاب في التحويل بين الجامعات
+//           </li>
+//           <li className="flex gap-3">
+//             <span className="text-emerald-700 font-bold">•</span>
+//             بناء مجتمع داعم ومتفاعل بين الطلاب
+//           </li>
+//         </ul>
 
-        {/* قسم أعمالنا وإنجازاتنا المضاف حديثاً */}
-        <h3 className="text-3xl font-semibold mt-16 mb-8 border-r-4 border-emerald-700 pr-4">أبرز أعمالنا وإنجازاتنا</h3>
-        <div className="grid md:grid-cols-3 gap-6 not-prose mb-16">
+//         {/* قسم أعمالنا وإنجازاتنا المضاف حديثاً */}
+//         <h3 className="text-3xl font-semibold mt-16 mb-8 border-r-4 border-emerald-700 pr-4">أبرز أعمالنا وإنجازاتنا</h3>
+//         <div className="grid md:grid-cols-3 gap-6 not-prose mb-16">
           
-          {/* الإنجاز الأول */}
-          <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition duration-300 hover:border-emerald-300 shadow-sm">
-            <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
-              <Users className="w-6 h-6" />
-            </div>
-            <h4 className="text-xl font-bold mb-2 text-emerald-950">متابعة ديبلوماسية</h4>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              عقد اجتماعات مستمرة مع سفارة الجمهورية العربية السورية في بيروت لمتابعة وحل مشاكل الطلاب، لا سيما أزمات الإقامة والتسجيل الجامعي.
-            </p>
+//           {/* الإنجاز الأول */}
+//           <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition duration-300 hover:border-emerald-300 shadow-sm">
+//             <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
+//               <Users className="w-6 h-6" />
+//             </div>
+//             <h4 className="text-xl font-bold mb-2 text-emerald-950">متابعة ديبلوماسية</h4>
+//             <p className="text-gray-600 text-sm leading-relaxed">
+//               عقد اجتماعات مستمرة مع سفارة الجمهورية العربية السورية في بيروت لمتابعة وحل مشاكل الطلاب، لا سيما أزمات الإقامة والتسجيل الجامعي.
+//             </p>
+//           </div>
+
+//           {/* الإنجاز الثاني */}
+//           <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition duration-300 hover:border-emerald-300 shadow-sm">
+//             <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
+//               <GraduationCap className="w-6 h-6" />
+//             </div>
+//             <h4 className="text-xl font-bold mb-2 text-emerald-950">حفل التخرج الأول 2025</h4>
+//             <p className="text-gray-600 text-sm leading-relaxed">
+//               تنظيم وإقامة أول حفل تخرج رسمي مخصص للطلاب السوريين في لبنان عام 2025، تقديراً لجهودهم وتفوقهم رغم كل التحديات.
+//             </p>
+//           </div>
+
+//           {/* الإنجاز الثالث */}
+//           <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition duration-300 hover:border-emerald-300 shadow-sm">
+//             <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
+//               <MessagesSquare className="w-6 h-6" />
+//             </div>
+//             <h4 className="text-xl font-bold mb-2 text-emerald-950">الدعم الاستشاري الرقمي</h4>
+//             <p className="text-gray-600 text-sm leading-relaxed">
+//               المتابعة اليومية الفورية لكافة استفسارات وأسئلة الطلاب عبر منصات التواصل الاجتماعي ومجموعات الدعم لتوجيههم دراسياً وقانونياً.
+//             </p>
+//           </div>
+//           {/* الإنجاز الرابع */}
+//           <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition duration-300 hover:border-emerald-300 shadow-sm">
+//             <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
+//               <BookOpen className="w-6 h-6" />
+//             </div>
+//             <h4 className="text-xl font-bold mb-2 text-emerald-950">التطوير والتمكين المعرفي</h4>
+//             <p className="text-gray-600 text-sm leading-relaxed">
+//               تقديم دورات تدريبية وورش عمل مجانية بالكامل في مجالات علمية وتكنولوجية وتوعوية مختلفة، لبناء قدرات الطلاب وتأهيلهم الأكاديمي والمهني.
+//             </p>
+//           </div>
+
+//         </div>
+
+//         <h3 className="text-3xl font-semibold mt-14 mb-6">من المستفيدون؟</h3>
+//         <p className="mb-16">جميع الطلاب السوريين في لبنان من مرحلة الثانوية حتى الدراسات العليا، بالإضافة إلى العائلات السورية الباحثة عن فرص تعليمية لأبنائها.</p>
+//       </div>
+      
+//       <h3 className="text-3xl font-semibold mt-20 mb-10 text-center">أعضاء ملتقى الطلاب السوريين</h3>
+
+//       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+//         {[
+//           {
+//             name: 'مصطفى المحيميد',
+//             role: 'مطور ومشرف تقني',
+//             image: '/images/team/mustafa.jpeg',
+//             desc: 'يهتم بتطوير المنصة وإدارة الأنظمة التقنية ودعم الطلاب رقمياً.'
+//           },
+//           {
+//             name: 'وليد ريحاوي',
+//             role: 'منسق شؤون جامعية',
+//             image: '/images/team/walid.jpeg',
+//             desc: 'مساعدة الطلاب في الجامعة وخصوصا الكليات الطبية'
+//           },  
+//           {
+//             name: 'عبدالبديع دشق',
+//             role: 'مشرف دعم طلابي',
+//             image: '/images/team/abedbadih.jpeg',
+//             desc: 'يعمل على متابعة استفسارات الطلاب وتقديم الدعم المباشر بالاضافة لاختصاص الصيدلة.'
+//           },
+//           {
+//             name: 'زاهدة العابد',
+//             role: 'مسؤولة الإعلام والتواصل',
+//             image: '/images/team/zahida1.jpeg',
+//             desc: 'علاقات مباشرة مع الطلاب بالاضافة منسق في سوريا'
+//           },
+//           {
+//             name: 'وئام الشاكوش',
+//             role: 'رئيسة الملتقى',
+//             image: '/images/team/weam.jpeg',
+//             desc: 'تنظم المبادرات واللقاءات والأنشطة التعليمية للطلاب.'
+//           },
+//           {
+//             name: 'عمر سمعو',
+//             role: 'مستشار أكاديمي ومطور تقني',
+//             image: '/images/team/omar.jpeg',
+//             desc: 'يقدم إرشادات أكاديمية حول الاختصاصات والجامعات خصوصا كلية الادارة والاقتصاد.'
+//           },
+//           {
+//             name: 'عبد القادر',
+//             role: 'مستشار أكاديمي',
+//             image: '/images/team/abedelkader.jpeg',
+//             desc: 'نائب الرئيس مسؤول عن الجامعات الخاصة'
+//           }
+//         ].map((member, index) => (
+//           <div
+//             key={index}
+//             className="bg-white border rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300"
+//           >
+//             <img
+//               src={member.image}
+//               alt={member.name}
+//               className="w-full h-72 object-cover"
+//             />
+
+//             <div className="p-6">
+//               <h4 className="text-2xl font-bold">{member.name}</h4>
+
+//               <div className="text-emerald-700 text-sm mt-1 mb-4">
+//                 {member.role}
+//               </div>
+
+//               <p className="text-gray-600 leading-relaxed text-sm">
+//                 {member.desc}
+//               </p>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+
+//       {/* الملاحظة التوضيحية المضافة في نهاية الصفحة */}
+//       <div className="bg-amber-50/60 border border-amber-200/70 rounded-3xl p-6 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-right mt-16 shadow-sm">
+//         <div className="bg-amber-600 text-white p-3 rounded-2xl shadow-sm shrink-0">
+//           <HeartHandshake className="w-6 h-6" />
+//         </div>
+//         <div>
+//           <h4 className="text-lg font-bold text-amber-950 mb-1">تنويه وعهد شفافية</h4>
+//           <p className="text-amber-900 text-sm leading-relaxed m-0">
+//             نحن في ملتقى الطلاب السوريين نسعى جاهدين وبشكل تطوعي كامل لخدمتكم ولتسهيل الإجراءات الأكاديمية والإدارية لكافة الطلاب، ونؤكد أننا <strong>لا نتلقى أي دعم مادي من أي جهة أو أحد</strong>، وغايتنا الأولى والأخيرة هي مصلحة الطالب ومساندته.
+//           </p>
+//         </div>
+//       </div>
+
+//     </div>
+//   );
+// }
+
+//with animation
+function AboutPage1() {
+
+  return (
+
+    <div className="
+      relative
+      overflow-hidden
+      min-h-screen
+      bg-gradient-to-b
+      from-emerald-50
+      via-white
+      to-white
+    ">
+
+      {/* Floating Background Effects */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-300/20 blur-3xl rounded-full"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-teal-300/20 blur-3xl rounded-full"></div>
+
+      <div className="relative max-w-7xl mx-auto px-6 py-16">
+
+        {/* HERO */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-20"
+        >
+
+          <div className="
+            inline-flex
+            items-center
+            gap-2
+            px-5
+            py-2
+            rounded-full
+            bg-emerald-100
+            text-emerald-700
+            text-sm
+            font-medium
+            shadow-sm
+          ">
+            <Sparkles className="w-4 h-4" />
+            من نحن
           </div>
 
-          {/* الإنجاز الثاني */}
-          <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition duration-300 hover:border-emerald-300 shadow-sm">
-            <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
-              <GraduationCap className="w-6 h-6" />
-            </div>
-            <h4 className="text-xl font-bold mb-2 text-emerald-950">حفل التخرج الأول 2025</h4>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              تنظيم وإقامة أول حفل تخرج رسمي مخصص للطلاب السوريين في لبنان عام 2025، تقديراً لجهودهم وتفوقهم رغم كل التحديات.
-            </p>
+          <h1 className="
+            text-5xl
+            md:text-7xl
+            font-black
+            tracking-tight
+            mt-6
+            text-gray-900
+          ">
+            عن ملتقى الطلاب السوريين
+          </h1>
+
+          <p className="
+            text-gray-600
+            text-lg
+            max-w-3xl
+            mx-auto
+            mt-8
+            leading-relaxed
+          ">
+            مبادرة تطوعية تهدف إلى دعم الطلاب السوريين في لبنان أكاديمياً وإدارياً ومجتمعياً،
+            وبناء بيئة داعمة تساعدهم على تجاوز التحديات وتحقيق النجاح.
+          </p>
+
+        </motion.div>
+
+        {/* MAIN IMAGE */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+          className="mb-20"
+        >
+
+          <div className="
+            overflow-hidden
+            rounded-[40px]
+            shadow-2xl
+            border
+            border-white/20
+          ">
+
+            <img
+              src="/images/team.jpeg"
+              alt="طلاب سوريون"
+              className="
+                w-full
+                h-[500px]
+                object-cover
+                hover:scale-105
+                transition-transform
+                duration-1000
+              "
+            />
+
           </div>
 
-          {/* الإنجاز الثالث */}
-          <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition duration-300 hover:border-emerald-300 shadow-sm">
-            <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
-              <MessagesSquare className="w-6 h-6" />
-            </div>
-            <h4 className="text-xl font-bold mb-2 text-emerald-950">الدعم الاستشاري الرقمي</h4>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              المتابعة اليومية الفورية لكافة استفسارات وأسئلة الطلاب عبر منصات التواصل الاجتماعي ومجموعات الدعم لتوجيههم دراسياً وقانونياً.
-            </p>
+        </motion.div>
+
+        {/* STATS */}
+        <div className="grid md:grid-cols-3 gap-6 mb-24">
+
+          {[
+            {
+              number: "500+",
+              label: "طالب وطالبة"
+            },
+            {
+              number: "20+",
+              label: "جامعة ومعهد"
+            },
+            {
+              number: "1000+",
+              label: "استشارة ودعم"
+            }
+          ].map((item, index) => (
+
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{
+                y: -8,
+                scale: 1.02
+              }}
+              className="
+                bg-white/70
+                backdrop-blur-xl
+                border
+                border-white/20
+                rounded-3xl
+                p-10
+                text-center
+                shadow-lg
+                hover:shadow-2xl
+                transition-all
+                duration-500
+              "
+            >
+
+              <div className="
+                text-5xl
+                font-black
+                text-emerald-700
+              ">
+                {item.number}
+              </div>
+
+              <div className="
+                mt-4
+                text-gray-600
+                text-lg
+              ">
+                {item.label}
+              </div>
+
+            </motion.div>
+
+          ))}
+
+        </div>
+
+        {/* GOALS */}
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+          className="mb-24"
+        >
+
+          <div className="text-center mb-14">
+
+            <h2 className="
+              text-4xl
+              md:text-5xl
+              font-bold
+              text-gray-900
+            ">
+              أهداف الملتقى
+            </h2>
+
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+
+            {[
+              'توفير معلومات موثوقة ومحدثة',
+              'تسهيل الإجراءات الجامعية',
+              'بناء مجتمع طلابي داعم',
+              'مساعدة الطلاب أكاديمياً وإدارياً'
+            ].map((goal, index) => (
+
+              <motion.div
+                key={index}
+                whileHover={{
+                  y: -6
+                }}
+                className="
+                  bg-white
+                  border
+                  rounded-3xl
+                  p-8
+                  shadow-sm
+                  hover:shadow-xl
+                  transition-all
+                  duration-500
+                  flex
+                  items-center
+                  gap-5
+                "
+              >
+
+                <div className="
+                  w-14
+                  h-14
+                  rounded-2xl
+                  bg-emerald-100
+                  flex
+                  items-center
+                  justify-center
+                  text-emerald-700
+                  font-bold
+                  text-xl
+                ">
+                  ✓
+                </div>
+
+                <div className="
+                  text-lg
+                  font-medium
+                  text-gray-800
+                ">
+                  {goal}
+                </div>
+
+              </motion.div>
+
+            ))}
+
+          </div>
+
+        </motion.div>
+
+        {/* TEAM */}
+        <div className="mb-24">
+
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+
+            <h2 className="
+              text-5xl
+              font-black
+              text-gray-900
+            ">
+              أعضاء الملتقى
+            </h2>
+
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            {[
+                {name: 'مصطفى المحيميد',
+                role: 'مطور ومشرف تقني',
+                image: '/images/team/mustafa.jpeg',
+                desc: 'يهتم بتطوير المنصة وإدارة الأنظمة التقنية ودعم الطلاب رقمياً.'
+              },
+              {
+                name: 'وليد ريحاوي',
+                role: 'منسق شؤون جامعية',
+                image: '/images/team/walid.jpeg',
+                desc: 'مساعدة الطلاب في الجامعة وخصوصا الكليات الطبية'
+              },
+              {
+                name: 'عبدالبديع دشق',
+                role: 'مشرف دعم طلابي',
+                image: '/images/team/abedbadih.jpeg',
+                desc: 'يعمل على متابعة استفسارات الطلاب وتقديم الدعم المباشر بالاضافة لاختصاص الصيدلة.'
+              },
+              {
+                name: 'زاهدة العابد',
+                role: 'مسؤولة الإعلام والتواصل',
+                image: '/images/team/zahida1.jpeg',
+                desc: 'علاقات مباشرة مع الطلاب بالاضافة منسق في سوريا'
+              },
+              {
+                name: 'وئام الشاكوش',
+                role: 'رئيسة الملتقى',
+                image: '/images/team/weam.jpeg',
+                desc: 'تنظم المبادرات واللقاءات والأنشطة التعليمية للطلاب.'
+              },
+              {
+                name: 'عمر سمعو',
+                role: 'مستشار أكاديمي ومطور تقني',
+                image: '/images/team/omar.jpeg',
+                desc: 'يقدم إرشادات أكاديمية حول الاختصاصات والجامعات خصوصا كلية الادارة والاقتصاد.'
+              },
+              {
+                name: 'عبد القادر',
+                role: 'مستشار أكاديمي',
+                image: '/images/team/abedelkader.jpeg',
+                desc: 'نائب الرئيس مسؤول عن الجامعات الخاصة'
+              }
+            ].map((member, index) => (
+
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{
+                  y: -12,
+                  scale: 1.02
+                }}
+                transition={{
+                  duration: 0.5
+                }}
+                viewport={{ once: true }}
+                className="
+                  bg-white/70
+                  backdrop-blur-xl
+                  border
+                  border-white/20
+                  rounded-3xl
+                  overflow-hidden
+                  shadow-lg
+                  hover:shadow-2xl
+                  transition-all
+                  duration-500
+                "
+              >
+
+                <div className="overflow-hidden">
+
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="
+                      w-full
+                      h-80
+                      object-cover
+                      hover:scale-110
+                      transition-transform
+                      duration-700
+                    "
+                  />
+
+                </div>
+
+                <div className="p-7">
+
+                  <h3 className="
+                    text-2xl
+                    font-bold
+                    text-gray-900
+                  ">
+                    {member.name}
+                  </h3>
+
+                  <div className="
+                    text-emerald-700
+                    mt-2
+                    text-sm
+                    font-medium
+                  ">
+                    {member.role}
+                  </div>
+
+                  <p className="
+                    text-gray-600
+                    mt-5
+                    leading-relaxed
+                    text-sm
+                  ">
+                    {member.desc}
+                  </p>
+
+                </div>
+
+              </motion.div>
+
+            ))}
+
           </div>
 
         </div>
 
-        <h3 className="text-3xl font-semibold mt-14 mb-6">من المستفيدون؟</h3>
-        <p className="mb-16">جميع الطلاب السوريين في لبنان من مرحلة الثانوية حتى الدراسات العليا، بالإضافة إلى العائلات السورية الباحثة عن فرص تعليمية لأبنائها.</p>
       </div>
-      
-      <h3 className="text-3xl font-semibold mt-20 mb-10 text-center">أعضاء ملتقى الطلاب السوريين</h3>
+    </div>
+  );
+}
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+// About Page
+function AboutPage() {
+  return (
+    <div className="max-w-7xl mx-auto px-6 py-16">
+
+      {/* Header */}
+      <div className="text-center mb-14">
+        <div className="text-emerald-700 tracking-[2px] text-sm">
+          من نحن
+        </div>
+
+        <h1 className="text-6xl font-bold tracking-tighter mt-3">
+          عن ملتقى الطلاب السوريين
+        </h1>
+      </div>
+
+      {/* Intro */}
+      <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+
+        <img
+          src="/images/team.jpeg"
+          alt="طلاب سوريون"
+          className="w-full rounded-3xl mb-12 shadow transition duration-500 hover:scale-[1.02] hover:shadow-2xl"
+        />
+
+        <p className="text-2xl font-light mb-12">
+          تأسس ملتقى الطلاب السوريين في لبنان كمبادرة تطوعية تهدف إلى دعم الطلاب السوريين الذين يواجهون تحديات تعليمية وإدارية في لبنان.
+        </p>
+
+        {/* GOALS */}
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+          className="mb-24"
+        >
+
+          <div className="text-center mb-14">
+
+            <h2 className="
+              text-4xl
+              md:text-5xl
+              font-bold
+              text-gray-900
+            ">
+              أهداف الملتقى
+            </h2>
+
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+
+            {[
+              'توفير معلومات موثوقة ومحدثة',
+              'تسهيل الإجراءات الجامعية',
+              'بناء مجتمع طلابي داعم',
+              'مساعدة الطلاب أكاديمياً وإدارياً'
+            ].map((goal, index) => (
+
+              <motion.div
+                key={index}
+                whileHover={{
+                  y: -6
+                }}
+                className="
+                  bg-white
+                  border
+                  rounded-3xl
+                  p-8
+                  shadow-sm
+                  hover:shadow-xl
+                  transition-all
+                  duration-500
+                  flex
+                  items-center
+                  gap-5
+                "
+              >
+
+                <div className="
+                  w-14
+                  h-14
+                  rounded-2xl
+                  bg-emerald-100
+                  flex
+                  items-center
+                  justify-center
+                  text-emerald-700
+                  font-bold
+                  text-xl
+                ">
+                  ✓
+                </div>
+
+                <div className="
+                  text-lg
+                  font-medium
+                  text-gray-800
+                ">
+                  {goal}
+                </div>
+
+              </motion.div>
+
+            ))}
+
+          </div>
+
+        </motion.div>
+        <div><br /></div>
+                {/* Achievements */}
+        <h3 className="text-3xl font-semibold mt-16 mb-8 border-r-4 border-emerald-700 pr-4">
+          أبرز أعمالنا وإنجازاتنا
+        </h3>
+
+        <div className="grid md:grid-cols-3 gap-6 not-prose mb-16">
+
+          {/* Achievement 1 */}
+          <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition-all duration-300 hover:border-emerald-300 hover:shadow-xl hover:-translate-y-2 hover:bg-white group">
+
+            <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm transition duration-300 group-hover:scale-110 group-hover:rotate-6">
+              <Users className="w-6 h-6" />
+            </div>
+
+            <h4 className="text-xl font-bold mb-2 text-emerald-950">
+              متابعة ديبلوماسية
+            </h4>
+
+            <p className="text-gray-600 text-sm leading-relaxed">
+              عقد اجتماعات مستمرة مع سفارة الجمهورية العربية السورية في بيروت لمتابعة وحل مشاكل الطلاب، لا سيما أزمات الإقامة والتسجيل الجامعي.
+            </p>
+
+          </div>
+
+          {/* Achievement 2 */}
+          <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition-all duration-300 hover:border-emerald-300 hover:shadow-xl hover:-translate-y-2 hover:bg-white group">
+
+            <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm transition duration-300 group-hover:scale-110 group-hover:rotate-6">
+              <GraduationCap className="w-6 h-6" />
+            </div>
+
+            <h4 className="text-xl font-bold mb-2 text-emerald-950">
+              حفل التخرج الأول 2025
+            </h4>
+
+            <p className="text-gray-600 text-sm leading-relaxed">
+              تنظيم وإقامة أول حفل تخرج رسمي مخصص للطلاب السوريين في لبنان عام 2025، تقديراً لجهودهم وتفوقهم رغم كل التحديات.
+            </p>
+
+          </div>
+
+          {/* Achievement 3 */}
+          <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition-all duration-300 hover:border-emerald-300 hover:shadow-xl hover:-translate-y-2 hover:bg-white group">
+
+            <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm transition duration-300 group-hover:scale-110 group-hover:rotate-6">
+              <MessagesSquare className="w-6 h-6" />
+            </div>
+
+            <h4 className="text-xl font-bold mb-2 text-emerald-950">
+              الدعم الاستشاري الرقمي
+            </h4>
+
+            <p className="text-gray-600 text-sm leading-relaxed">
+              المتابعة اليومية الفورية لكافة استفسارات وأسئلة الطلاب عبر منصات التواصل الاجتماعي ومجموعات الدعم لتوجيههم دراسياً وقانونياً.
+            </p>
+
+          </div>
+
+          {/* Achievement 4 */}
+          <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition-all duration-300 hover:border-emerald-300 hover:shadow-xl hover:-translate-y-2 hover:bg-white group">
+
+            <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm transition duration-300 group-hover:scale-110 group-hover:rotate-6">
+              <BookOpen className="w-6 h-6" />
+            </div>
+
+            <h4 className="text-xl font-bold mb-2 text-emerald-950">
+              التطوير والتمكين المعرفي
+            </h4>
+
+            <p className="text-gray-600 text-sm leading-relaxed">
+              تقديم دورات تدريبية وورش عمل مجانية بالكامل في مجالات علمية وتكنولوجية وتوعوية مختلفة، لبناء قدرات الطلاب وتأهيلهم الأكاديمي والمهني.
+            </p>
+
+          </div>
+
+        </div>
+        {/* STATS */}
+        <div className="grid md:grid-cols-3 gap-6 mb-24">
+
+          {[
+            {
+              number: "500+",
+              label: "طالب وطالبة"
+            },
+            {
+              number: "20+",
+              label: "جامعة ومعهد"
+            },
+            {
+              number: "1000+",
+              label: "استشارة ودعم"
+            }
+          ].map((item, index) => (
+
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{
+                y: -8,
+                scale: 1.02
+              }}
+              className="
+                bg-white/70
+                backdrop-blur-xl
+                border
+                border-white/20
+                rounded-3xl
+                p-10
+                text-center
+                shadow-lg
+                hover:shadow-2xl
+                transition-all
+                duration-500
+              "
+            >
+
+              <div className="
+                text-5xl
+                font-black
+                text-emerald-700
+              ">
+                {item.number}
+              </div>
+
+              <div className="
+                mt-4
+                text-gray-600
+                text-lg
+              ">
+                {item.label}
+              </div>
+
+            </motion.div>
+
+          ))}
+
+        </div>
+
+
+        {/* Beneficiaries */}
+        <h3 className="text-3xl font-semibold mt-14 mb-6">
+          من المستفيدون؟
+        </h3>
+
+        <p className="mb-16">
+          جميع الطلاب السوريين في لبنان من مرحلة الثانوية حتى الدراسات العليا، بالإضافة إلى العائلات السورية الباحثة عن فرص تعليمية لأبنائها.
+        </p>
+
+      </div>
+
+      {/* Team */}
+      {/* <h3 className="text-3xl font-semibold mt-20 mb-10 text-center">
+        أعضاء ملتقى الطلاب السوريين
+      </h3> */}
+
+      {/* <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
         {[
           {
             name: 'مصطفى المحيميد',
@@ -1037,7 +2154,7 @@ function AboutPage() {
             role: 'منسق شؤون جامعية',
             image: '/images/team/walid.jpeg',
             desc: 'مساعدة الطلاب في الجامعة وخصوصا الكليات الطبية'
-          },  
+          },
           {
             name: 'عبدالبديع دشق',
             role: 'مشرف دعم طلابي',
@@ -1069,18 +2186,23 @@ function AboutPage() {
             desc: 'نائب الرئيس مسؤول عن الجامعات الخاصة'
           }
         ].map((member, index) => (
+
           <div
             key={index}
-            className="bg-white border rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300"
+            className="bg-white border rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 group"
           >
+
             <img
               src={member.image}
               alt={member.name}
-              className="w-full h-72 object-cover"
+              className="w-full h-72 object-cover transition duration-500 group-hover:scale-105"
             />
 
             <div className="p-6">
-              <h4 className="text-2xl font-bold">{member.name}</h4>
+
+              <h4 className="text-2xl font-bold transition duration-300 group-hover:text-emerald-700">
+                {member.name}
+              </h4>
 
               <div className="text-emerald-700 text-sm mt-1 mb-4">
                 {member.role}
@@ -1089,27 +2211,188 @@ function AboutPage() {
               <p className="text-gray-600 leading-relaxed text-sm">
                 {member.desc}
               </p>
-            </div>
-          </div>
-        ))}
-      </div>
 
-      {/* الملاحظة التوضيحية المضافة في نهاية الصفحة */}
-      <div className="bg-amber-50/60 border border-amber-200/70 rounded-3xl p-6 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-right mt-16 shadow-sm">
+            </div>
+
+          </div>
+
+        ))}
+
+      </div> */}
+              {/* TEAM */}
+        <div className="mb-24">
+
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+
+            <h2 className="
+              text-5xl
+              font-black
+              text-gray-900
+            ">
+              أعضاء الملتقى
+            </h2>
+
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            {[
+                {name: 'مصطفى المحيميد',
+                role: 'مطور ومشرف تقني',
+                image: '/images/team/mustafa.jpeg',
+                desc: 'يهتم بتطوير المنصة وإدارة الأنظمة التقنية ودعم الطلاب رقمياً.'
+              },
+              {
+                name: 'وليد ريحاوي',
+                role: 'منسق شؤون جامعية',
+                image: '/images/team/walid.jpeg',
+                desc: 'مساعدة الطلاب في الجامعة وخصوصا الكليات الطبية'
+              },
+              {
+                name: 'عبدالبديع دشق',
+                role: 'مشرف دعم طلابي',
+                image: '/images/team/abedbadih.jpeg',
+                desc: 'يعمل على متابعة استفسارات الطلاب وتقديم الدعم المباشر بالاضافة لاختصاص الصيدلة.'
+              },
+              {
+                name: 'زاهدة العابد',
+                role: 'مسؤولة الإعلام والتواصل',
+                image: '/images/team/zahida1.jpeg',
+                desc: 'علاقات مباشرة مع الطلاب بالاضافة منسق في سوريا'
+              },
+              {
+                name: 'وئام الشاكوش',
+                role: 'رئيسة الملتقى',
+                image: '/images/team/weam.jpeg',
+                desc: 'تنظم المبادرات واللقاءات والأنشطة التعليمية للطلاب.'
+              },
+              {
+                name: 'عمر سمعو',
+                role: 'مستشار أكاديمي ومطور تقني',
+                image: '/images/team/omar.jpeg',
+                desc: 'يقدم إرشادات أكاديمية حول الاختصاصات والجامعات خصوصا كلية الادارة والاقتصاد.'
+              },
+              {
+                name: 'عبد القادر',
+                role: 'مستشار أكاديمي',
+                image: '/images/team/abedelkader.jpeg',
+                desc: 'نائب الرئيس مسؤول عن الجامعات الخاصة'
+              }
+            ].map((member, index) => (
+
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{
+                  y: -12,
+                  scale: 1.02
+                }}
+                transition={{
+                  duration: 0.5
+                }}
+                viewport={{ once: true }}
+                className="
+                  bg-white/70
+                  backdrop-blur-xl
+                  border
+                  border-white/20
+                  rounded-3xl
+                  overflow-hidden
+                  shadow-lg
+                  hover:shadow-2xl
+                  transition-all
+                  duration-500
+                "
+              >
+
+                <div className="overflow-hidden">
+
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="
+                      w-full
+                      h-80
+                      object-cover
+                      hover:scale-110
+                      transition-transform
+                      duration-700
+                    "
+                  />
+
+                </div>
+
+                <div className="p-7">
+
+                  <h3 className="
+                    text-2xl
+                    font-bold
+                    text-gray-900
+                  ">
+                    {member.name}
+                  </h3>
+
+                  <div className="
+                    text-emerald-700
+                    mt-2
+                    text-sm
+                    font-medium
+                  ">
+                    {member.role}
+                  </div>
+
+                  <p className="
+                    text-gray-600
+                    mt-5
+                    leading-relaxed
+                    text-sm
+                  ">
+                    {member.desc}
+                  </p>
+
+                </div>
+
+              </motion.div>
+
+            ))}
+
+          </div>
+
+        </div>
+
+      {/* Notice */}
+      <div className="bg-amber-50/60 border border-amber-200/70 rounded-3xl p-6 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-right mt-16 shadow-sm transition duration-300 hover:shadow-xl hover:-translate-y-1">
+
         <div className="bg-amber-600 text-white p-3 rounded-2xl shadow-sm shrink-0">
           <HeartHandshake className="w-6 h-6" />
         </div>
+
         <div>
-          <h4 className="text-lg font-bold text-amber-950 mb-1">تنويه وعهد شفافية</h4>
+
+          <h4 className="text-lg font-bold text-amber-950 mb-1">
+            تنويه وعهد شفافية
+          </h4>
+
           <p className="text-amber-900 text-sm leading-relaxed m-0">
             نحن في ملتقى الطلاب السوريين نسعى جاهدين وبشكل تطوعي كامل لخدمتكم ولتسهيل الإجراءات الأكاديمية والإدارية لكافة الطلاب، ونؤكد أننا <strong>لا نتلقى أي دعم مادي من أي جهة أو أحد</strong>، وغايتنا الأولى والأخيرة هي مصلحة الطالب ومساندته.
           </p>
+
         </div>
+
       </div>
 
     </div>
   );
 }
+
+
 // News & Updates Page with CRUD for Admin
 function NewsPage({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
   const [posts, setPosts] = useState<Post[]>([]);
