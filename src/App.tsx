@@ -385,9 +385,79 @@ const GUIDES = [
       "يخضع للامتحان خريجو كليات: الطب البشري، طب الأسنان، الصيدلة، الهندسة المعمارية، الهندسة المعلوماتية، والتمريض",
       "علامة الامتحان الموحد تُعتمد أيضاً كمعيار تفاضلي رئيسي للقبول في مفاضلات الدراسات العليا (الماجستير)"
     ]
+  },
+  {
+    id: 13,
+    title: "دليل دراسة البكالوريوس في لبنان للطلاب القادمين من سوريا",
+    steps: [
+      "تصديق شهادة الثانوية العامة السورية (البكالوريا) وكشف العلامات من وزارة التربية والخارجية في سوريا أصولاً.",
+      "تقديم الأوراق لمديرية التعليم العالي في وزارة التربية والتعليم العالي اللبنانية (الأونيسكو - بيروت) للحصول على المعادلة اللبنانية للثانوية العامة.",
+      "اختيار الجامعة المستهدفة والتأكد من اعترافها المتبادل والاطلاع على اختبارات الكفاءة المطلوبة (مثل اختبارات اللغة أو المقابلة الشخصية).",
+      "تقديم مستندات الإقامة القانونية في لبنان أو تأشيرة الدخول المخصصة للدراسة لتسجيل الملف الإداري.",
+      "سداد رسوم التسجيل للفصل الدراسي الأول وتثبيت المقعد الجامعي في شؤون الطلاب للجامعة المحددة."
+    ],
+    requirements: [
+      "شهادة الثانوية العامة السورية الأصلية مصدقة أصولاً",
+      "كشف علامات الثانوية العامة مصدق",
+      "وثيقة المعادلة الصادرة عن وزارة التربية والتعليم العالي اللبنانية",
+      "جواز سفر ساري المفعول مع إقامة قانونية أو وثيقة دخول رسمية",
+      "صور شخصية حديثة ملونة (عدد 4)"
+    ],
+    additionalConditions: [
+      "تشترط بعض الجامعات الخاصة والجامعة اللبنانية الحكومية معدلات دنيا محددة للقبول في كليات الهندسة والعلوم الطبية.",
+      "يُطلب من الطالب أحياناً الخضوع لبرنامج دراسة اللغة (اللغة الإنكليزية أو الفرنسية) في حال عدم امتلاك شهادة كفاءة دولية (مثل TOEFL أو IELTS)."
+    ]
+  },
+  {
+    id: 14,
+    title: "دليل دراسة الماجستير في لبنان للطلاب القادمين من سوريا",
+    steps: [
+      "تجهيز المصدقة الجامعية الأصلية (البكالوريوس) مع كشف علامات تفصيلي لسنوات الدراسة الأربع أو الخمس ومصادقتها من الخارجية السورية.",
+      "إجراء معاملة معادلة الشهادة الجامعية السورية لدى اللجنة الفنية لمعادلة الشهادات في وزارة التعليم العالي اللبنانية (بيروت).",
+      "تأمين رسائل توصية أكاديمية (Recommendation Letters) من دكاترة الجامعة السابقة (تطلبها أغلب الجامعات اللبنانية).",
+      "صياغة رسالة الدافع (Motivation Letter) توضح الأهداف البحثية واختيار التخصص المطلوب.",
+      "اجتياز اختبارات اللغة المعتمدة بالجامعة اللبنانية المعنية أو تقديم ما يثبت الكفاءة اللغوية المطلوبة لبدء المقررات.",
+      "التسجيل النهائي ودفع رسوم الساعات الدراسية المعتمدة بعد صدور القبول الأكاديمي من عمادة الدراسات العليا."
+    ],
+    requirements: [
+      "مصدقة التخرج لشهادة البكالوريوس الأصلية مصدقة من الخارجية السورية",
+      "كشف علامات جامعي تفصيلي مصدق",
+      "وثيقة المعادلة الجامعية الصادرة من وزارة التعليم العالي اللبنانية",
+      "سيرة ذاتية محدثة ورسالة دافع",
+      "رسائل توصية أكاديمية (عدد 2 على الأقل)",
+      "إثبات هوية (جواز سفر وإقامة قانونية في لبنان)"
+    ],
+    additionalConditions: [
+      "يشترط لمرحلة الماجستير ألا يقل التقدير العام للطالب في مرحلة البكالوريوس عن درجة (جيد) في أغلب الأنظمة الجامعية المعتمدة بـلبنان.",
+      "قد تطلب بعض الكليات (مثل إدارة الأعمال والعلوم الإنسانية) تقديم بحث أولي أو الخضوع لمقابلة شفهية أمام لجنة علمية قبل منح القبول."
+    ]
+  },
+  {
+    id: 15,
+    title: "دليل دراسة الدكتوراه في لبنان للطلاب القادمين من سوريا",
+    steps: [
+      "تصديق شهادتي البكالوريوس والماجستير مع كشوف العلامات التفصيلية لكلا المرحلتين من وزارة الخارجية السورية.",
+      "الحصول على المعادلة الرسمية لشهادة الماجستير من وزارة التربية والتعليم العالي اللبنانية (قسم تعادل الشهادات الجامعية).",
+      "إعداد مقترح بحثي متكامل وطموح (Research Proposal) يتوافق مع الأبحاث العلمية المتاحة في الكلية المستهدفة.",
+      "التواصل المباشر مع أحد الأساتذة الدكاترة (Professors) في الجامعة اللبنانية للحصول على موافقة خطية بالإشراف على الأطروحة.",
+      "تقديم الملف الكامل إلى مجلس الشؤون العلمية وعمادة المعهد العالي للدكتوراه في الجامعة والانتظار حتى صدور قرار القبول الرسمي.",
+      "تثبيت التسجيل السنوي وتنسيق اللقاءات الدورية مع المشرف الأكاديمي لبدء العمل على الرسالة والبحث."
+    ],
+    requirements: [
+      "شهادة الماجستير ومصدقة البكالوريوس مصدقتين أصولاً من سوريا",
+      "كشوف علامات تفصيلية للمرحلتين الجامعيتين (الأولى والعليا)",
+      "المعادلة اللبنانية الصادرة لشهادة الماجستير",
+      "المقترح البحثي المعتمد للأطروحة باللغة الأجنبية المعتمدة للدراسة",
+      "موافقة الأستاذ المشرف على الرسالة",
+      "جواز سفر ساري ومستندات إقامة قانونية بـلبنان"
+    ],
+    additionalConditions: [
+      "تتطلب دراسة الدكتوراه في لبنان تفرغاً علمياً وبحثياً واضحاً، والتزاماً بنشر أبحاث في مجلات علمية محكمة كشرط للتخرج.",
+      "تعطى الأولوية في القبول للطلاب الذين يملكون خلفية بحثية قوية وإتقاناً تاماً للغة الدراسة (الإنكليزية أو الفرنسية) مع سجل أكاديمي ممتاز."
+    ]
   }
-
 ];
+
 
 // FAQ Data
 const FAQS = [
@@ -921,14 +991,18 @@ function HomePage() {
             منصة رسمية للطلاب السوريين
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 35 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter leading-tight"
-          >
-            ملتقى الطلاب السوريين في لبنان
-          </motion.h1>
+        <motion.h1
+          initial={{ opacity: 0, y: 35 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter leading-tight"
+        >
+          ملتقى الطلاب السوريين
+          <br />
+          <span className="text-3xl sm:text-4xl md:text-5xl font-medium mt-2 inline-block text-emerald-200">
+            في لبنان
+          </span>
+        </motion.h1>
 
           <motion.div
             initial={{ opacity: 0 }}
@@ -1190,689 +1264,9 @@ function HomePage() {
   );
 }
 
-//without animation
-// About Page
-// function AboutPage() {
-//   return (
-//     <div className="max-w-4xl mx-auto px-6 py-16">
-//       <div className="text-center mb-14">
-//         <div className="text-emerald-700 tracking-[2px] text-sm">من نحن</div>
-//         <h1 className="text-6xl font-bold tracking-tighter mt-3">عن ملتقى الطلاب السوريين</h1>
-//       </div>
 
-//       <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-//         <img src="/images/team.jpeg" alt="طلاب سوريون" className="w-full rounded-3xl mb-12 shadow" />
-        
-//         <p className="text-2xl font-light mb-12">تأسس ملتقى الطلاب السوريين في لبنان كمبادرة تطوعية تهدف إلى دعم الطلاب السوريين الذين يواجهون تحديات تعليمية وإدارية في لبنان.</p>
-        
-//         <h3 className="text-3xl font-semibold mt-14 mb-6">أهداف الملتقى</h3>
-//         <ul className="grid md:grid-cols-2 gap-x-12 gap-y-4 text-lg">
-//           <li className="flex gap-3">• توفير معلومات موثوقة ومحدثة حول القرارات الرسمية</li>
-//           <li className="flex gap-3">• تسهيل عملية معادلة الشهادات والوثائق</li>
-//           <li className="flex gap-3">• دعم الطلاب في التحويل بين الجامعات</li>
-//           <li className="flex gap-3">• بناء مجتمع داعم ومتفاعل بين الطلاب</li>
-//         </ul>
 
-//         <h3 className="text-3xl font-semibold mt-14 mb-6">من المستفيدون؟</h3>
-//         <p>جميع الطلاب السوريين في لبنان من مرحلة الثانوية حتى الدراسات العليا، بالإضافة إلى العائلات السورية الباحثة عن فرص تعليمية لأبنائها.</p>
-//       </div>
-//       <h3 className="text-3xl font-semibold mt-20 mb-10 text-center">أعضاء ملتقى الطلاب السوريين</h3>
 
-//       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-//         {[
-//           {
-//             name: 'مصطفى المحيميد',
-//             role: 'مطور ومشرف تقني',
-//             image: '/images/team/mustafa.jpeg',
-//             desc: 'يهتم بتطوير المنصة وإدارة الأنظمة التقنية ودعم الطلاب رقمياً.'
-//           },
-//           {
-//             name: 'وليد ريحاوي',
-//             role: 'منسق شؤون جامعية',
-//             image: '/images/team/walid.jpeg',
-//             desc: 'مساعدة الطلاب في الجامعة وخصوصا الكليات الطبية'
-//           },  
-//           {
-//             name: 'عبدالبديع دشق',
-//             role: 'مشرف دعم طلابي',
-//             image: '/images/team/abedbadih.jpeg',
-//             desc: 'يعمل على متابعة استفسارات الطلاب وتقديم الدعم المباشر بالاضافة لاختصاص الصيدلة.'
-//           },
-//           {
-//             name: 'زاهدة العابد',
-//             role: 'مسؤولة الإعلام والتواصل',
-//             image: '/images/team/zahida1.jpeg',
-//             desc: 'علاقات مباشرة مع الطلاب بالاضافة منسق في سوريا'
-//           },
-
-//           {
-//             name: 'وئام الشاكوش',
-//             role: 'رئيسة الملتقى',
-//             image: '/images/team/weam.jpeg',
-//             desc: 'تنظم المبادرات واللقاءات والأنشطة التعليمية للطلاب.'
-//           },
-//           {
-//             name: 'عمر سمعو',
-//             role: 'مستشار أكاديمي ومطور تقني',
-//             image: '/images/team/omar.jpeg',
-//             desc: 'يقدم إرشادات أكاديمية حول الاختصاصات والجامعات خصوصا كلية الادارة والاقتصاد.'
-//           },
-//           {
-//             name: 'عبد القادر',
-//             role: 'مستشار أكاديمي',
-//             image: '/images/team/abedelkader.jpeg',
-//             desc: 'نائب الرئيس مسؤول عن الجامعات الخاصة'
-//           }
-//         ].map((member, index) => (
-//           <div
-//             key={index}
-//             className="bg-white border rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300"
-//           >
-//             <img
-//               src={member.image}
-//               alt={member.name}
-//               className="w-full h-72 object-cover"
-//             />
-
-//             <div className="p-6">
-//               <h4 className="text-2xl font-bold">{member.name}</h4>
-
-//               <div className="text-emerald-700 text-sm mt-1 mb-4">
-//                 {member.role}
-//               </div>
-
-//               <p className="text-gray-600 leading-relaxed text-sm">
-//                 {member.desc}
-//               </p>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-// function AboutPage() {
-//   return (
-//     <div className="max-w-4xl mx-auto px-6 py-16">
-//       <div className="text-center mb-14">
-//         <div className="text-emerald-700 tracking-[2px] text-sm">من نحن</div>
-//         <h1 className="text-6xl font-bold tracking-tighter mt-3">عن ملتقى الطلاب السوريين</h1>
-//       </div>
-
-//       <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-//         <img src="/images/team.jpeg" alt="طلاب سوريون" className="w-full rounded-3xl mb-12 shadow" />
-        
-//         <p className="text-2xl font-light mb-12">تأسس ملتقى الطلاب السوريين في لبنان كمبادرة تطوعية تهدف إلى دعم الطلاب السوريين الذين يواجهون تحديات تعليمية وإدارية في لبنان.</p>
-        
-//         <h3 className="text-3xl font-semibold mt-14 mb-6">أهداف الملتقى</h3>
-//         <ul className="grid md:grid-cols-2 gap-x-12 gap-y-4 text-lg list-none p-0">
-//           <li className="flex gap-3">
-//             <span className="text-emerald-700 font-bold">•</span>
-//             توفير معلومات موثوقة ومحدثة حول القرارات الرسمية
-//           </li>
-//           <li className="flex gap-3">
-//             <span className="text-emerald-700 font-bold">•</span>
-//             تسهيل عملية معادلة الشهادات والوثائق
-//           </li>
-//           <li className="flex gap-3">
-//             <span className="text-emerald-700 font-bold">•</span>
-//             دعم الطلاب في التحويل بين الجامعات
-//           </li>
-//           <li className="flex gap-3">
-//             <span className="text-emerald-700 font-bold">•</span>
-//             بناء مجتمع داعم ومتفاعل بين الطلاب
-//           </li>
-//         </ul>
-
-//         {/* قسم أعمالنا وإنجازاتنا المضاف حديثاً */}
-//         <h3 className="text-3xl font-semibold mt-16 mb-8 border-r-4 border-emerald-700 pr-4">أبرز أعمالنا وإنجازاتنا</h3>
-//         <div className="grid md:grid-cols-3 gap-6 not-prose mb-16">
-          
-//           {/* الإنجاز الأول */}
-//           <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition duration-300 hover:border-emerald-300 shadow-sm">
-//             <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
-//               <Users className="w-6 h-6" />
-//             </div>
-//             <h4 className="text-xl font-bold mb-2 text-emerald-950">متابعة ديبلوماسية</h4>
-//             <p className="text-gray-600 text-sm leading-relaxed">
-//               عقد اجتماعات مستمرة مع سفارة الجمهورية العربية السورية في بيروت لمتابعة وحل مشاكل الطلاب، لا سيما أزمات الإقامة والتسجيل الجامعي.
-//             </p>
-//           </div>
-
-//           {/* الإنجاز الثاني */}
-//           <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition duration-300 hover:border-emerald-300 shadow-sm">
-//             <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
-//               <GraduationCap className="w-6 h-6" />
-//             </div>
-//             <h4 className="text-xl font-bold mb-2 text-emerald-950">حفل التخرج الأول 2025</h4>
-//             <p className="text-gray-600 text-sm leading-relaxed">
-//               تنظيم وإقامة أول حفل تخرج رسمي مخصص للطلاب السوريين في لبنان عام 2025، تقديراً لجهودهم وتفوقهم رغم كل التحديات.
-//             </p>
-//           </div>
-
-//           {/* الإنجاز الثالث */}
-//           <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition duration-300 hover:border-emerald-300 shadow-sm">
-//             <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
-//               <MessagesSquare className="w-6 h-6" />
-//             </div>
-//             <h4 className="text-xl font-bold mb-2 text-emerald-950">الدعم الاستشاري الرقمي</h4>
-//             <p className="text-gray-600 text-sm leading-relaxed">
-//               المتابعة اليومية الفورية لكافة استفسارات وأسئلة الطلاب عبر منصات التواصل الاجتماعي ومجموعات الدعم لتوجيههم دراسياً وقانونياً.
-//             </p>
-//           </div>
-//           {/* الإنجاز الرابع */}
-//           <div className="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl transition duration-300 hover:border-emerald-300 shadow-sm">
-//             <div className="bg-emerald-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-sm">
-//               <BookOpen className="w-6 h-6" />
-//             </div>
-//             <h4 className="text-xl font-bold mb-2 text-emerald-950">التطوير والتمكين المعرفي</h4>
-//             <p className="text-gray-600 text-sm leading-relaxed">
-//               تقديم دورات تدريبية وورش عمل مجانية بالكامل في مجالات علمية وتكنولوجية وتوعوية مختلفة، لبناء قدرات الطلاب وتأهيلهم الأكاديمي والمهني.
-//             </p>
-//           </div>
-
-//         </div>
-
-//         <h3 className="text-3xl font-semibold mt-14 mb-6">من المستفيدون؟</h3>
-//         <p className="mb-16">جميع الطلاب السوريين في لبنان من مرحلة الثانوية حتى الدراسات العليا، بالإضافة إلى العائلات السورية الباحثة عن فرص تعليمية لأبنائها.</p>
-//       </div>
-      
-//       <h3 className="text-3xl font-semibold mt-20 mb-10 text-center">أعضاء ملتقى الطلاب السوريين</h3>
-
-//       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-//         {[
-//           {
-//             name: 'مصطفى المحيميد',
-//             role: 'مطور ومشرف تقني',
-//             image: '/images/team/mustafa.jpeg',
-//             desc: 'يهتم بتطوير المنصة وإدارة الأنظمة التقنية ودعم الطلاب رقمياً.'
-//           },
-//           {
-//             name: 'وليد ريحاوي',
-//             role: 'منسق شؤون جامعية',
-//             image: '/images/team/walid.jpeg',
-//             desc: 'مساعدة الطلاب في الجامعة وخصوصا الكليات الطبية'
-//           },  
-//           {
-//             name: 'عبدالبديع دشق',
-//             role: 'مشرف دعم طلابي',
-//             image: '/images/team/abedbadih.jpeg',
-//             desc: 'يعمل على متابعة استفسارات الطلاب وتقديم الدعم المباشر بالاضافة لاختصاص الصيدلة.'
-//           },
-//           {
-//             name: 'زاهدة العابد',
-//             role: 'مسؤولة الإعلام والتواصل',
-//             image: '/images/team/zahida1.jpeg',
-//             desc: 'علاقات مباشرة مع الطلاب بالاضافة منسق في سوريا'
-//           },
-//           {
-//             name: 'وئام الشاكوش',
-//             role: 'رئيسة الملتقى',
-//             image: '/images/team/weam.jpeg',
-//             desc: 'تنظم المبادرات واللقاءات والأنشطة التعليمية للطلاب.'
-//           },
-//           {
-//             name: 'عمر سمعو',
-//             role: 'مستشار أكاديمي ومطور تقني',
-//             image: '/images/team/omar.jpeg',
-//             desc: 'يقدم إرشادات أكاديمية حول الاختصاصات والجامعات خصوصا كلية الادارة والاقتصاد.'
-//           },
-//           {
-//             name: 'عبد القادر',
-//             role: 'مستشار أكاديمي',
-//             image: '/images/team/abedelkader.jpeg',
-//             desc: 'نائب الرئيس مسؤول عن الجامعات الخاصة'
-//           }
-//         ].map((member, index) => (
-//           <div
-//             key={index}
-//             className="bg-white border rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300"
-//           >
-//             <img
-//               src={member.image}
-//               alt={member.name}
-//               className="w-full h-72 object-cover"
-//             />
-
-//             <div className="p-6">
-//               <h4 className="text-2xl font-bold">{member.name}</h4>
-
-//               <div className="text-emerald-700 text-sm mt-1 mb-4">
-//                 {member.role}
-//               </div>
-
-//               <p className="text-gray-600 leading-relaxed text-sm">
-//                 {member.desc}
-//               </p>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-
-//       {/* الملاحظة التوضيحية المضافة في نهاية الصفحة */}
-//       <div className="bg-amber-50/60 border border-amber-200/70 rounded-3xl p-6 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-right mt-16 shadow-sm">
-//         <div className="bg-amber-600 text-white p-3 rounded-2xl shadow-sm shrink-0">
-//           <HeartHandshake className="w-6 h-6" />
-//         </div>
-//         <div>
-//           <h4 className="text-lg font-bold text-amber-950 mb-1">تنويه وعهد شفافية</h4>
-//           <p className="text-amber-900 text-sm leading-relaxed m-0">
-//             نحن في ملتقى الطلاب السوريين نسعى جاهدين وبشكل تطوعي كامل لخدمتكم ولتسهيل الإجراءات الأكاديمية والإدارية لكافة الطلاب، ونؤكد أننا <strong>لا نتلقى أي دعم مادي من أي جهة أو أحد</strong>، وغايتنا الأولى والأخيرة هي مصلحة الطالب ومساندته.
-//           </p>
-//         </div>
-//       </div>
-
-//     </div>
-//   );
-// }
-
-//with animation
-function AboutPage1() {
-
-  return (
-
-    <div className="
-      relative
-      overflow-hidden
-      min-h-screen
-      bg-gradient-to-b
-      from-emerald-50
-      via-white
-      to-white
-    ">
-
-      {/* Floating Background Effects */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-emerald-300/20 blur-3xl rounded-full"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-teal-300/20 blur-3xl rounded-full"></div>
-
-      <div className="relative max-w-7xl mx-auto px-6 py-16">
-
-        {/* HERO */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-20"
-        >
-
-          <div className="
-            inline-flex
-            items-center
-            gap-2
-            px-5
-            py-2
-            rounded-full
-            bg-emerald-100
-            text-emerald-700
-            text-sm
-            font-medium
-            shadow-sm
-          ">
-            <Sparkles className="w-4 h-4" />
-            من نحن
-          </div>
-
-          <h1 className="
-            text-5xl
-            md:text-7xl
-            font-black
-            tracking-tight
-            mt-6
-            text-gray-900
-          ">
-            عن ملتقى الطلاب السوريين
-          </h1>
-
-          <p className="
-            text-gray-600
-            text-lg
-            max-w-3xl
-            mx-auto
-            mt-8
-            leading-relaxed
-          ">
-            مبادرة تطوعية تهدف إلى دعم الطلاب السوريين في لبنان أكاديمياً وإدارياً ومجتمعياً،
-            وبناء بيئة داعمة تساعدهم على تجاوز التحديات وتحقيق النجاح.
-          </p>
-
-        </motion.div>
-
-        {/* MAIN IMAGE */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-          className="mb-20"
-        >
-
-          <div className="
-            overflow-hidden
-            rounded-[40px]
-            shadow-2xl
-            border
-            border-white/20
-          ">
-
-            <img
-              src="/images/team.jpeg"
-              alt="طلاب سوريون"
-              className="
-                w-full
-                h-[500px]
-                object-cover
-                hover:scale-105
-                transition-transform
-                duration-1000
-              "
-            />
-
-          </div>
-
-        </motion.div>
-
-        {/* STATS */}
-        <div className="grid md:grid-cols-3 gap-6 mb-24">
-
-          {[
-            {
-              number: "500+",
-              label: "طالب وطالبة"
-            },
-            {
-              number: "20+",
-              label: "جامعة ومعهد"
-            },
-            {
-              number: "1000+",
-              label: "استشارة ودعم"
-            }
-          ].map((item, index) => (
-
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              whileHover={{
-                y: -8,
-                scale: 1.02
-              }}
-              className="
-                bg-white/70
-                backdrop-blur-xl
-                border
-                border-white/20
-                rounded-3xl
-                p-10
-                text-center
-                shadow-lg
-                hover:shadow-2xl
-                transition-all
-                duration-500
-              "
-            >
-
-              <div className="
-                text-5xl
-                font-black
-                text-emerald-700
-              ">
-                {item.number}
-              </div>
-
-              <div className="
-                mt-4
-                text-gray-600
-                text-lg
-              ">
-                {item.label}
-              </div>
-
-            </motion.div>
-
-          ))}
-
-        </div>
-
-        {/* GOALS */}
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-          className="mb-24"
-        >
-
-          <div className="text-center mb-14">
-
-            <h2 className="
-              text-4xl
-              md:text-5xl
-              font-bold
-              text-gray-900
-            ">
-              أهداف الملتقى
-            </h2>
-
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-
-            {[
-              'توفير معلومات موثوقة ومحدثة',
-              'تسهيل الإجراءات الجامعية',
-              'بناء مجتمع طلابي داعم',
-              'مساعدة الطلاب أكاديمياً وإدارياً'
-            ].map((goal, index) => (
-
-              <motion.div
-                key={index}
-                whileHover={{
-                  y: -6
-                }}
-                className="
-                  bg-white
-                  border
-                  rounded-3xl
-                  p-8
-                  shadow-sm
-                  hover:shadow-xl
-                  transition-all
-                  duration-500
-                  flex
-                  items-center
-                  gap-5
-                "
-              >
-
-                <div className="
-                  w-14
-                  h-14
-                  rounded-2xl
-                  bg-emerald-100
-                  flex
-                  items-center
-                  justify-center
-                  text-emerald-700
-                  font-bold
-                  text-xl
-                ">
-                  ✓
-                </div>
-
-                <div className="
-                  text-lg
-                  font-medium
-                  text-gray-800
-                ">
-                  {goal}
-                </div>
-
-              </motion.div>
-
-            ))}
-
-          </div>
-
-        </motion.div>
-
-        {/* TEAM */}
-        <div className="mb-24">
-
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-
-            <h2 className="
-              text-5xl
-              font-black
-              text-gray-900
-            ">
-              أعضاء الملتقى
-            </h2>
-
-          </motion.div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            {[
-                {name: 'مصطفى المحيميد',
-                role: 'مطور ومشرف تقني',
-                image: '/images/team/mustafa.jpeg',
-                desc: 'يهتم بتطوير المنصة وإدارة الأنظمة التقنية ودعم الطلاب رقمياً.'
-              },
-              {
-                name: 'وليد ريحاوي',
-                role: 'منسق شؤون جامعية',
-                image: '/images/team/walid.jpeg',
-                desc: 'مساعدة الطلاب في الجامعة وخصوصا الكليات الطبية'
-              },
-              {
-                name: 'عبدالبديع دشق',
-                role: 'مشرف دعم طلابي',
-                image: '/images/team/abedbadih.jpeg',
-                desc: 'يعمل على متابعة استفسارات الطلاب وتقديم الدعم المباشر بالاضافة لاختصاص الصيدلة.'
-              },
-              {
-                name: 'زاهدة العابد',
-                role: 'مسؤولة الإعلام والتواصل',
-                image: '/images/team/zahida1.jpeg',
-                desc: 'علاقات مباشرة مع الطلاب بالاضافة منسق في سوريا'
-              },
-              {
-                name: 'وئام الشاكوش',
-                role: 'رئيسة الملتقى',
-                image: '/images/team/weam.jpeg',
-                desc: 'تنظم المبادرات واللقاءات والأنشطة التعليمية للطلاب.'
-              },
-              {
-                name: 'عمر سمعو',
-                role: 'مستشار أكاديمي ومطور تقني',
-                image: '/images/team/omar.jpeg',
-                desc: 'يقدم إرشادات أكاديمية حول الاختصاصات والجامعات خصوصا كلية الادارة والاقتصاد.'
-              },
-              {
-                name: 'عبد القادر',
-                role: 'مستشار أكاديمي',
-                image: '/images/team/abedelkader.jpeg',
-                desc: 'نائب الرئيس مسؤول عن الجامعات الخاصة'
-              }
-            ].map((member, index) => (
-
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{
-                  y: -12,
-                  scale: 1.02
-                }}
-                transition={{
-                  duration: 0.5
-                }}
-                viewport={{ once: true }}
-                className="
-                  bg-white/70
-                  backdrop-blur-xl
-                  border
-                  border-white/20
-                  rounded-3xl
-                  overflow-hidden
-                  shadow-lg
-                  hover:shadow-2xl
-                  transition-all
-                  duration-500
-                "
-              >
-
-                <div className="overflow-hidden">
-
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="
-                      w-full
-                      h-80
-                      object-cover
-                      hover:scale-110
-                      transition-transform
-                      duration-700
-                    "
-                  />
-
-                </div>
-
-                <div className="p-7">
-
-                  <h3 className="
-                    text-2xl
-                    font-bold
-                    text-gray-900
-                  ">
-                    {member.name}
-                  </h3>
-
-                  <div className="
-                    text-emerald-700
-                    mt-2
-                    text-sm
-                    font-medium
-                  ">
-                    {member.role}
-                  </div>
-
-                  <p className="
-                    text-gray-600
-                    mt-5
-                    leading-relaxed
-                    text-sm
-                  ">
-                    {member.desc}
-                  </p>
-
-                </div>
-
-              </motion.div>
-
-            ))}
-
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-  );
-}
 
 // About Page
 function AboutPage() {
@@ -2138,90 +1532,6 @@ function AboutPage() {
 
       </div>
 
-      {/* Team */}
-      {/* <h3 className="text-3xl font-semibold mt-20 mb-10 text-center">
-        أعضاء ملتقى الطلاب السوريين
-      </h3> */}
-
-      {/* <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-        {[
-          {
-            name: 'مصطفى المحيميد',
-            role: 'مطور ومشرف تقني',
-            image: '/images/team/mustafa.jpeg',
-            desc: 'يهتم بتطوير المنصة وإدارة الأنظمة التقنية ودعم الطلاب رقمياً.'
-          },
-          {
-            name: 'وليد ريحاوي',
-            role: 'منسق شؤون جامعية',
-            image: '/images/team/walid.jpeg',
-            desc: 'مساعدة الطلاب في الجامعة وخصوصا الكليات الطبية'
-          },
-          {
-            name: 'عبدالبديع دشق',
-            role: 'مشرف دعم طلابي',
-            image: '/images/team/abedbadih.jpeg',
-            desc: 'يعمل على متابعة استفسارات الطلاب وتقديم الدعم المباشر بالاضافة لاختصاص الصيدلة.'
-          },
-          {
-            name: 'زاهدة العابد',
-            role: 'مسؤولة الإعلام والتواصل',
-            image: '/images/team/zahida1.jpeg',
-            desc: 'علاقات مباشرة مع الطلاب بالاضافة منسق في سوريا'
-          },
-          {
-            name: 'وئام الشاكوش',
-            role: 'رئيسة الملتقى',
-            image: '/images/team/weam.jpeg',
-            desc: 'تنظم المبادرات واللقاءات والأنشطة التعليمية للطلاب.'
-          },
-          {
-            name: 'عمر سمعو',
-            role: 'مستشار أكاديمي ومطور تقني',
-            image: '/images/team/omar.jpeg',
-            desc: 'يقدم إرشادات أكاديمية حول الاختصاصات والجامعات خصوصا كلية الادارة والاقتصاد.'
-          },
-          {
-            name: 'عبد القادر',
-            role: 'مستشار أكاديمي',
-            image: '/images/team/abedelkader.jpeg',
-            desc: 'نائب الرئيس مسؤول عن الجامعات الخاصة'
-          }
-        ].map((member, index) => (
-
-          <div
-            key={index}
-            className="bg-white border rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 group"
-          >
-
-            <img
-              src={member.image}
-              alt={member.name}
-              className="w-full h-72 object-cover transition duration-500 group-hover:scale-105"
-            />
-
-            <div className="p-6">
-
-              <h4 className="text-2xl font-bold transition duration-300 group-hover:text-emerald-700">
-                {member.name}
-              </h4>
-
-              <div className="text-emerald-700 text-sm mt-1 mb-4">
-                {member.role}
-              </div>
-
-              <p className="text-gray-600 leading-relaxed text-sm">
-                {member.desc}
-              </p>
-
-            </div>
-
-          </div>
-
-        ))}
-
-      </div> */}
               {/* TEAM */}
         <div className="mb-24">
 
@@ -2246,6 +1556,18 @@ function AboutPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
             {[
+                {
+                name: 'وئام الشاكوش',
+                role: 'رئيسة الملتقى',
+                image: '/images/team/weam.jpeg',
+                desc: 'تنظم المبادرات واللقاءات والأنشطة التعليمية للطلاب.'
+              },
+              {
+                name: 'عبد القادر عودة',
+                role: 'مستشار أكاديمي',
+                image: '/images/team/abedelkader.jpeg',
+                desc: 'نائب الرئيس مسؤول عن الجامعات الخاصة'
+              },
                 {name: 'مصطفى المحيميد',
                 role: 'مطور ومشرف تقني',
                 image: '/images/team/mustafa.jpeg',
@@ -2269,23 +1591,12 @@ function AboutPage() {
                 image: '/images/team/zahida1.jpeg',
                 desc: 'علاقات مباشرة مع الطلاب بالاضافة منسق في سوريا'
               },
-              {
-                name: 'وئام الشاكوش',
-                role: 'رئيسة الملتقى',
-                image: '/images/team/weam.jpeg',
-                desc: 'تنظم المبادرات واللقاءات والأنشطة التعليمية للطلاب.'
-              },
+
               {
                 name: 'عمر سمعو',
                 role: 'مستشار أكاديمي ومطور تقني',
                 image: '/images/team/omar.jpeg',
                 desc: 'يقدم إرشادات أكاديمية حول الاختصاصات والجامعات خصوصا كلية الادارة والاقتصاد.'
-              },
-              {
-                name: 'عبد القادر',
-                role: 'مستشار أكاديمي',
-                image: '/images/team/abedelkader.jpeg',
-                desc: 'نائب الرئيس مسؤول عن الجامعات الخاصة'
               }
             ].map((member, index) => (
 
