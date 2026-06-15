@@ -24,7 +24,7 @@ import {
 
 } from 'lucide-react';
 
-import { motion } from 'framer-motion';
+import { motion ,AnimatePresence } from 'framer-motion';
 // Using local SQLite database via API routes
 
 // Types
@@ -1275,9 +1275,9 @@ function AboutPage() {
 
       {/* Header */}
       <div className="text-center mb-14">
-        <div className="text-emerald-700 tracking-[2px] text-sm">
+        {/* <div className="text-emerald-700 tracking-[2px] text-sm">
           من نحن
-        </div>
+        </div> */}
 
         <h1 className="text-6xl font-bold tracking-tighter mt-3">
           عن ملتقى الطلاب السوريين
@@ -1885,97 +1885,259 @@ function NewsPage({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
 // }
 
 // Guides Page
+// function GuidesPage() {
+//   return (
+//     <div className="max-w-5xl mx-auto px-6 py-16">
+//       <div className="text-center mb-16">
+//         <div className="text-emerald-600 text-sm tracking-[3px]">
+//           معلومات موثوقة
+//         </div>
+
+//         <h1 className="font-bold text-6xl tracking-tighter mt-3">
+//           الأدلة الإرشادية
+//         </h1>
+//       </div>
+
+//       <div className="space-y-16">
+//         {GUIDES.map((guide, idx) => (
+//           <div
+//             key={guide.id}
+//             className="bg-white border rounded-3xl px-10 py-12 shadow-sm"
+//           >
+//             <div className="flex items-center gap-4 mb-8">
+//               <div className="text-5xl font-bold text-emerald-100">
+//                 0{idx + 1}
+//               </div>
+
+//               <h2 className="font-semibold text-4xl tracking-tighter">
+//                 {guide.title}
+//               </h2>
+//             </div>
+
+//             <div className="grid md:grid-cols-5 gap-10">
+//               {/* Steps */}
+//               <div className="md:col-span-3">
+//                 <div className="font-medium mb-5 text-sm tracking-wider text-emerald-700">
+//                   الخطوات بالتفصيل
+//                 </div>
+
+//                 <ol className="space-y-5 text-[15px] leading-relaxed">
+//                   {guide.steps.map((step, i) => (
+//                     <li
+//                       key={i}
+//                       className="pr-10 relative before:absolute before:right-0 before:top-1 before:w-6 before:h-6 before:bg-emerald-50 before:rounded-full before:content-['✓'] before:flex before:items-center before:justify-center before:text-emerald-600 before:text-sm"
+//                     >
+//                       {step}
+//                     </li>
+//                   ))}
+//                 </ol>
+//               </div>
+
+//               {/* Requirements */}
+//               <div className="md:col-span-2 space-y-6">
+//                 <div className="bg-gray-50 p-8 rounded-2xl">
+//                   <div className="font-semibold mb-4 text-lg">
+//                     الشروط والمتطلبات
+//                   </div>
+
+//                   <ul className="space-y-3 text-sm text-gray-700 leading-relaxed">
+//                     {Array.isArray(guide.requirements) ? (
+//                       guide.requirements.map((req, i) => (
+//                         <li key={i} className="flex gap-2">
+//                           <span className="text-emerald-600">•</span>
+//                           <span>{req}</span>
+//                         </li>
+//                       ))
+//                     ) : (
+//                       <li>{guide.requirements}</li>
+//                     )}
+//                   </ul>
+//                 </div>
+
+//                 {/* Additional Conditions */}
+//                 {"additionalConditions" in guide &&
+//                   guide.additionalConditions && (
+//                     <div className="bg-orange-50 border border-orange-100 p-8 rounded-2xl">
+//                       <div className="font-semibold mb-4 text-lg text-orange-700">
+//                         شروط إضافية
+//                       </div>
+
+//                       <ul className="space-y-4 text-sm text-gray-700 leading-relaxed">
+//                         {guide.additionalConditions.map((condition, i) => (
+//                           <li key={i} className="flex gap-2">
+//                             <span className="text-orange-500">•</span>
+//                             <span>{condition}</span>
+//                           </li>
+//                         ))}
+//                       </ul>
+//                     </div>
+//                   )}
+//               </div>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
 function GuidesPage() {
+  // تخزين الـ id الخاص بالدليل المفتوح حالياً (افتراضياً يفتح الأول)
+  const [activeGuideId, setActiveGuideId] = useState<number | null>(1);
+
+  const toggleGuide = (id: number) => {
+    setActiveGuideId(activeGuideId === id ? null : id);
+  };
+
   return (
-    <div className="max-w-5xl mx-auto px-6 py-16">
+    <div className="max-w-5xl mx-auto px-6 py-16" dir="rtl">
+      {/* Header */}
       <div className="text-center mb-16">
-        <div className="text-emerald-600 text-sm tracking-[3px]">
+        <div className="text-emerald-600 text-sm tracking-[3px] font-medium uppercase">
           معلومات موثوقة
         </div>
-
-        <h1 className="font-bold text-6xl tracking-tighter mt-3">
+        <h1 className="font-bold text-5xl md:text-6xl tracking-tighter mt-3 text-slate-900">
           الأدلة الإرشادية
         </h1>
       </div>
 
-      <div className="space-y-16">
-        {GUIDES.map((guide, idx) => (
-          <div
-            key={guide.id}
-            className="bg-white border rounded-3xl px-10 py-12 shadow-sm"
-          >
-            <div className="flex items-center gap-4 mb-8">
-              <div className="text-5xl font-bold text-emerald-100">
-                0{idx + 1}
-              </div>
+      {/* Accordion Container */}
+      <div className="space-y-4">
+        {GUIDES.map((guide, idx) => {
+          const isOpen = activeGuideId === guide.id;
 
-              <h2 className="font-semibold text-4xl tracking-tighter">
-                {guide.title}
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-5 gap-10">
-              {/* Steps */}
-              <div className="md:col-span-3">
-                <div className="font-medium mb-5 text-sm tracking-wider text-emerald-700">
-                  الخطوات بالتفصيل
-                </div>
-
-                <ol className="space-y-5 text-[15px] leading-relaxed">
-                  {guide.steps.map((step, i) => (
-                    <li
-                      key={i}
-                      className="pr-10 relative before:absolute before:right-0 before:top-1 before:w-6 before:h-6 before:bg-emerald-50 before:rounded-full before:content-['✓'] before:flex before:items-center before:justify-center before:text-emerald-600 before:text-sm"
-                    >
-                      {step}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-
-              {/* Requirements */}
-              <div className="md:col-span-2 space-y-6">
-                <div className="bg-gray-50 p-8 rounded-2xl">
-                  <div className="font-semibold mb-4 text-lg">
-                    الشروط والمتطلبات
+          return (
+            <div
+              key={guide.id}
+              className={`border rounded-3xl bg-white transition-all duration-300 overflow-hidden ${
+                isOpen 
+                  ? "shadow-md border-emerald-500/30 ring-1 ring-emerald-500/10" 
+                  : "shadow-sm hover:shadow-md border-slate-200/80"
+              }`}
+            >
+              {/* Trigger Button */}
+              <button
+                onClick={() => toggleGuide(guide.id)}
+                className="w-full flex justify-between items-center px-8 py-6 md:px-10 md:py-8 text-right focus:outline-none group"
+              >
+                <div className="flex items-center gap-5">
+                  {/* Index Number */}
+                  <div className={`text-3xl md:text-4xl font-bold transition-colors duration-300 ${
+                    isOpen ? "text-emerald-500" : "text-slate-200 group-hover:text-slate-300"
+                  }`}>
+                    {String(idx + 1).padStart(2, '0')}
                   </div>
-
-                  <ul className="space-y-3 text-sm text-gray-700 leading-relaxed">
-                    {Array.isArray(guide.requirements) ? (
-                      guide.requirements.map((req, i) => (
-                        <li key={i} className="flex gap-2">
-                          <span className="text-emerald-600">•</span>
-                          <span>{req}</span>
-                        </li>
-                      ))
-                    ) : (
-                      <li>{guide.requirements}</li>
-                    )}
-                  </ul>
+                  {/* Title */}
+                  <h2 className={`font-semibold text-xl md:text-2xl tracking-tight transition-colors ${
+                    isOpen ? "text-emerald-900" : "text-slate-800 group-hover:text-emerald-700"
+                  }`}>
+                    {guide.title}
+                  </h2>
                 </div>
 
-                {/* Additional Conditions */}
-                {"additionalConditions" in guide &&
-                  guide.additionalConditions && (
-                    <div className="bg-orange-50 border border-orange-100 p-8 rounded-2xl">
-                      <div className="font-semibold mb-4 text-lg text-orange-700">
-                        شروط إضافية
-                      </div>
+                {/* Status Indicator Icon */}
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all duration-300 ${
+                  isOpen 
+                    ? "bg-emerald-500 border-emerald-500 text-white rotate-185" 
+                    : "bg-slate-50 border-slate-200 text-slate-500 group-hover:bg-slate-100"
+                }`}>
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    strokeWidth={2.5} 
+                    stroke="currentColor" 
+                    className="w-5 h-5"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg>
+                </div>
+              </button>
 
-                      <ul className="space-y-4 text-sm text-gray-700 leading-relaxed">
-                        {guide.additionalConditions.map((condition, i) => (
-                          <li key={i} className="flex gap-2">
-                            <span className="text-orange-500">•</span>
-                            <span>{condition}</span>
-                          </li>
-                        ))}
-                      </ul>
+              {/* Animated Content Expansion */}
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: "easeInOut" }}
+                  >
+                    <div className="px-8 pb-10 md:px-10 md:pb-12 border-t border-slate-100 pt-8 bg-slate-50/40">
+                      <div className="grid md:grid-cols-5 gap-10">
+                        
+                        {/* Steps (Col: 3) */}
+                        <div className="md:col-span-3">
+                          <div className="font-bold mb-6 text-xs uppercase tracking-wider text-emerald-700 bg-emerald-50 inline-block px-3 py-1 rounded-md">
+                            الخطوات بالتفصيل
+                          </div>
+
+                          <ol className="space-y-4 text-[15px] leading-relaxed text-slate-700">
+                            {guide.steps.map((step, i) => (
+                              <li
+                                key={i}
+                                className="pr-9 relative before:absolute before:right-0 before:top-0.5 before:w-6 before:h-6 before:bg-emerald-50 before:rounded-full before:content-['✓'] before:flex before:items-center before:justify-center before:text-emerald-600 before:text-xs before:font-bold"
+                              >
+                                {step}
+                              </li>
+                            ))}
+                          </ol>
+                        </div>
+
+                        {/* Requirements & Extra Conditions (Col: 2) */}
+                        <div className="md:col-span-2 space-y-6">
+                          {/* Requirements */}
+                          <div className="bg-white border border-slate-200/60 p-6 rounded-2xl shadow-sm">
+                            <div className="font-bold mb-4 text-base text-slate-900 flex items-center gap-2">
+                              <span className="w-1.5 h-4 bg-emerald-500 rounded-full inline-block"></span>
+                              الشروط والمتطلبات
+                            </div>
+
+                            <ul className="space-y-2.5 text-sm text-slate-600 leading-relaxed">
+                              {Array.isArray(guide.requirements) ? (
+                                guide.requirements.map((req, i) => (
+                                  <li key={i} className="flex gap-2 items-start">
+                                    <span className="text-emerald-500 mt-0.5">•</span>
+                                    <span>{req}</span>
+                                  </li>
+                                ))
+                              ) : (
+                                <li className="flex gap-2 items-start">
+                                  <span className="text-emerald-500 mt-0.5">•</span>
+                                  <span>{guide.requirements}</span>
+                                </li>
+                              )}
+                            </ul>
+                          </div>
+
+                          {/* Additional Conditions */}
+                          {"additionalConditions" in guide && guide.additionalConditions && (
+                            <div className="bg-amber-50/60 border border-amber-100 p-6 rounded-2xl">
+                              <div className="font-bold mb-4 text-base text-amber-800 flex items-center gap-2">
+                                <span className="w-1.5 h-4 bg-amber-500 rounded-full inline-block"></span>
+                                تنويهات وشروط إضافية
+                              </div>
+
+                              <ul className="space-y-3 text-sm text-amber-900/80 leading-relaxed">
+                                {guide.additionalConditions.map((condition, i) => (
+                                  <li key={i} className="flex gap-2 items-start">
+                                    <span className="text-amber-500 mt-0.5">•</span>
+                                    <span>{condition}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+
+                      </div>
                     </div>
-                  )}
-              </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
