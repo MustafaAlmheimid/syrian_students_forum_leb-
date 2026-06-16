@@ -19,12 +19,22 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS
+//   }
+// });
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
-  }
+  },
+  family: 4
 });
 
 // ==================== Helper: Check Admin ====================
@@ -53,9 +63,7 @@ async function checkAdmin(req) {
 // ==================== AUTH ====================
 
 app.post('/api/auth', async (req, res) => {
-
   try {
-
     const {
       action,
       first_name,
@@ -70,7 +78,6 @@ app.post('/api/auth', async (req, res) => {
 
     // LOGIN
     if (action === 'login') {
-
       const users = await sql`
         SELECT *
         FROM users
@@ -80,32 +87,30 @@ app.post('/api/auth', async (req, res) => {
       const user = users[0];
 
       if (!user || user.password !== password) {
-
         return res.status(401).json({
           error: 'البريد أو كلمة المرور غير صحيحة'
         });
       }
 
-        return res.json({
-          user: {
-            id: user.id,
-            email: user.email,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            birthday: user.birthday
+      return res.json({
+        user: {
+          id: user.id,
+          email: user.email,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          birthday: user.birthday
             ? user.birthday.toISOString().split('T')[0]
             : null,
-            university: user.university,
-            major: user.major,
-            phone: user.phone,
-            role: user.role
-          }
-        });
+          university: user.university,
+          major: user.major,
+          phone: user.phone,
+          role: user.role
+        }
+      });
     }
 
     // SIGNUP
     if (action === 'signup') {
-
       const existing = await sql`
         SELECT id
         FROM users
@@ -113,7 +118,6 @@ app.post('/api/auth', async (req, res) => {
       `;
 
       if (existing.length > 0) {
-
         return res.status(400).json({
           error: 'هذا البريد مسجل مسبقاً'
         });
@@ -149,83 +153,51 @@ app.post('/api/auth', async (req, res) => {
         RETURNING *
       `;
 
-      // Send Welcome Email
-      await transporter.sendMail({
-
-        from: process.env.EMAIL_USER,
-
-        to: email,
-
-        subject: 'مرحباً بك في ملتقى الطلاب السوريين',
-
-        html: `
-          <div style="
-            font-family: Arial;
-            direction: rtl;
-            text-align: right;
-            padding: 20px;
-          ">
-
-            <h2 style="color:#047857;">
-              أهلاً بك ${first_name} 👋
-            </h2>
-
-            <p>
-              تم إنشاء حسابك بنجاح في منصة
-              <strong>ملتقى الطلاب السوريين في لبنان</strong>.
-            </p>
-
-            <p>
-              يمكنك الآن:
-            </p>
-
-            <ul>
-              <li>متابعة الأخبار والتحديثات</li>
-              <li>طرح الأسئلة داخل المجتمع</li>
-              <li>التفاعل مع الطلاب</li>
-              <li>الوصول إلى الأدلة الإرشادية</li>
-            </ul>
-
-            <br>
-
-            <a
-              href="${process.env.BASE_URL}"
-              style="
-                background:#047857;
-                color:white;
-                padding:12px 20px;
-                border-radius:10px;
-                text-decoration:none;
-                display:inline-block;
-              "
-            >
-              الدخول إلى المنصة
-            </a>
-
-            <br><br>
-
-            <p style="font-size:13px;color:gray;">
-              ملتقى الطلاب السوريين في لبنان
-            </p>
-
-          </div>
-        `
-      });
-
-      return res.status(201).json({
+      // 1. أرسل الاستجابة فوراً للمتصفح ليفتح الحساب دون أي تأخير 🚀
+      res.status(201).json({
         user: {
           id: newUser.id,
           first_name: newUser.first_name,
           last_name: newUser.last_name,
-          birthday: newUser.birthday  ? 
-          user.birthday.toISOString().split('T')[0]
-          : null,
+          birthday: newUser.birthday ? 
+            newUser.birthday.toISOString().split('T')[0]
+            : null,
           university: newUser.university,
           major: newUser.major,
           email: newUser.email,
           role: newUser.role
         }
       });
+
+      // 2. كود إرسال البريد يعمل الآن في الخلفية (Asynchronously) على مهله دون await
+      // تم وضعه في try/catch معزول تماماً حتى لو فشل، لا يؤثر على المستخدم
+      transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: 'مرحباً بك في ملتقى الطلاب السوريين',
+        html: `
+          <div style="font-family: Arial; direction: rtl; text-align: right; padding: 20px;">
+            <h2 style="color:#047857;">أهلاً بك ${first_name} 👋</h2>
+            <p>تم إنشاء حسابك بنجاح في منصة <strong>ملتقى الطلاب السوريين في لبنان</strong>.</p>
+            <p>يمكنك الآن:</p>
+            <ul>
+              <li>متابعة الأخبار والتحديثات</li>
+              <li>طرح الأسئلة داخل المجتمع</li>
+              <li>التفاعل مع الطلاب</li>
+              <li>الوصول إلى الأدلة الإرشادية</li>
+            </ul>
+            <br>
+            <a href="${process.env.BASE_URL}" style="background:#047857; color:white; padding:12px 20px; border-radius:10px; text-decoration:none; display:inline-block;">الدخول إلى المنصة</a>
+            <br><br>
+            <p style="font-size:13px;color:gray;">ملتقى الطلاب السوريين في لبنان</p>
+          </div>
+        `
+      }).catch(mailErr => {
+        // طباعة الخطأ في السيرفر فقط دون التأثير على المتصفح
+        console.error('❌ فشل إرسال بريد الترحيب في الخلفية:', mailErr.message);
+      });
+
+      return; // إنهاء التنفيذ هنا للمسار بنجاح
     }
 
     return res.status(400).json({
@@ -233,15 +205,167 @@ app.post('/api/auth', async (req, res) => {
     });
 
   } catch (err) {
-
     console.error(err);
-
-    res.status(500).json({
-      error: err.message
-    });
+    // هذا الـ catch يلتقط فقط أخطاء الاتصال بقاعدة البيانات أو العمليات المتزامنة الأساسية
+    if (!res.headersSent) {
+      res.status(500).json({
+        error: err.message
+      });
+    }
   }
 });
+// app.post('/api/auth', async (req, res) => {
+//   try {
+//     const {
+//       action,
+//       first_name,
+//       last_name,
+//       birthday,
+//       university,
+//       major,
+//       phone,
+//       email,
+//       password
+//     } = req.body;
 
+//     // LOGIN
+//     if (action === 'login') {
+//       const users = await sql`
+//         SELECT *
+//         FROM users
+//         WHERE email = ${email}
+//       `;
+
+//       const user = users[0];
+
+//       if (!user || user.password !== password) {
+//         return res.status(401).json({
+//           error: 'البريد أو كلمة المرور غير صحيحة'
+//         });
+//       }
+
+//       return res.json({
+//         user: {
+//           id: user.id,
+//           email: user.email,
+//           first_name: user.first_name,
+//           last_name: user.last_name,
+//           birthday: user.birthday
+//             ? user.birthday.toISOString().split('T')[0]
+//             : null,
+//           university: user.university,
+//           major: user.major,
+//           phone: user.phone,
+//           role: user.role
+//         }
+//       });
+//     }
+
+//     // SIGNUP
+//     if (action === 'signup') {
+//       const existing = await sql`
+//         SELECT id
+//         FROM users
+//         WHERE email = ${email}
+//       `;
+
+//       if (existing.length > 0) {
+//         return res.status(400).json({
+//           error: 'هذا البريد مسجل مسبقاً'
+//         });
+//       }
+
+//       const id = 'user-' + Date.now();
+
+//       const [newUser] = await sql`
+//         INSERT INTO users (
+//             id,
+//             first_name,
+//             last_name,
+//             birthday,
+//             university,
+//             major,
+//             phone,
+//             email,
+//             password,
+//             role
+//           )
+//           VALUES (
+//             ${id},
+//             ${first_name},
+//             ${last_name},
+//             ${birthday},
+//             ${university},
+//             ${major},
+//             ${phone},
+//             ${email},
+//             ${password},
+//             'user'
+//           )
+//         RETURNING *
+//       `;
+
+//       // 1. أرسل الاستجابة فوراً للمتصفح ليفتح الحساب دون أي تأخير 🚀
+//       res.status(201).json({
+//         user: {
+//           id: newUser.id,
+//           first_name: newUser.first_name,
+//           last_name: newUser.last_name,
+//           birthday: newUser.birthday ? 
+//             newUser.birthday.toISOString().split('T')[0]
+//             : null,
+//           university: newUser.university,
+//           major: newUser.major,
+//           email: newUser.email,
+//           role: newUser.role
+//         }
+//       });
+
+//       // 2. كود إرسال البريد يعمل الآن في الخلفية (Asynchronously) على مهله دون await
+//       // تم وضعه في try/catch معزول تماماً حتى لو فشل، لا يؤثر على المستخدم
+//       transporter.sendMail({
+//         from: process.env.EMAIL_USER,
+//         to: email,
+//         subject: 'مرحباً بك في ملتقى الطلاب السوريين',
+//         html: `
+//           <div style="font-family: Arial; direction: rtl; text-align: right; padding: 20px;">
+//             <h2 style="color:#047857;">أهلاً بك ${first_name} 👋</h2>
+//             <p>تم إنشاء حسابك بنجاح في منصة <strong>ملتقى الطلاب السوريين في لبنان</strong>.</p>
+//             <p>يمكنك الآن:</p>
+//             <ul>
+//               <li>متابعة الأخبار والتحديثات</li>
+//               <li>طرح الأسئلة داخل المجتمع</li>
+//               <li>التفاعل مع الطلاب</li>
+//               <li>الوصول إلى الأدلة الإرشادية</li>
+//             </ul>
+//             <br>
+//             <a href="${process.env.BASE_URL}" style="background:#047857; color:white; padding:12px 20px; border-radius:10px; text-decoration:none; display:inline-block;">الدخول إلى المنصة</a>
+//             <br><br>
+//             <p style="font-size:13px;color:gray;">ملتقى الطلاب السوريين في لبنان</p>
+//           </div>
+//         `
+//       }).catch(mailErr => {
+//         // طباعة الخطأ في السيرفر فقط دون التأثير على المتصفح
+//         console.error('❌ فشل إرسال بريد الترحيب في الخلفية:', mailErr.message);
+//       });
+
+//       return; // إنهاء التنفيذ هنا للمسار بنجاح
+//     }
+
+//     return res.status(400).json({
+//       error: 'Invalid action'
+//     });
+
+//   } catch (err) {
+//     console.error(err);
+//     // هذا الـ catch يلتقط فقط أخطاء الاتصال بقاعدة البيانات أو العمليات المتزامنة الأساسية
+//     if (!res.headersSent) {
+//       res.status(500).json({
+//         error: err.message
+//       });
+//     }
+//   }
+// });
 
 // ==================== POSTS ====================
 
