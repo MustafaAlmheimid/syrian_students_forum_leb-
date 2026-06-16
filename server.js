@@ -27,19 +27,21 @@ app.use(express.json());
 //   }
 // });
 const transporter = nodemailer.createTransport({
-  // بدلاً من استخدام service: 'gmail'، نكتب الـ host الصريح والمنفذ 587
   host: 'smtp.gmail.com',
-  port: 587, 
-  secure: false, // يجب أن تكون false مع المنفذ 587 (ثم يتم الترقية عبر STARTTLS)
+  port: 465,         // الانتقال إلى المنفذ المشفر الافتراضي لـ Gmail
+  secure: true,      // يجب أن تكون true مع المنفذ 465
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
   },
-  // هنا السحر: نُجبر Nodemailer على استخدام الـ IPv4 فقط وتجاهل الـ IPv6
-  connectionTimeout: 10000, // مهلة الاتصال 10 ثوانٍ
-  greetingTimeout: 10000,
-  socketTimeout: 10000,
-  dnsjs: true, // تفعيل ميزة معالجة الـ DNS داخلياً
+  // هنا الحل الحاسم لمنع الـ Timeout وإجبار الاتصال على الـ IPv4
+  connectionTimeout: 15000, // رفع مهلة الاتصال إلى 15 ثانية لمنع الـ Timeout اللحظي
+  greetingTimeout: 15000,
+  socketTimeout: 15000,
+  family: 4,                // 👈 هذا الخيار يجبر بروتوكول اتصال الـ Node.js على استخدام IPv4 فقط 
+  tls: {
+    rejectUnauthorized: false // تخطي فحص الشهادات المحلية لتجنب رفض السيرفر للطلب
+  }
 });
 
 // ==================== Helper: Check Admin ====================
