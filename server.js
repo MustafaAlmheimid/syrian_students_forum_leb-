@@ -19,12 +19,27 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS
+//   }
+// });
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  // بدلاً من استخدام service: 'gmail'، نكتب الـ host الصريح والمنفذ 587
+  host: 'smtp.gmail.com',
+  port: 587, 
+  secure: false, // يجب أن تكون false مع المنفذ 587 (ثم يتم الترقية عبر STARTTLS)
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
-  }
+  },
+  // هنا السحر: نُجبر Nodemailer على استخدام الـ IPv4 فقط وتجاهل الـ IPv6
+  connectionTimeout: 10000, // مهلة الاتصال 10 ثوانٍ
+  greetingTimeout: 10000,
+  socketTimeout: 10000,
+  dnsjs: true, // تفعيل ميزة معالجة الـ DNS داخلياً
 });
 
 // ==================== Helper: Check Admin ====================
