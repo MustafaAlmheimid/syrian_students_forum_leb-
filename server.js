@@ -9,6 +9,7 @@ import { sql } from './api/_db.js';
 
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
+import dns from 'dns'; 
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -26,21 +27,26 @@ app.use(express.json());
 //     pass: process.env.EMAIL_PASS
 //   }
 // });
+// تعديل كود الـ transporter ليصبح هكذا:
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
-  port: 465,         // الانتقال إلى المنفذ المشفر الافتراضي لـ Gmail
-  secure: true,      // يجب أن تكون true مع المنفذ 465
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
   },
-  // هنا الحل الحاسم لمنع الـ Timeout وإجبار الاتصال على الـ IPv4
-  connectionTimeout: 15000, // رفع مهلة الاتصال إلى 15 ثانية لمنع الـ Timeout اللحظي
+  // 🛠️ الحل الجذري: إجبار محرك الاتصال على استخدام بروتوكول الـ IPv4 فقط للـ Hostname
+  lookup: (hostname, options, callback) => {
+    dns.lookup(hostname, { family: 4 }, (err, address, family) => {
+      callback(err, address, family);
+    });
+  },
+  connectionTimeout: 15000,
   greetingTimeout: 15000,
   socketTimeout: 15000,
-  family: 4,                // 👈 هذا الخيار يجبر بروتوكول اتصال الـ Node.js على استخدام IPv4 فقط 
   tls: {
-    rejectUnauthorized: false // تخطي فحص الشهادات المحلية لتجنب رفض السيرفر للطلب
+    rejectUnauthorized: false
   }
 });
 
