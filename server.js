@@ -9,7 +9,6 @@ import { sql } from './api/_db.js';
 
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
-import dns from 'dns'; 
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -20,31 +19,12 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-// const transporter = nodemailer.createTransport({
-//   service: 'gmail',
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.EMAIL_PASS
-//   }
-// });
-// تعديل كود الـ transporter ليصبح هكذا:
 const transporter = nodemailer.createTransport({
-  // 🛠️ نضع الـ IPv4 الخاص بـ smtp.gmail.com مباشرة هنا
-  host: '142.250.141.108', 
-  port: 465,
-  secure: true,
+  service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
-  },
-  // نُجبر الـ TLS على قبول الاتصال لأننا نستخدم IP بدلاً من اسم النطاق
-  tls: {
-    rejectUnauthorized: false,
-    servername: 'smtp.gmail.com' // 👈 مهم جداً لكي يطابق شهادة الأمان لـ Gmail ولا يعطي خطأ أمان
-  },
-  connectionTimeout: 15000,
-  greetingTimeout: 15000,
-  socketTimeout: 15000
+  }
 });
 
 // ==================== Helper: Check Admin ====================
