@@ -36,7 +36,21 @@ const transporter = nodemailer.createTransport({
   },
   family: 4
 });
+app.get('/test-mail', async (req, res) => {
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER,
+      subject: 'Test',
+      text: 'Hello'
+    });
 
+    res.send('Mail Sent');
+  } catch (e) {
+    console.error(e);
+    res.status(500).send(e.message);
+  }
+});
 // ==================== Helper: Check Admin ====================
 
 async function checkAdmin(req) {
