@@ -29,25 +29,22 @@ app.use(express.json());
 // });
 // تعديل كود الـ transporter ليصبح هكذا:
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
+  // 🛠️ نضع الـ IPv4 الخاص بـ smtp.gmail.com مباشرة هنا
+  host: '142.250.141.108', 
   port: 465,
   secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
   },
-  // 🛠️ الحل الجذري: إجبار محرك الاتصال على استخدام بروتوكول الـ IPv4 فقط للـ Hostname
-  lookup: (hostname, options, callback) => {
-    dns.lookup(hostname, { family: 4 }, (err, address, family) => {
-      callback(err, address, family);
-    });
+  // نُجبر الـ TLS على قبول الاتصال لأننا نستخدم IP بدلاً من اسم النطاق
+  tls: {
+    rejectUnauthorized: false,
+    servername: 'smtp.gmail.com' // 👈 مهم جداً لكي يطابق شهادة الأمان لـ Gmail ولا يعطي خطأ أمان
   },
   connectionTimeout: 15000,
   greetingTimeout: 15000,
-  socketTimeout: 15000,
-  tls: {
-    rejectUnauthorized: false
-  }
+  socketTimeout: 15000
 });
 
 // ==================== Helper: Check Admin ====================
