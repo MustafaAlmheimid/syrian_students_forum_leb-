@@ -29,12 +29,16 @@ app.use(express.json());
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
-  secure: false,
+  secure: false, // يجب أن تكون false عند استخدام المنفذ 587
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
+    pass: process.env.EMAIL_PASS,
   },
-  family: 4
+  tls: {
+    // هذه الإعدادات تجبر نودمايلر على استخدام IPv4 وتتخطى مشاكل رفض الشهادات المحلية
+    rejectUnauthorized: false,
+    minVersion: 'TLSv1.2'
+  }
 });
 app.get('/test-mail', async (req, res) => {
   try {
