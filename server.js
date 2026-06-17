@@ -19,27 +19,27 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-// const transporter = nodemailer.createTransport({
-//   service: 'gmail',
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.EMAIL_PASS
-//   }
-// });
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false, // يجب أن تكون false عند استخدام المنفذ 587
+  service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
-  },
-  tls: {
-    // هذه الإعدادات تجبر نودمايلر على استخدام IPv4 وتتخطى مشاكل رفض الشهادات المحلية
-    rejectUnauthorized: false,
-    minVersion: 'TLSv1.2'
   }
 });
+// const transporter = nodemailer.createTransport({
+//   host: 'smtp.gmail.com',
+//   port: 587,
+//   secure: false, // يجب أن تكون false عند استخدام المنفذ 587
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS
+//   },
+//   tls: {
+//     // هذه الإعدادات تجبر نودمايلر على استخدام IPv4 وتتخطى مشاكل رفض الشهادات المحلية
+//     rejectUnauthorized: false,
+//     minVersion: 'TLSv1.2'
+//   }
+// });
 app.get('/test-mail', async (req, res) => {
   try {
     await transporter.sendMail({
