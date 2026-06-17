@@ -7,7 +7,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { sql } from './api/_db.js';
 
-import nodemailer from 'nodemailer';
+// استيراد مكتبة Resend بدلاً من nodemailer
+import { Resend } from 'resend';
 import crypto from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -19,31 +20,23 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// ==================== إعدادات الإيميل المعدلة والفعالة لـ Render ====================
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465, // استخدام المنفذ الآمن والافتراضي للخوادم السحابية
-  secure: true, // يجب أن تكون true مع المنفذ 465
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  },
-  tls: {
-    // يتخطى مشاكل رفض الشهادات المحلية والقيود الأمنية على خوادم Render
-    rejectUnauthorized: false
-  }
-});
+// تعريف كائن الـ Resend باستخدام مفتاح الـ API
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// من بريد الإرسال (إذا لم تربط دومينك الخاص بعد، استخدم بريد الفحص المجاني لـ Resend)
+const FROM_EMAIL = process.env.EMAIL_FROM || 'onboarding@resend.dev';
 
 app.get('/test-mail', async (req, res) => {
   try {
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
+    const { data, error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: process.env.EMAIL_USER, // البريد الذي ستستقبل عليه الفحص
       subject: 'Test',
       text: 'Hello'
     });
 
-    res.send('Mail Sent');
+    if (error) throw error;
+    res.send('Mail Sent via Resend');
   } catch (e) {
     console.error(e);
     res.status(500).send(e.message);
@@ -162,8 +155,9 @@ app.post('/api/auth', async (req, res) => {
         }
       });
 
-      transporter.sendMail({
-        from: process.env.EMAIL_USER,
+      // إرسال بريد الترحيب عبر Resend API في الخلفية
+      resend.emails.send({
+        from: FROM_EMAIL,
         to: email,
         subject: 'مرحباً بك في ملتقى الطلاب السوريين',
         html: `
@@ -184,7 +178,7 @@ app.post('/api/auth', async (req, res) => {
           </div>
         `
       }).catch(mailErr => {
-        console.error('❌ فشل إرسال بريد الترحيب في الخلفية:', mailErr.message);
+        console.error('❌ فشل إرسال بريد الترحيب في الخلفية عبر Resend:', mailErr.message);
       });
 
       return;
@@ -207,11 +201,7 @@ app.post('/api/auth', async (req, res) => {
 // ==================== POSTS ====================
 app.get('/api/posts', async (req, res) => {
   try {
-    const posts = await sql`
-      SELECT *
-      FROM posts
-      ORDER BY created_at DESC
-    `;
+    const posts = await sql`SELECT * FROM posts ORDER BY created_at DESC`;
     res.json(posts);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -529,8 +519,8 @@ app.post('/api/forgot-password', async (req, res) => {
     const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
     const resetLink = `${BASE_URL}/reset-password/${token}`;
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+    await resend.emails.send({
+      from: FROM_EMAIL,
       to: email,
       subject: 'إعادة تعيين كلمة المرور',
       html: `
@@ -588,8 +578,8 @@ app.post('/api/admin/send-announcement', async (req, res) => {
     const users = await sql`SELECT email, first_name FROM users WHERE email IS NOT NULL`;
 
     for (const user of users) {
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER,
+      await resend.emails.send({
+        from: FROM_EMAIL,
         to: user.email,
         subject: title,
         html: `
