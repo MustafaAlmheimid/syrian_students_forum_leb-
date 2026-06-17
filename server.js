@@ -32,7 +32,7 @@ const transporter = nodemailer.createTransport({
   secure: false, // يجب أن تكون false عند استخدام المنفذ 587
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    pass: process.env.EMAIL_PASS
   },
   tls: {
     // هذه الإعدادات تجبر نودمايلر على استخدام IPv4 وتتخطى مشاكل رفض الشهادات المحلية

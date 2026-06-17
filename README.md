@@ -161,3 +161,8 @@ https://myaccount.google.com/apppasswords?utm_source=chatgpt.com&pli=1&rapt=AEjH
 
 in .env : BASE_URL=http://localhost:3000 
 eza sar 3ende domain name , b7ot l domain name mahal hal link 'localhost' b 'render envirenoment variable'
+
+
+EMAIL_USER=syrianstudentsforum@gmail.com
+EMAIL_PASS=lsib anai yppl lcdl
+BASE_URL=https://ssf-lb.com
