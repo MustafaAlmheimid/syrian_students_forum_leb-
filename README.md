@@ -166,3 +166,47 @@ eza sar 3ende domain name , b7ot l domain name mahal hal link 'localhost' b 'ren
 EMAIL_USER=syrianstudentsforum@gmail.com
 EMAIL_PASS=lsib anai yppl lcdl
 BASE_URL=https://ssf-lb.com
+
+## 🛠️ تحديثات نظام إرسال البريد الإلكتروني (Production Mail Setup)
+
+تم تحديث النظام بالكامل ونقله من بروتوكول SMTP التقليدي لـ Gmail (والذي كان يواجه قيوداً برمجية وقيود شبكة IPv6 على سيرفرات Render) إلى نظام احترافي يعتمد على **Resend API** وموثق بالكامل عبر الدومين الرسمي للمنصة.
+
+إليك تفاصيل الخطوات والمشكلات التي تم حلها اليوم:
+
+### 1. المشكلة والدافع للتغيير (The Problem)
+* **Nodemailer + Gmail:** كانت السيرفرات السحابية (Render) تفشل في الاتصال بسيرفرات Gmail بسبب حظر المنفذ (Port Blocking) والتعقيدات الأمنية لـ IPv6 وطلب التحقق بخطوتين من قِبل Google على السيرفرات غير المعروفة.
+* **الحل البديل:** الانتقال إلى خدمة بريدية وسيطة مخصصة للمطورين تعمل عبر **REST API** بدلاً من الـ SMTP التقليدي، وتم اختيار منصة **Resend**.
+
+---
+
+### 2. التغييرات البرمجية (Backend Updates)
+* تم الاستغناء تماماً عن مكتبة `nodemailer` وتثبيت الحزمة الرسمية `@resend/node`.
+* تحويل آلية الإرسال في مسارات الـ Auth (بريد الترحيب عند الـ Signup) والـ Forgot Password والـ Announcements لتتم عبر طلب HTTP سريع ومدعوم بالكامل في الخلفية لضمان عدم تأثر تجربة المستخدم الفورية.
+
+---
+
+### 3. ربط وتوثيق الدومين المخصص (DNS Records Configuration)
+لكي تخرج الإيميلات باسم المنصة بشكل رسمي دون أن تُصنف كـ Spam، تم ربط الدومين المخصص `ssf-lb.com` بحساب **Resend** عبر إضافة سجلات الـ DNS التالية في لوحة تحكم **Namecheap**:
+
+* **سجل الـ DKIM (DomainKeys Identified Mail):** * **Type:** `TXT Record`
+  * **Host:** `resend._domainkey`
+  * **Value:** تم إدخال مفتاح التشفير العام الممنوح من Resend لتوثيق هوية خروج البريد.
+* **سجل الـ SPF (Sender Policy Framework):**
+  * **Type:** `TXT Record`
+  * **Host:** `send`
+  * **Value:** `v=spf1 include:amazonses.com ~all` لتعريف سيرفرات الاستقبال بأن Resend مصرح لها بالإرسال نيابة عن الدومين.
+* **سجل الـ MX (Mail Exchanger):**
+  * تم التوجه إلى قسم **Mail Settings** أسفل لوحة Namecheap وتفعيله كـ **Custom MX**.
+  * **Host:** `send` | **Value:** `feedback-smtp.ap-northeast-1.amazonses.com` | **Priority:** `10`.
+* **سجل الـ DMARC:**
+  * **Type:** `TXT Record` | **Host:** `_dmarc` | **Value:** `v=DMARC1; p=none;` لتحديد سياسة التعامل مع الرسائل غير الموثقة وتجهيز الدومين مستقبلاً لنظام BIMI.
+
+---
+
+### 4. إعدادات البيئة على الإنتاج (Render Env Variables)
+لضمان عمل النظام بكفاءة بعد الرفع، تم ضبط المتغيرات البيئية التالية في لوحة تحكم **Render Dashboard -> Environment**:
+
+```env
+RESEND_API_KEY=re_YourSecretApiKeyHere
+EMAIL_FROM=ملتقى الطلاب السوريين <no-reply@ssf-lb.com>
+BASE_URL=[https://ssf-lb.com](https://ssf-lb.com)

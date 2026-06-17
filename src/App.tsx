@@ -683,117 +683,40 @@ function Navbar({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
       ] : [])
     ];
 
-  return (
-    <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-20 items-center">
+return (
+  <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex justify-between h-20 items-center gap-2">
 
         {/* Logo + Title */}
-        <Link to="/" className="flex items-center gap-3 group">
+        <Link to="/" className="flex items-center gap-2 sm:gap-3 group min-w-0">
           
           {/* Logo Image */}
           <img
             src="/images/logo1.png"
             alt="ملتقى الطلاب السوريين"
-            className="w-14 h-14 object-cover rounded-full border border-emerald-100 shadow-sm group-hover:scale-105 transition"
+            className="w-10 h-10 sm:w-14 sm:h-14 object-cover rounded-full border border-emerald-100 shadow-sm group-hover:scale-105 transition flex-shrink-0"
           />
 
           {/* Title */}
-          <div>
-            <div className="font-bold text-2xl text-emerald-900 group-hover:text-emerald-700 transition">
+          <div className="min-w-0">
+            <div className="font-bold text-base sm:text-lg md:text-2xl text-emerald-900 group-hover:text-emerald-700 transition whitespace-nowrap truncate">
               ملتقى الطلاب السوريين
             </div>
 
-            <div className="text-xs text-gray-500 -mt-1">
+            <div className="text-[10px] sm:text-xs text-gray-500 -mt-0.5 sm:-mt-1">
               في لبنان
             </div>
           </div>
         </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-            {navLinks.map(link => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className="text-gray-700 hover:text-emerald-700 transition-colors flex items-center gap-1.5"
-              >
-                <link.icon className="w-4 h-4" />
-                {link.label}
-              </Link>
-            ))}
-
-            {isAdmin && (
-              <Link
-                to="/admin"
-                className="text-emerald-700 hover:text-emerald-800 flex items-center gap-1.5 font-semibold"
-              >
-                <Award className="w-4 h-4" />
-                لوحة الإدارة
-              </Link>
-            )}
-          </div>
-              {/* Auth Buttons */}
-              <div className="flex items-center gap-4">
-                {user ? (
-                  <div className="flex items-center gap-3">
-
-                    <Link
-                      to="/profile"
-                      className="hidden md:flex items-center gap-2 text-sm bg-gray-100 px-3 py-1.5 rounded-full hover:bg-emerald-50 transition"
-                    >
-                      <User className="w-4 h-4" />
-
-                      <span>
-                        {user.first_name && user.last_name
-                          ? `${user.first_name} ${user.last_name}`
-                          : user.email}
-                      </span>
-                    </Link>
-
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      تسجيل الخروج
-                    </button>
-
-                  </div>
-                ) : (
-              <Link
-                to="/login"
-                className="flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-2.5 rounded-full text-sm font-medium transition"
-              >
-                <LogIn className="w-4 h-4" />
-                تسجيل الدخول
-              </Link>
-            )}
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2"
-            >
-              <div className="space-y-1">
-                <div className={`h-0.5 w-6 bg-gray-800 transition ${isOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
-                <div className={`h-0.5 w-6 bg-gray-800 transition ${isOpen ? 'opacity-0' : ''}`} />
-                <div className={`h-0.5 w-6 bg-gray-800 transition ${isOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
-              </div>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden border-t bg-white px-4 py-4 space-y-1 text-sm">
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-8 text-sm font-medium">
           {navLinks.map(link => (
             <Link
               key={link.to}
               to={link.to}
-              className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 rounded-xl"
-              onClick={() => setIsOpen(false)}
+              className="text-gray-700 hover:text-emerald-700 transition-colors flex items-center gap-1.5"
             >
               <link.icon className="w-4 h-4" />
               {link.label}
@@ -803,16 +726,95 @@ function Navbar({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
           {isAdmin && (
             <Link
               to="/admin"
-              className="flex items-center gap-3 px-4 py-3 text-emerald-700"
-              onClick={() => setIsOpen(false)}
+              className="text-emerald-700 hover:text-emerald-800 flex items-center gap-1.5 font-semibold"
             >
+              <Award className="w-4 h-4" />
               لوحة الإدارة
             </Link>
           )}
         </div>
-      )}
-    </nav>
-  );
+
+        {/* Auth Buttons & Mobile Toggle */}
+        <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+          {user ? (
+            <div className="flex items-center gap-2 sm:gap-3">
+
+              <Link
+                to="/profile"
+                className="hidden md:flex items-center gap-2 text-sm bg-gray-100 px-3 py-1.5 rounded-full hover:bg-emerald-50 transition"
+              >
+                <User className="w-4 h-4" />
+                <span>
+                  {user.first_name && user.last_name
+                    ? `${user.first_name} ${user.last_name}`
+                    : user.email}
+                </span>
+              </Link>
+
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2 text-xs sm:text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition whitespace-nowrap"
+              >
+                <LogOut className="w-4 h-4" />
+                <span className="hidden xs:inline">تسجيل الخروج</span>
+                <span className="xs:hidden">خروج</span>
+              </button>
+
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-800 text-white px-3 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition whitespace-nowrap"
+            >
+              <LogIn className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              تسجيل الدخول
+            </Link>
+          )}
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-1.5 sm:p-2 flex-shrink-0"
+          >
+            <div className="space-y-1">
+              <div className={`h-0.5 w-5 sm:w-6 bg-gray-800 transition ${isOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
+              <div className={`h-0.5 w-5 sm:w-6 bg-gray-800 transition ${isOpen ? 'opacity-0' : ''}`} />
+              <div className={`h-0.5 w-5 sm:w-6 bg-gray-800 transition ${isOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
+            </div>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    {/* Mobile Menu */}
+    {isOpen && (
+      <div className="md:hidden border-t bg-white px-4 py-4 space-y-1 text-sm">
+        {navLinks.map(link => (
+          <Link
+            key={link.to}
+            to={link.to}
+            className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 rounded-xl"
+            onClick={() => setIsOpen(false)}
+          >
+            <link.icon className="w-4 h-4" />
+            {link.label}
+          </Link>
+        ))}
+
+        {isAdmin && (
+          <Link
+            to="/admin"
+            className="flex items-center gap-3 px-4 py-3 text-emerald-700"
+            onClick={() => setIsOpen(false)}
+          >
+            لوحة الإدارة
+          </Link>
+        )}
+      </div>
+    )}
+  </nav>
+);
 }
 
 // Homepage
